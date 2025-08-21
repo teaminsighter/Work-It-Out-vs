@@ -34,6 +34,7 @@ import {
   Heart,
   Activity,
   FileDigit,
+  Users,
 } from 'lucide-react';
 
 export const TOTAL_STEPS_ESTIMATE = 8;
@@ -117,13 +118,12 @@ export const ALL_QUESTIONS: Questions = {
   },
   'security-systems': {
     id: 'security-systems',
-    question: 'Do you have security systems installed?',
-    description: 'Such as alarms, cameras, or deadbolts.',
-    Icon: ShieldCheck,
+    question: 'Who do you want to cover?',
+    Icon: Users,
     nextStepId: 'previous-claims',
     options: [
-      { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' },
+      { value: 'myself', label: 'Myself', icon: User },
+      { value: 'myself-and-partner', label: 'Myself & partner', icon: Users },
     ],
   },
   'previous-claims': {
