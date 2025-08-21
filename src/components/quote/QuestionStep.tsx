@@ -19,14 +19,6 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1
-  }
-};
-
 export default function QuestionStep({ question }: QuestionStepProps) {
   const { handleAnswer } = useForm();
   const { id, Icon, question: questionText, description, options } = question;
@@ -48,7 +40,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
       {description && <p className="mt-2 text-muted-foreground">{description}</p>}
       
       <motion.div 
-        className="mt-6 grid w-full grid-cols-1 gap-4 sm:grid-cols-2"
+        className="mt-6 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

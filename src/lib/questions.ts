@@ -31,9 +31,10 @@ import {
   Truck,
   Gem,
   CalendarClock,
+  Heart,
+  Activity,
+  FileDigit,
 } from 'lucide-react';
-import ContactForm from '@/components/quote/ContactForm';
-import CoverageRecommendationStep from '@/components/quote/CoverageRecommendationStep';
 
 export const TOTAL_STEPS_ESTIMATE = 8;
 
@@ -50,10 +51,10 @@ export const ALL_QUESTIONS: Questions = {
     description: "Select the main type of cover you're looking for.",
     Icon: ShieldQuestion,
     options: [
-      { value: 'home', label: 'Home', icon: Home, nextStepId: 'home-property-type' },
-      { value: 'vehicle', label: 'Vehicle', icon: Car, nextStepId: 'vehicle-type' },
-      { value: 'business', label: 'Business', icon: Building2, nextStepId: 'business-type' },
-      { value: 'landlord', label: 'Landlord', icon: KeyRound, nextStepId: 'landlord-property-type' },
+      { value: 'life', label: 'Life Insurance', icon: Heart, nextStepId: 'security-systems' },
+      { value: 'trauma', label: 'Trauma Insurance', icon: Activity, nextStepId: 'security-systems' },
+      { value: 'income', label: 'Income Protection', icon: FileDigit, nextStepId: 'security-systems' },
+      { value: 'mortgage', label: 'Mortgage Protection', icon: Home, nextStepId: 'security-systems' },
     ],
   },
   'home-property-type': {
