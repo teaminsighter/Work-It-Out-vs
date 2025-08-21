@@ -2,6 +2,7 @@ import { FormProvider } from '@/contexts/FormContext';
 import Hero from '@/components/Hero';
 import Insurers from '@/components/Insurers';
 import FinancialProtection from '@/components/FinancialProtection';
+import Services from '@/components/Services';
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
         <Hero />
         <Insurers />
         <FinancialProtection />
+        <Services />
       </main>
     </FormProvider>
   );
