@@ -30,7 +30,7 @@ const Hero = () => {
                 <span>Trusted by thousands of Kiwis</span>
               </li>
             </ul>
-             <Button size="lg" className="mt-8 bg-accent hover:bg-accent/90 text-accent-foreground">Get Your Quote</Button>
+             <Button size="lg" className="mt-8">Get Your Quote</Button>
           </div>
           <div>
             <QuoteWizard />
