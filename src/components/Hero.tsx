@@ -13,7 +13,7 @@ const Hero = () => {
         style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/Lanind%20Page%201%2Ffamily.jpeg?alt=media&token=424b8995-e4f0-4cf9-b257-623ca0287635')" }}
         data-ai-hint="insurance office"
       ></div>
-      <div className="absolute inset-0 bg-black/50 z-10"></div>
+      <div className="absolute inset-0 z-10" style={{ backgroundColor: 'rgba(53, 162, 231, 0.5)' }}></div>
       <div className="container mx-auto px-4 relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-white">
