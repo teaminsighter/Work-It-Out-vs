@@ -71,13 +71,6 @@ const HowItWorks = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.5 }}
         >
-          {/* Dashed lines for larger screens */}
-          <div className="hidden md:block absolute top-1/2 left-0 w-full h-full">
-            <div className="flex justify-center items-center h-full">
-                <div className="w-2/3 border-t-2 border-dashed border-gray-300 absolute top-8"></div>
-            </div>
-          </div>
-          
           {steps.map((step, index) => (
             <motion.div 
                 key={index} 
