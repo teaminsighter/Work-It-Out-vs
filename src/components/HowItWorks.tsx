@@ -48,7 +48,10 @@ const itemVariants = {
 
 const HowItWorks = () => {
   return (
-    <section className="teal-gradient text-white py-16 sm:py-24">
+    <section 
+      className="text-white py-16 sm:py-24"
+      style={{ backgroundColor: '#69c1f7' }}
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30 text-sm">ABOUT OUR PROCESS PROGRAMME</Badge>
