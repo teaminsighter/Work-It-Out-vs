@@ -27,6 +27,7 @@ const createSchema = (fields: string[] = []) => {
     if (fields.includes('email')) shape.email = z.string().email('Invalid email address.');
     if (fields.includes('phone')) shape.phone = z.string().min(10, 'Phone number seems too short.');
     if (fields.includes('postcode')) shape.postcode = z.string().min(4, 'Postcode must be at least 4 digits.').max(4, 'Postcode must be at most 4 digits.');
+    if (fields.includes('age')) shape.age = z.string().refine(val => !isNaN(parseInt(val, 10)) && parseInt(val, 10) > 0, { message: 'Please enter a valid age.' });
     return z.object(shape);
 };
 
@@ -118,6 +119,21 @@ export default function ContactForm({ question }: ContactFormProps) {
                     <FormLabel>Postcode</FormLabel>
                     <FormControl>
                     <Input placeholder="e.g. 2000" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+          )}
+           {fields.includes('age') && (
+            <FormField
+                control={form.control}
+                name="age"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Age</FormLabel>
+                    <FormControl>
+                    <Input placeholder="e.g. 35" type="number" {...field} />
                     </FormControl>
                     <FormMessage />
                 </FormItem>

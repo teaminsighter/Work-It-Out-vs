@@ -29,7 +29,7 @@ export default function QuoteWizard() {
       if (currentQuestion.id === 'coverage-recommendation') {
         return <CoverageRecommendationStep question={currentQuestion} />;
       }
-      if (currentQuestion.id === 'location' || currentQuestion.id === 'contact-details') {
+      if (currentQuestion.fields && currentQuestion.fields.length > 0) {
         return <ContactForm question={currentQuestion} />;
       }
       return <QuestionStep key={currentStepId} question={currentQuestion} />;

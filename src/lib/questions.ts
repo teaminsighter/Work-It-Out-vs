@@ -141,7 +141,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'coverage-level',
     question: 'Have you smoked in the past 12 months?',
     Icon: Cigarette,
-    nextStepId: 'excess-amount',
+    nextStepId: 'age',
     options: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
@@ -151,19 +151,14 @@ export const ALL_QUESTIONS: Questions = {
     id: 'coverage-recommendation',
     question: 'Getting your recommendation...',
     Icon: ShieldQuestion,
-    nextStepId: 'excess-amount'
+    nextStepId: 'age'
   },
-  'excess-amount': {
-    id: 'excess-amount',
-    question: "What's your preferred excess amount?",
-    Icon: CircleDollarSign,
-    nextStepId: 'age-group',
-    options: [
-      { value: '250-500', label: '$250 - $500' },
-      { value: '500-1000', label: '$500 - $1000' },
-      { value: '1000+', label: '$1000+' },
-      { value: 'as-low-as-possible', label: 'As low as possible' },
-    ],
+  'age': {
+    id: 'age',
+    question: 'How old are you?',
+    Icon: User,
+    fields: ['age'],
+    nextStepId: 'coverage-start-date',
   },
   'age-group': {
     id: 'age-group',
