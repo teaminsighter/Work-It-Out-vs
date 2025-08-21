@@ -6,7 +6,7 @@ import Image from 'next/image';
 const Hero = () => {
   return (
     <section
-      className="relative w-full py-16 md:py-24 lg:py-32"
+      className="relative w-full pt-40 pb-16 md:pt-48 md:pb-24 lg:pt-56 lg:pb-32"
     >
       <Image
         src="https://placehold.co/1920x1080.png"
