@@ -11,7 +11,7 @@ import CTA from '@/components/CTA';
 export default function Home() {
   return (
     <FormProvider>
-      <main className="w-full text-foreground bg-gray-50">
+      <main className="w-full text-foreground bg-white">
         <Hero />
         <Insurers />
         <FinancialProtection />

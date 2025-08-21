@@ -45,7 +45,7 @@ export const ALL_QUESTIONS: Questions = {
   'start': {
     id: 'start',
     question: "Welcome to QuoteFlow",
-    Icon: Home,
+    Icon: ShieldCheck,
     nextStepId: 'insurance-type',
   },
   'insurance-type': {

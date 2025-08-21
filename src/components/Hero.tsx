@@ -1,5 +1,5 @@
 import QuoteWizard from '@/components/quote/QuoteWizard';
-import { CheckCircle } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { Button } from './ui/button';
 import Image from 'next/image';
 
@@ -8,14 +8,11 @@ const Hero = () => {
     <section
       className="relative w-full pt-40 pb-16 md:pt-48 md:pb-24 lg:pt-56 lg:pb-32"
     >
-      <Image
-        src="https://placehold.co/1920x1080.png"
-        alt="Hero background"
-        layout="fill"
-        objectFit="cover"
-        className="z-0"
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-fixed"
+        style={{ backgroundImage: "url('https://placehold.co/1920x1080.png')" }}
         data-ai-hint="insurance office"
-      />
+      ></div>
       <div className="absolute inset-0 bg-black/50 z-10"></div>
       <div className="container mx-auto px-4 relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -28,19 +25,19 @@ const Hero = () => {
             </p>
             <ul className="space-y-3">
                <li className="flex items-center text-lg gap-3">
-                <CheckCircle className="h-6 w-6 text-white" />
+                <ShieldCheck className="h-6 w-6 text-white" />
                 <span>We compare 50+ NZ insurers</span>
               </li>
                <li className="flex items-center text-lg gap-3">
-                <CheckCircle className="h-6 w-6 text-white" />
+                <ShieldCheck className="h-6 w-6 text-white" />
                 <span>Get independent advice</span>
               </li>
                <li className="flex items-center text-lg gap-3">
-                <CheckCircle className="h-6 w-6 text-white" />
+                <ShieldCheck className="h-6 w-6 text-white" />
                 <span>Trusted by thousands of Kiwis</span>
               </li>
             </ul>
-             <Button size="lg" className="mt-8" variant="default">Get Your Quote</Button>
+             <Button size="lg" className="mt-8 bg-primary hover:bg-primary/90">Get Your Quote</Button>
           </div>
           <div>
             <QuoteWizard />

@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 const FinancialProtection = () => {
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section className="bg-gray-50 py-16 sm:py-24">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <motion.div 
