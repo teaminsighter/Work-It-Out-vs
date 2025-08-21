@@ -6,6 +6,7 @@ import Services from '@/components/Services';
 import Benefits from '@/components/Benefits';
 import HowItWorks from '@/components/HowItWorks';
 import Testimonials from '@/components/Testimonials';
+import CTA from '@/components/CTA';
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <Benefits />
         <HowItWorks />
         <Testimonials />
+        <CTA />
       </main>
     </FormProvider>
   );
