@@ -1,13 +1,22 @@
+'use client';
+
 import Image from 'next/image';
 import { Button } from './ui/button';
 import { CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const FinancialProtection = () => {
   return (
     <section className="bg-white py-16 sm:py-24">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="rounded-lg overflow-hidden shadow-xl">
+          <motion.div 
+            className="rounded-lg overflow-hidden shadow-xl"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6 }}
+          >
             <Image
               src="https://placehold.co/600x400.png"
               alt="Family photo"
@@ -16,8 +25,13 @@ const FinancialProtection = () => {
               className="w-full h-full object-cover"
               data-ai-hint="family photo"
             />
-          </div>
-          <div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6 }}
+          >
             <h3 className="text-lg font-semibold text-primary mb-2">
               IS YOUR FAMILY FINANCIALLY PROTECTED?
             </h3>
@@ -42,7 +56,7 @@ const FinancialProtection = () => {
               </li>
             </ul>
             <Button size="lg">Learn More</Button>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
