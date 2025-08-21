@@ -164,7 +164,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'household-income',
     question: 'What is your annual household income?',
     Icon: CircleDollarSign,
-    nextStepId: 'contact-details',
+    nextStepId: 'location',
     options: [
       { value: 'less-than-49k', label: 'Less than $49,000' },
       { value: '50k-99k', label: '$50,000 - $99,000' },
@@ -175,7 +175,7 @@ export const ALL_QUESTIONS: Questions = {
   },
   'location': {
     id: 'location',
-    question: 'What is your location?',
+    question: "You're almost there! Where do you live?",
     description: 'Please provide your postcode so we can find local deals.',
     Icon: MapPin,
     fields: ['postcode'],
