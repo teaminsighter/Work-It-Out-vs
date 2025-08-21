@@ -126,7 +126,7 @@ const Testimonials = () => {
                     transition: { duration: 0.5, delay: 0.4, type: 'spring', stiffness: 100 },
                     viewport: { once: true, amount: 0.5 }
                 }}
-                className="absolute top-1/3 right-[15%] w-full max-w-md hidden lg:block"
+                className="absolute top-[20%] right-[15%] w-full max-w-md hidden lg:block"
             />
         </div>
 
