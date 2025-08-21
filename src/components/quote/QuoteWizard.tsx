@@ -69,7 +69,7 @@ export default function QuoteWizard() {
               variant="ghost"
               size="icon"
               onClick={goBack}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white sm:-left-12"
+              className="absolute -left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white sm:-left-12"
               aria-label="Go back"
             >
               <ChevronLeft className="h-6 w-6 text-gray-700" />

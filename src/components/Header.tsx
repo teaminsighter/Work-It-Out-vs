@@ -46,7 +46,7 @@ const Header = () => {
           </div>
 
           <div className="md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)}>
+            <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
@@ -56,7 +56,7 @@ const Header = () => {
       {/* Mobile Menu */}
       <div
         className={cn(
-          'md:hidden bg-white transition-all duration-300 ease-in-out overflow-hidden',
+          'md:hidden bg-white transition-all duration-300 ease-in-out overflow-hidden border-t',
           isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         )}
       >

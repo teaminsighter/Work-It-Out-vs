@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="bg-dark-teal text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <Shield className="h-8 w-8 text-white" />
@@ -49,7 +49,7 @@ const Footer = () => {
 
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center">
+        <div className="mt-12 pt-8 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left">
             <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} QuoteFlow. All rights reserved.</p>
             <div className="flex space-x-4 mt-4 sm:mt-0">
                 <a href="#" className="text-gray-400 hover:text-white"><Facebook className="h-5 w-5" /></a>
