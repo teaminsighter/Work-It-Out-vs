@@ -2,7 +2,6 @@
 
 import type { Question } from '@/types';
 import { useForm } from '@/contexts/FormContext';
-import OptionCard from './OptionCard';
 import { motion } from 'framer-motion';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
@@ -25,18 +24,11 @@ const containerVariants = {
 };
 
 export default function QuestionStep({ question, isWelcome = false }: QuestionStepProps) {
-  const { handleAnswer, setFormData, formData } = useForm();
-  const { id, Icon, question: questionText, description, options, getNextStepId, nextStepId } = question;
+  const { handleAnswer, formData } = useForm();
+  const { id, Icon, question: questionText, description, options } = question;
 
   const onOptionSelect = (value: string) => {
-    // If there is no continue button, transition immediately
-    if (getNextStepId || nextStepId) {
-        setFormData(prev => ({...prev, [id]: value }));
-        handleAnswer(id, value);
-    } else {
-        // Otherwise, just store the value and wait for the continue button
-        setFormData(prev => ({...prev, [id]: value }));
-    }
+    handleAnswer(id, value);
   };
   
   const currentValue = formData[id];

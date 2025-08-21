@@ -13,7 +13,7 @@ import CoverageRecommendationStep from './CoverageRecommendationStep';
 import ContactForm from './ContactForm';
 
 export default function QuoteWizard() {
-  const { currentStepId, goBack, stepHistory, handleAnswer, formData } = useForm();
+  const { currentStepId, goBack, stepHistory } = useForm();
 
   const currentQuestion = ALL_QUESTIONS[currentStepId];
   const isFirstStep = stepHistory.length <= 1;
@@ -37,14 +37,6 @@ export default function QuoteWizard() {
     }
     return <div>Question not found.</div>;
   };
-  
-  const showContinue = currentQuestion && currentQuestion.options && formData[currentQuestion.id];
-  
-  const handleContinue = () => {
-      if (currentQuestion && formData[currentQuestion.id]) {
-          handleAnswer(currentQuestion.id, formData[currentQuestion.id]);
-      }
-  }
 
   return (
     <div className="relative w-full max-w-lg mx-auto">
@@ -76,7 +68,7 @@ export default function QuoteWizard() {
                 </motion.div>
                 </AnimatePresence>
 
-                {!isFirstStep && currentStepId !== 'results' && !showContinue &&(
+                {!isFirstStep && currentStepId !== 'results' && (
                 <Button
                     variant="ghost"
                     size="icon"
@@ -95,19 +87,6 @@ export default function QuoteWizard() {
                 </div>
                 )}
             </div>
-
-            {showContinue && (
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
-                    className="mt-8"
-                >
-                    <Button onClick={handleContinue} size="lg" className="w-full bg-[#2A81A8] hover:bg-[#2A81A8]/90 text-white">
-                        CONTINUE →
-                    </Button>
-                </motion.div>
-            )}
 
             <div className="mt-8 text-center">
                 <div className="flex justify-center items-center gap-1">
