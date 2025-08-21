@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 const logos = [
   { src: 'https://placehold.co/160x80.png', alt: 'Insurance Company 1', hint: 'company logo' },
@@ -21,12 +22,12 @@ const Insurers = () => {
             We compare NZ's top insurance companies to find you the best deal.
           </p>
         </div>
-        <div className="mx-auto max-w-lg lg:max-w-none">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
-            {logos.map((logo, index) => (
-              <div key={index} className="flex justify-center">
+        <div className="relative w-full overflow-hidden">
+          <div className="marquee flex gap-16">
+            {[...logos, ...logos].map((logo, index) => (
+              <div key={index} className="flex-shrink-0">
                 <Image
-                  className="max-h-12 w-full object-contain"
+                  className="max-h-12 w-auto object-contain"
                   src={logo.src}
                   alt={logo.alt}
                   width={160}
@@ -36,6 +37,7 @@ const Insurers = () => {
               </div>
             ))}
           </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white pointer-events-none"></div>
         </div>
       </div>
     </section>
