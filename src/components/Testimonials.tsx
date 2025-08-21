@@ -1,4 +1,4 @@
-
+"use client";
 
 import { Star, Quote, ShieldCheck, BarChart2 } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
