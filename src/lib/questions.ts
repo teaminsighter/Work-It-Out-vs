@@ -35,6 +35,7 @@ import {
   Activity,
   FileDigit,
   Users,
+  Cigarette,
 } from 'lucide-react';
 
 export const TOTAL_STEPS_ESTIMATE = 8;
@@ -138,14 +139,12 @@ export const ALL_QUESTIONS: Questions = {
   },
   'coverage-level': {
     id: 'coverage-level',
-    question: 'What level of coverage do you prefer?',
-    Icon: HeartHandshake,
-    getNextStepId: (value) => (value === 'not-sure' ? 'coverage-recommendation' : 'excess-amount'),
+    question: 'Have you smoked in the past 12 months?',
+    Icon: Cigarette,
+    nextStepId: 'excess-amount',
     options: [
-      { value: 'basic', label: 'Basic/Third Party' },
-      { value: 'comprehensive', label: 'Comprehensive' },
-      { value: 'premium', label: 'Premium/Full Cover' },
-      { value: 'not-sure', label: 'Not Sure?', icon: ShieldQuestion },
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
     ],
   },
   'coverage-recommendation': {
