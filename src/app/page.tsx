@@ -1,11 +1,11 @@
 import { FormProvider } from '@/contexts/FormContext';
-import QuoteWizard from '@/components/quote/QuoteWizard';
+import Hero from '@/components/Hero';
 
 export default function Home() {
   return (
     <FormProvider>
-      <main className="min-h-dvh w-full bg-background font-body text-foreground">
-        <QuoteWizard />
+      <main className="w-full text-foreground">
+        <Hero />
       </main>
     </FormProvider>
   );
