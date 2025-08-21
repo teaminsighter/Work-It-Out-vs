@@ -37,6 +37,7 @@ import {
   Users,
   Cigarette,
 } from 'lucide-react';
+import { NZ_TOWNS } from './nz-towns';
 
 export const TOTAL_STEPS_ESTIMATE = 8;
 
@@ -176,9 +177,10 @@ export const ALL_QUESTIONS: Questions = {
   'location': {
     id: 'location',
     question: "You're almost there! Where do you live?",
-    description: 'Please provide your postcode so we can find local deals.',
+    description: 'Select your town from the list below.',
     Icon: MapPin,
-    fields: ['postcode'],
+    field: 'location', // This will be the key in formData
+    options: NZ_TOWNS.map(town => ({ value: town, label: town })),
     nextStepId: 'contact-details',
   },
   'contact-details': {

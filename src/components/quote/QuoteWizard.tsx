@@ -11,6 +11,7 @@ import { ChevronLeft, RotateCcw } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import CoverageRecommendationStep from './CoverageRecommendationStep';
 import ContactForm from './ContactForm';
+import SelectForm from './SelectForm';
 
 export default function QuoteWizard() {
   const { currentStepId, goBack, stepHistory } = useForm();
@@ -31,6 +32,9 @@ export default function QuoteWizard() {
       }
       if (currentQuestion.fields && currentQuestion.fields.length > 0) {
         return <ContactForm question={currentQuestion} />;
+      }
+      if (currentQuestion.field && currentQuestion.field === 'location') {
+        return <SelectForm question={currentQuestion} />;
       }
       return <QuestionStep key={currentStepId} question={currentQuestion} />;
     }
