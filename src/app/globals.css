@@ -21,7 +21,7 @@ body {
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 25 71% 57%;
+    --accent: 16 84% 57%; /* coral/orange */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -44,8 +44,8 @@ body {
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 25 71% 57%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 16 84% 57%; /* coral/orange */
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
@@ -74,5 +74,9 @@ body {
     background: hsla(0, 0%, 100%, 0.05);
     backdrop-filter: blur(10px);
     border: 1px solid hsla(0, 0%, 100%, 0.1);
+  }
+
+  .teal-gradient {
+    background: linear-gradient(45deg, hsl(var(--primary)), hsl(177, 80%, 60%));
   }
 }
