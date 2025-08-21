@@ -29,21 +29,22 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const handleAnswer = (questionId: string, value: any, nextStepId?: string) => {
     const newFormData = { ...formData, [questionId]: value };
     
-    // Special handling for dynamic data like the form component values
     if (typeof value === 'object' && value !== null) {
       Object.assign(newFormData, value);
     } else {
       newFormData[questionId] = value;
     }
 
-    if (questionId === 'insurance-type') {
+    if (questionId === 'start' && value === 'go') {
+        newFormData['insuranceType'] = value;
+    } else if (questionId === 'insurance-type') {
       newFormData['insuranceType'] = value;
     }
 
     setFormData(newFormData);
 
     let nextStep: string | undefined = nextStepId;
-
+    
     if (!nextStep) {
       const question = ALL_QUESTIONS[currentStepId];
       if (question?.getNextStepId) {
@@ -51,7 +52,6 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } else if (question?.nextStepId) {
         nextStep = question.nextStepId
       } else if (question?.options) {
-        // Fallback for simple option-based steps if getNextStepId isn't defined
         const selectedOption = question.options.find(opt => opt.value === value);
         const questionFromOption = ALL_QUESTIONS[selectedOption?.value as string]
         if(questionFromOption?.nextStepId) {
