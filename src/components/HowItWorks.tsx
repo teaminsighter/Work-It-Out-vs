@@ -1,6 +1,9 @@
+'use client';
+
 import { FileText, ClipboardList, ThumbsUp } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
+import { motion } from 'framer-motion';
 
 const steps = [
   {
@@ -20,17 +23,52 @@ const steps = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: 'spring',
+      stiffness: 100,
+    },
+  },
+};
+
 const HowItWorks = () => {
   return (
     <section className="teal-gradient text-white py-16 sm:py-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30 text-sm">ABOUT OUR PROCESS PROGRAMME</Badge>
-          <h2 className="text-3xl font-bold sm:text-4xl">
+          <motion.h2 
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, amount: 0.5 }}
+            className="text-3xl font-bold sm:text-4xl"
+          >
             How It Works
-          </h2>
+          </motion.h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center relative">
+        <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center relative"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+        >
           {/* Dashed lines for larger screens */}
           <div className="hidden md:block absolute top-1/2 left-0 w-full h-full">
             <div className="flex justify-center items-center h-full">
@@ -39,15 +77,19 @@ const HowItWorks = () => {
           </div>
           
           {steps.map((step, index) => (
-            <div key={index} className="flex flex-col items-center relative z-10">
+            <motion.div 
+                key={index} 
+                className="flex flex-col items-center relative z-10"
+                variants={itemVariants}
+            >
               <div className="bg-white/20 p-4 rounded-full mb-4">
                 <step.icon className="h-10 w-10 text-white" />
               </div>
               <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
               <p className="text-gray-200">{step.description}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
         <div className="text-center mt-16">
           <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
             GET YOUR FREE QUOTE
