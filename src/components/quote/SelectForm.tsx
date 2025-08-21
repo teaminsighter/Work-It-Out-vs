@@ -27,14 +27,15 @@ interface SelectFormProps {
 }
 
 export default function SelectForm({ question }: SelectFormProps) {
-  const { handleAnswer } = useForm();
+  const { handleAnswer, formData } = useForm();
   const { id, Icon, question: questionText, description, options, field, nextStepId } = question;
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState('');
-
-  const onContinue = () => {
-    if (value && field) {
-        handleAnswer(field, value, nextStepId);
+  const value = field ? formData[field] || '' : '';
+  
+  const handleSelect = (currentValue: string) => {
+    setOpen(false);
+    if (field) {
+      handleAnswer(field, currentValue, nextStepId);
     }
   };
 
@@ -75,10 +76,7 @@ export default function SelectForm({ question }: SelectFormProps) {
                         <CommandItem
                             key={option.value}
                             value={option.value}
-                            onSelect={(currentValue) => {
-                                setValue(currentValue === value ? '' : currentValue);
-                                setOpen(false);
-                            }}
+                            onSelect={handleSelect}
                         >
                             <Check
                                 className={cn(
@@ -94,9 +92,6 @@ export default function SelectForm({ question }: SelectFormProps) {
                 </Command>
             </PopoverContent>
             </Popover>
-             <Button onClick={onContinue} className="w-full" disabled={!value}>
-                Continue
-            </Button>
         </div>
     </div>
   );
