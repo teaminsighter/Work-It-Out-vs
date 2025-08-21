@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useMemo } from 'react';
-import type { FormData } from '@/types';
+import type { FormData, Question } from '@/types';
 import { ALL_QUESTIONS, TOTAL_STEPS_ESTIMATE } from '@/lib/questions';
 import { useToast } from "@/hooks/use-toast";
 
@@ -28,11 +28,19 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const handleAnswer = (questionId: string, value: any, nextStepId?: string) => {
     const newFormData = { ...formData, [questionId]: value };
-    setFormData(newFormData);
+    
+    // Special handling for dynamic data like the form component values
+    if (typeof value === 'object' && value !== null) {
+      Object.assign(newFormData, value);
+    } else {
+      newFormData[questionId] = value;
+    }
 
     if (questionId === 'insurance-type') {
       newFormData['insuranceType'] = value;
     }
+
+    setFormData(newFormData);
 
     let nextStep: string | undefined = nextStepId;
 
@@ -40,13 +48,15 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const question = ALL_QUESTIONS[currentStepId];
       if (question?.getNextStepId) {
         nextStep = question.getNextStepId(value);
-      } else if (question?.options) {
-        const selectedOption = question.options.find(opt => opt.value === value);
-        if (selectedOption) {
-          nextStep = selectedOption.nextStepId;
-        }
       } else if (question?.nextStepId) {
         nextStep = question.nextStepId
+      } else if (question?.options) {
+        // Fallback for simple option-based steps if getNextStepId isn't defined
+        const selectedOption = question.options.find(opt => opt.value === value);
+        const questionFromOption = ALL_QUESTIONS[selectedOption?.value as string]
+        if(questionFromOption?.nextStepId) {
+          nextStep = questionFromOption.nextStepId
+        }
       }
     }
     

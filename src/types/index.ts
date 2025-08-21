@@ -9,7 +9,6 @@ export interface Option {
   value: string;
   label: string;
   icon?: LucideIcon;
-  nextStepId: string;
 }
 
 export interface Question {
@@ -18,8 +17,9 @@ export interface Question {
   description?: string;
   Icon: LucideIcon;
   options?: Option[];
-  component?: React.ComponentType<any>;
-  getNextStepId?: (value: string) => string;
+  fields?: string[];
+  nextStepId?: string;
+  getNextStepId?: (value: any) => string;
 }
 
 export type Questions = {
