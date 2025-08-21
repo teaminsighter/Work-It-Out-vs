@@ -5,6 +5,7 @@ import FinancialProtection from '@/components/FinancialProtection';
 import Services from '@/components/Services';
 import Benefits from '@/components/Benefits';
 import HowItWorks from '@/components/HowItWorks';
+import Testimonials from '@/components/Testimonials';
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <Services />
         <Benefits />
         <HowItWorks />
+        <Testimonials />
       </main>
     </FormProvider>
   );
