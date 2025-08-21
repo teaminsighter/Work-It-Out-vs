@@ -34,8 +34,7 @@ export default function QuoteWizard() {
   };
 
   return (
-    <div className="relative flex min-h-dvh w-full flex-col items-center justify-center p-0">
-      <div className="w-full max-w-3xl">
+    <div className="relative w-full max-w-3xl mx-auto">
         <AnimatePresence>
           {currentStepId !== 'start' && (
             <motion.div
@@ -59,7 +58,7 @@ export default function QuoteWizard() {
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.3, type: "tween" }}
             >
-              <div className="rounded-xl border bg-card/80 p-6 shadow-lg glassmorphism sm:p-8">
+              <div className="rounded-xl border bg-card/90 text-card-foreground p-6 shadow-2xl backdrop-blur-sm sm:p-8">
                 {renderStep()}
               </div>
             </motion.div>
@@ -70,10 +69,10 @@ export default function QuoteWizard() {
               variant="ghost"
               size="icon"
               onClick={goBack}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 rounded-full sm:-left-12"
+              className="absolute -left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white sm:-left-12"
               aria-label="Go back"
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-6 w-6 text-gray-700" />
             </Button>
           )}
            {currentStepId === 'results' && (
@@ -85,6 +84,5 @@ export default function QuoteWizard() {
           )}
         </div>
       </div>
-    </div>
   );
 }

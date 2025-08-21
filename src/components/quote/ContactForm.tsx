@@ -51,7 +51,7 @@ export default function ContactForm({ question }: ContactFormProps) {
   }
 
   return (
-    <div className="flex flex-col items-center text-center">
+    <div className="flex flex-col items-center text-center text-gray-800">
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -125,7 +125,7 @@ export default function ContactForm({ question }: ContactFormProps) {
             />
           )}
           
-          <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+          <Button type="submit" className="w-full">
             Continue
           </Button>
         </form>
