@@ -49,12 +49,11 @@ const itemVariants = {
 const HowItWorks = () => {
   return (
     <section 
-      className="text-white py-16 sm:py-24"
-      style={{ backgroundColor: '#69c1f7' }}
+      className="bg-white text-gray-900 py-16 sm:py-24"
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30 text-sm">ABOUT OUR PROCESS PROGRAMME</Badge>
+          <Badge className="mb-4 bg-primary/20 text-primary hover:bg-primary/30 text-sm">ABOUT OUR PROCESS PROGRAMME</Badge>
           <motion.h2 
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
@@ -75,7 +74,7 @@ const HowItWorks = () => {
           {/* Dashed lines for larger screens */}
           <div className="hidden md:block absolute top-1/2 left-0 w-full h-full">
             <div className="flex justify-center items-center h-full">
-                <div className="w-2/3 border-t-2 border-dashed border-white/50 absolute top-8"></div>
+                <div className="w-2/3 border-t-2 border-dashed border-gray-300 absolute top-8"></div>
             </div>
           </div>
           
@@ -85,11 +84,11 @@ const HowItWorks = () => {
                 className="flex flex-col items-center relative z-10"
                 variants={itemVariants}
             >
-              <div className="bg-white/20 p-4 rounded-full mb-4">
-                <step.icon className="h-10 w-10 text-white" />
+              <div className="bg-primary/10 p-4 rounded-full mb-4">
+                <step.icon className="h-10 w-10 text-primary" />
               </div>
               <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-              <p className="text-gray-200">{step.description}</p>
+              <p className="text-muted-foreground">{step.description}</p>
             </motion.div>
           ))}
         </motion.div>
