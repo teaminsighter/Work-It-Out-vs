@@ -9,7 +9,7 @@ import {
   ShieldOff,
   MapPin,
   FileText,
-  HeartHand,
+  HeartHandshake,
   CircleDollarSign,
   User,
   Calendar,
@@ -27,7 +27,7 @@ import {
   Building as BuildingIcon,
   ChevronsUp,
   CarFront,
-  Motorcycle,
+  Bike,
   Truck,
   Gem,
   CalendarClock,
@@ -102,7 +102,7 @@ export const ALL_QUESTIONS: Questions = {
     getNextStepId: () => 'vehicle-year',
     options: [
       { value: 'car', label: 'Car', icon: CarFront, nextStepId: '' },
-      { value: 'motorcycle', label: 'Motorcycle', icon: Motorcycle, nextStepId: '' },
+      { value: 'motorcycle', label: 'Motorcycle', icon: Bike, nextStepId: '' },
       { value: 'commercial', label: 'Commercial Vehicle', icon: Truck, nextStepId: '' },
     ],
   },
@@ -185,7 +185,7 @@ export const ALL_QUESTIONS: Questions = {
   'coverage-level': {
     id: 'coverage-level',
     question: 'What level of coverage do you prefer?',
-    Icon: HeartHand,
+    Icon: HeartHandshake,
     getNextStepId: (value) => (value === 'not-sure' ? 'coverage-recommendation' : 'excess-amount'),
     options: [
       { value: 'basic', label: 'Basic/Third Party', nextStepId: '' },
