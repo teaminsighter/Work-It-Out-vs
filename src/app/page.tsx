@@ -3,6 +3,7 @@ import Hero from '@/components/Hero';
 import Insurers from '@/components/Insurers';
 import FinancialProtection from '@/components/FinancialProtection';
 import Services from '@/components/Services';
+import Benefits from '@/components/Benefits';
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
         <Insurers />
         <FinancialProtection />
         <Services />
+        <Benefits />
       </main>
     </FormProvider>
   );
