@@ -128,7 +128,7 @@ export const ALL_QUESTIONS: Questions = {
   },
   'previous-claims': {
     id: 'previous-claims',
-    question: 'Have you made any claims in the last 5 years?',
+    question: 'Do you have an existing policy?',
     Icon: FileText,
     nextStepId: 'coverage-level',
     options: [
