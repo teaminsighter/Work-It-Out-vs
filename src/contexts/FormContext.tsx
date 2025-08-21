@@ -36,7 +36,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     if (questionId === 'start' && value === 'go') {
-        newFormData['insuranceType'] = value;
+        // Just moving to the first question, no data to set yet
     } else if (questionId === 'insurance-type') {
       newFormData['insuranceType'] = value;
     }
@@ -53,9 +53,8 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
         nextStep = question.nextStepId
       } else if (question?.options) {
         const selectedOption = question.options.find(opt => opt.value === value);
-        const questionFromOption = ALL_QUESTIONS[selectedOption?.value as string]
-        if(questionFromOption?.nextStepId) {
-          nextStep = questionFromOption.nextStepId
+        if (selectedOption?.nextStepId) {
+            nextStep = selectedOption.nextStepId;
         }
       }
     }

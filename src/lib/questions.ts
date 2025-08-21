@@ -1,4 +1,4 @@
-import type { Question, Questions } from '@/types';
+import type { Question, Questions, Option } from '@/types';
 import {
   Home,
   Car,
@@ -31,10 +31,6 @@ import {
   Truck,
   Gem,
   CalendarClock,
-  Briefcase,
-  Heart,
-  Activity,
-  UserCheck
 } from 'lucide-react';
 import ContactForm from '@/components/quote/ContactForm';
 import CoverageRecommendationStep from '@/components/quote/CoverageRecommendationStep';
@@ -50,15 +46,83 @@ export const ALL_QUESTIONS: Questions = {
   },
   'insurance-type': {
     id: 'insurance-type',
-    question: "What insurance do you need?",
-    description: "Select the primary type of coverage you're looking for.",
+    question: "What type of insurance do you need?",
+    description: "Select the main type of cover you're looking for.",
     Icon: ShieldQuestion,
+    options: [
+      { value: 'home', label: 'Home', icon: Home, nextStepId: 'home-property-type' },
+      { value: 'vehicle', label: 'Vehicle', icon: Car, nextStepId: 'vehicle-type' },
+      { value: 'business', label: 'Business', icon: Building2, nextStepId: 'business-type' },
+      { value: 'landlord', label: 'Landlord', icon: KeyRound, nextStepId: 'landlord-property-type' },
+    ],
+  },
+  'home-property-type': {
+    id: 'home-property-type',
+    question: 'What type of property is it?',
+    Icon: Home,
+    nextStepId: 'security-systems',
+    options: [
+      { value: 'house', label: 'House', icon: Home },
+      { value: 'apartment', label: 'Apartment', icon: Building },
+      { value: 'townhouse', label: 'Townhouse', icon: Hotel },
+      { value: 'unit', label: 'Unit/Flat', icon: BedDouble },
+    ],
+  },
+  'vehicle-type': {
+    id: 'vehicle-type',
+    question: 'What type of vehicle do you want to insure?',
+    Icon: Car,
+    nextStepId: 'vehicle-year',
+     options: [
+      { value: 'car', label: 'Car', icon: CarFront },
+      { value: 'motorcycle', label: 'Motorcycle', icon: Bike },
+      { value: 'truck', label: 'Truck/Ute', icon: Truck },
+      { value: 'other', label: 'Other', icon: ShieldQuestion },
+    ],
+  },
+   'vehicle-year': {
+    id: 'vehicle-year',
+    question: 'How old is the vehicle?',
+    Icon: Calendar,
+    nextStepId: 'security-systems',
+     options: [
+      { value: 'newer-3', label: '0-3 years old' },
+      { value: '3-10', label: '3-10 years old' },
+      { value: 'older-10', label: '10+ years old' },
+    ],
+  },
+  'business-type': {
+    id: 'business-type',
+    question: 'What is your business type?',
+    Icon: Building2,
+    nextStepId: 'security-systems',
+    options: [
+        { value: 'trades', label: 'Trades & Services', icon: Wrench },
+        { value: 'professional', label: 'Professional Services', icon: Laptop },
+        { value: 'retail', label: 'Retail', icon: BuildingIcon },
+        { value: 'other', label: 'Other' }
+    ]
+  },
+  'landlord-property-type': {
+    id: 'landlord-property-type',
+    question: 'What type of property do you rent out?',
+    Icon: KeyRound,
+    nextStepId: 'security-systems',
+    options: [
+      { value: 'house', label: 'House', icon: Home },
+      { value: 'apartment', label: 'Apartment', icon: Building },
+      { value: 'multi-unit', label: 'Multi-unit Dwelling', icon: ChevronsUp },
+    ],
+  },
+  'security-systems': {
+    id: 'security-systems',
+    question: 'Do you have security systems installed?',
+    description: 'Such as alarms, cameras, or deadbolts.',
+    Icon: ShieldCheck,
     nextStepId: 'previous-claims',
     options: [
-      { value: 'life-insurance', label: 'Life Insurance', icon: Heart },
-      { value: 'trauma-insurance', label: 'Trauma Insurance', icon: Activity },
-      { value: 'income-protection', label: 'Income Protection', icon: UserCheck },
-      { value: 'mortgage-protection', label: 'Mortgage Protection', icon: Home },
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
     ],
   },
   'previous-claims': {
@@ -124,6 +188,14 @@ export const ALL_QUESTIONS: Questions = {
       { value: '1-3-months', label: '1 - 3 months' },
       { value: 'researching', label: 'Just researching' },
     ],
+  },
+  'location': {
+    id: 'location',
+    question: 'What is your location?',
+    description: 'Please provide your postcode so we can find local deals.',
+    Icon: MapPin,
+    fields: ['postcode'],
+    nextStepId: 'contact-details',
   },
   'contact-details': {
     id: 'contact-details',

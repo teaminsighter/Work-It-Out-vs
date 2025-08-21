@@ -9,6 +9,7 @@ export interface Option {
   value: string;
   label: string;
   icon?: LucideIcon;
+  nextStepId?: string;
 }
 
 export interface Question {
