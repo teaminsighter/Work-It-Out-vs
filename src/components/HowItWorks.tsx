@@ -1,9 +1,11 @@
+
 'use client';
 
 import { FileText, ClipboardList, ThumbsUp } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { motion } from 'framer-motion';
+import { useForm } from '@/contexts/FormContext';
 
 const steps = [
   {
@@ -47,6 +49,7 @@ const itemVariants = {
 };
 
 const HowItWorks = () => {
+  const { scrollToWizard } = useForm();
   return (
     <section 
       className="bg-white text-gray-900 py-16 sm:py-24"
@@ -86,7 +89,7 @@ const HowItWorks = () => {
           ))}
         </motion.div>
         <div className="text-center mt-16">
-          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" onClick={scrollToWizard}>
             GET YOUR FREE QUOTE
           </Button>
         </div>

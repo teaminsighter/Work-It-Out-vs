@@ -1,3 +1,6 @@
+
+'use client';
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -5,22 +8,30 @@ import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { FormProvider } from '@/contexts/FormContext';
+import { useRef } from 'react';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
-export const metadata: Metadata = {
-  title: 'QuoteFlow Insurance',
-  description: 'Get your insurance quote in minutes.',
-};
+// Since we can't export metadata from a client component, we'll keep it separate.
+// In a real app, you might move this to a parent server component if needed.
+// export const metadata: Metadata = {
+//   title: 'QuoteFlow Insurance',
+//   description: 'Get your insurance quote in minutes.',
+// };
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const wizardRef = useRef<HTMLDivElement>(null);
+
   return (
     <html lang="en" suppressHydrationWarning>
        <head>
+        <title>QuoteFlow Insurance</title>
+        <meta name="description" content="Get your insurance quote in minutes." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -29,10 +40,14 @@ export default function RootLayout({
         />
       </head>
       <body className={cn('font-sans antialiased', inter.variable)}>
-        <Header />
-        {children}
-        <Toaster />
-        <Footer />
+        <FormProvider wizardRef={wizardRef}>
+          <Header />
+          <div id="wizard-ref-parent">
+            {children}
+          </div>
+          <Toaster />
+          <Footer />
+        </FormProvider>
       </body>
     </html>
   );

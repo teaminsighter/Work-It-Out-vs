@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -5,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Shield, Menu, X, Phone } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { useForm } from '@/contexts/FormContext';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { scrollToWizard } = useForm();
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -42,7 +45,7 @@ const Header = () => {
                 <Phone className="h-4 w-4" />
                 <span className="font-medium">0800 123 456</span>
              </a>
-            <Button>Get Quote</Button>
+            <Button onClick={scrollToWizard}>Get Quote</Button>
           </div>
 
           <div className="md:hidden">
@@ -76,7 +79,7 @@ const Header = () => {
                 <Phone className="h-4 w-4" />
                 <span className="font-medium">0800 123 456</span>
              </a>
-            <Button className="w-full mt-2">Get Quote</Button>
+            <Button className="w-full mt-2" onClick={() => { scrollToWizard(); setIsOpen(false); }}>Get Quote</Button>
         </div>
       </div>
     </header>

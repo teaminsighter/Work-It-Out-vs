@@ -1,6 +1,11 @@
+
+'use client';
+
 import { Button } from './ui/button';
+import { useForm } from '@/contexts/FormContext';
 
 const CTA = () => {
+  const { scrollToWizard } = useForm();
   return (
     <section className="bg-white py-16 sm:py-24">
       <div className="container mx-auto px-4">
@@ -14,7 +19,7 @@ const CTA = () => {
           <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
             Start your comparison now and join thousands of Kiwis who have found better coverage for less. It's fast, free, and there's no obligation.
           </p>
-          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" onClick={scrollToWizard}>
             GET YOUR FREE QUOTE TODAY
           </Button>
         </div>

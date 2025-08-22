@@ -1,4 +1,8 @@
-import { FormProvider } from '@/contexts/FormContext';
+
+'use client';
+
+import { useEffect, useRef } from 'react';
+import { useForm } from '@/contexts/FormContext';
 import Hero from '@/components/Hero';
 import Insurers from '@/components/Insurers';
 import FinancialProtection from '@/components/FinancialProtection';
@@ -9,10 +13,18 @@ import Testimonials from '@/components/Testimonials';
 import CTA from '@/components/CTA';
 
 export default function Home() {
+  const { setQuoteWizardRef } = useForm();
+  const quoteWizardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setQuoteWizardRef(quoteWizardRef);
+  }, [setQuoteWizardRef]);
+
   return (
-    <FormProvider>
       <main className="w-full text-foreground bg-white">
-        <Hero />
+        <div ref={quoteWizardRef}>
+          <Hero />
+        </div>
         <Insurers />
         <FinancialProtection />
         <Services />
@@ -21,6 +33,5 @@ export default function Home() {
         <Testimonials />
         <CTA />
       </main>
-    </FormProvider>
   );
 }
