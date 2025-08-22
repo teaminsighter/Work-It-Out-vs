@@ -37,6 +37,12 @@ export const FormProvider: React.FC<{ children: React.ReactNode, wizardRef?: Rea
 
   const scrollToWizard = () => {
     quoteWizardRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    setStepHistory(prev => {
+        if (prev[prev.length - 1] === 'start') {
+            return ['start', 'insurance-type'];
+        }
+        return prev;
+    });
   };
 
   const handleAnswer = (questionId: string, value: any, nextStepId?: string) => {
