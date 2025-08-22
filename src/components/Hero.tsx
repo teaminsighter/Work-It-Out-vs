@@ -1,17 +1,13 @@
+
 'use client';
 
-import { useRef } from 'react';
 import QuoteWizard from '@/components/quote/QuoteWizard';
 import { ShieldCheck } from 'lucide-react';
 import { Button } from './ui/button';
-import Image from 'next/image';
+import { useForm } from '@/contexts/FormContext';
 
 const Hero = () => {
-  const quoteWizardRef = useRef<HTMLDivElement>(null);
-
-  const scrollToWizard = () => {
-    quoteWizardRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const { scrollToWizard, quoteWizardRef } = useForm();
 
   return (
     <section
