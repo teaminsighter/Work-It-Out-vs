@@ -1,9 +1,18 @@
+'use client';
+
+import { useRef } from 'react';
 import QuoteWizard from '@/components/quote/QuoteWizard';
 import { ShieldCheck } from 'lucide-react';
 import { Button } from './ui/button';
 import Image from 'next/image';
 
 const Hero = () => {
+  const quoteWizardRef = useRef<HTMLDivElement>(null);
+
+  const scrollToWizard = () => {
+    quoteWizardRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section
       className="relative w-full pt-40 pb-16 md:pt-48 md:pb-24 lg:pt-56 lg:pb-32"
@@ -37,9 +46,9 @@ const Hero = () => {
                 <span>Trusted by thousands of Kiwis</span>
               </li>
             </ul>
-             <Button size="lg" className="mt-8 bg-primary hover:bg-primary/90">Get Your Quote</Button>
+             <Button size="lg" className="mt-8 bg-primary hover:bg-primary/90" onClick={scrollToWizard}>Get Your Quote</Button>
           </div>
-          <div>
+          <div ref={quoteWizardRef}>
             <QuoteWizard />
           </div>
         </div>
