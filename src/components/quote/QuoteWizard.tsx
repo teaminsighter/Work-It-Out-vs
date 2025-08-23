@@ -2,7 +2,6 @@
 
 import { useForm } from '@/contexts/FormContext';
 import { ALL_QUESTIONS } from '@/lib/questions';
-import WelcomeStep from './WelcomeStep';
 import QuestionStep from './QuestionStep';
 import ResultsPage from './ResultsPage';
 import ProgressBar from './ProgressBar';
@@ -20,9 +19,6 @@ export default function QuoteWizard() {
   const isFirstStep = stepHistory.length <= 1;
 
   const renderStep = () => {
-    if (currentStepId === 'start') {
-      return <WelcomeStep />;
-    }
     if (currentStepId === 'results') {
       return <ResultsPage />;
     }

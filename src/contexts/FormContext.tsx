@@ -24,7 +24,7 @@ const FormContext = createContext<FormContextType | undefined>(undefined);
 
 export const FormProvider: React.FC<{ children: React.ReactNode, wizardRef?: React.RefObject<HTMLDivElement> }> = ({ children, wizardRef }) => {
   const [formData, setFormData] = useState<FormData>({});
-  const [stepHistory, setStepHistory] = useState<string[]>(['start']);
+  const [stepHistory, setStepHistory] = useState<string[]>(['insurance-type']);
   const [totalSteps, setTotalSteps] = useState(TOTAL_STEPS_ESTIMATE);
   const [quoteWizardRef, setQuoteWizardRefState] = useState<React.RefObject<HTMLDivElement> | null>(wizardRef || null);
   const { toast } = useToast();
@@ -37,12 +37,6 @@ export const FormProvider: React.FC<{ children: React.ReactNode, wizardRef?: Rea
 
   const scrollToWizard = () => {
     quoteWizardRef?.current?.scrollIntoView({ behavior: 'smooth' });
-    setStepHistory(prev => {
-        if (prev[prev.length - 1] === 'start') {
-            return ['start', 'insurance-type'];
-        }
-        return prev;
-    });
   };
 
   const handleAnswer = (questionId: string, value: any, nextStepId?: string) => {
