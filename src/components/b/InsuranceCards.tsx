@@ -8,17 +8,17 @@ import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
 const insuranceOptions = [
-  { value: 'life', label: 'Life Insurance', icon: Heart },
-  { value: 'health', label: 'Health Insurance', icon: Shield },
-  { value: 'home', label: 'Home Insurance', icon: Home },
-  { value: 'vehicle', label: 'Car Insurance', icon: Car },
+  { value: 'life', label: 'Life Insurance', icon: Heart, nextStepId: 'security-systems' },
+  { value: 'health', label: 'Health Insurance', icon: Shield, nextStepId: 'security-systems' },
+  { value: 'home', label: 'Home Insurance', icon: Home, nextStepId: 'home-property-type' },
+  { value: 'vehicle', label: 'Car Insurance', icon: Car, nextStepId: 'vehicle-type' },
 ];
 
 const InsuranceCards = () => {
   const { handleAnswer } = useForm();
 
-  const onOptionSelect = (value: string) => {
-    handleAnswer('insurance-type', value, 'security-systems');
+  const onOptionSelect = (value: string, nextStepId: string) => {
+    handleAnswer('insurance-type', value, nextStepId);
   };
 
   return (
@@ -43,7 +43,7 @@ const InsuranceCards = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
                     <Card
-                    onClick={() => onOptionSelect(option.value)}
+                    onClick={() => onOptionSelect(option.value, option.nextStepId)}
                     className={cn(
                         'group relative text-center p-6 rounded-xl shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-2 hover:shadow-2xl',
                         index === 2 ? 'bg-teal-400 text-white' : 'bg-white hover:bg-gray-50'
@@ -66,4 +66,3 @@ const InsuranceCards = () => {
 };
 
 export default InsuranceCards;
-
