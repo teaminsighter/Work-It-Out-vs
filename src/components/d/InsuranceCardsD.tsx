@@ -55,7 +55,7 @@ const InsuranceCardsD = () => {
     <section>
       <div className="container mx-auto px-4">
         <motion.div 
-            className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-3 gap-4 items-center"
+            className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-3 gap-2 md:gap-3 items-center"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -70,7 +70,7 @@ const InsuranceCardsD = () => {
               <Card
                 onClick={() => onOptionSelect(option.value, option.nextStepId)}
                 className={cn(
-                  'group flex flex-col items-center justify-center text-center p-2 md:p-4 aspect-square rounded-2xl shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-2xl',
+                  'group flex flex-col items-center justify-center text-center p-2 md:p-3 aspect-square rounded-xl shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-2xl',
                   option.value === 'home'
                     ? 'bg-teal-400 text-white'
                     : 'bg-white hover:bg-gray-50'
@@ -78,7 +78,7 @@ const InsuranceCardsD = () => {
               >
                 <div
                   className={cn(
-                    'p-1.5 md:p-2 rounded-lg mb-2 transition-colors',
+                    'p-1 md:p-1.5 rounded-md mb-1 transition-colors',
                     option.value === 'home'
                       ? 'bg-white/20'
                       : 'bg-teal-100/30 group-hover:bg-teal-100/60'
@@ -86,12 +86,12 @@ const InsuranceCardsD = () => {
                 >
                   <option.icon
                     className={cn(
-                      'h-4 w-4 md:h-6 md:w-6 transition-colors',
+                      'h-3 w-3 md:h-4 md:w-4 transition-colors',
                       option.value === 'home' ? 'text-white' : 'text-teal-500'
                     )}
                   />
                 </div>
-                <h3 className="font-semibold text-xs md:text-base">{option.label}</h3>
+                <h3 className="font-semibold text-[10px] md:text-xs">{option.label}</h3>
               </Card>
             </motion.div>
           ))}
@@ -100,10 +100,10 @@ const InsuranceCardsD = () => {
             variants={itemVariants}
             className="md:col-span-2 md:col-start-2 row-start-2 md:row-start-2 text-center px-4"
           >
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+              <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                   Get best insurance deals from us
               </h2>
-              <p className="mt-2 text-base leading-7 text-gray-600">
+              <p className="mt-1 text-xs md:text-sm leading-7 text-gray-600">
                   Best Insurance helps you to get the best insurance quotes fast and easily.
               </p>
           </motion.div>
