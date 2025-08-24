@@ -71,26 +71,13 @@ const InsuranceCardsC = () => {
             >
               <Card
                 onClick={() => onOptionSelect(option.value, option.nextStepId)}
-                className={cn(
-                  'group flex flex-col items-center justify-center text-center p-2 md:p-4 aspect-square rounded-2xl shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-2xl',
-                  option.value === 'home'
-                    ? 'bg-teal-400 text-white'
-                    : 'bg-white hover:bg-gray-50'
-                )}
+                className='group flex flex-col items-center justify-center text-center p-2 md:p-4 aspect-square rounded-2xl shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-2xl bg-white hover:bg-gray-50'
               >
                 <div
-                  className={cn(
-                    'p-1.5 md:p-2 rounded-lg mb-2 transition-colors',
-                    option.value === 'home'
-                      ? 'bg-white/20'
-                      : 'bg-teal-100/30 group-hover:bg-teal-100/60'
-                  )}
+                  className='p-1.5 md:p-2 rounded-lg mb-2 transition-colors bg-teal-100/30 group-hover:bg-teal-100/60'
                 >
                   <option.icon
-                    className={cn(
-                      'h-4 w-4 md:h-6 md:w-6 transition-colors',
-                      option.value === 'home' ? 'text-white' : 'text-teal-500'
-                    )}
+                    className='h-4 w-4 md:h-6 md:w-6 transition-colors text-teal-500'
                   />
                 </div>
                 <h3 className="font-semibold text-xs md:text-base">{option.label}</h3>
