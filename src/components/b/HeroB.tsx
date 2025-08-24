@@ -46,7 +46,7 @@ const HeroB = () => {
                     <div className="h-3 bg-gray-200/70 rounded-full w-5/6"></div>
                 </div>
               </Card>
-               <Card className="p-4 bg-teal-400/70 backdrop-blur-md border-white/70 shadow-xl w-60 h-24 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+               <Card className="p-4 bg-teal-400/70 backdrop-blur-md border-white/70 shadow-xl w-60 h-24 absolute top-[20%] left-[40%] -translate-x-1/2 -translate-y-1/2 z-10">
                  <div className="h-3 bg-white/50 rounded-full w-full mt-2"></div>
                  <div className="h-3 bg-white/50 rounded-full w-3/4 mt-2"></div>
               </Card>
