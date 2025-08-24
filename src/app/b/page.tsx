@@ -23,9 +23,11 @@ export default function BPage() {
 
   return (
       <main className="w-full text-foreground bg-white">
-        <HeroB />
-        <div ref={quoteWizardRef}>
-            <InsuranceCards />
+        <div className="relative">
+          <HeroB />
+          <div ref={quoteWizardRef} className="relative z-10 -mt-24 sm:-mt-32 md:-mt-48">
+              <InsuranceCards />
+          </div>
         </div>
         <Insurers />
         <FinancialProtection />
