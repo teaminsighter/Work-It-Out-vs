@@ -11,7 +11,10 @@ const HeroB = () => {
 
   return (
     <div className="relative w-full overflow-hidden bg-white">
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-400 via-blue-500 to-blue-600"></div>
+      <div 
+        className="absolute inset-0 bg-gradient-to-r from-purple-400 via-blue-500 to-blue-600"
+        style={{ clipPath: 'polygon(0 0, 100% 0, 100% 75%, 0 100%)' }}
+      ></div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start min-h-screen pt-40 pb-12">
