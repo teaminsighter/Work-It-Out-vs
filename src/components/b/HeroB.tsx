@@ -38,11 +38,24 @@ const HeroB = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <motion.div
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                whileHover={{ scale: 1.1, boxShadow: "0px 0px 20px rgba(96, 165, 250, 0.7)" }}
+              >
+                <Card className="p-4 bg-white/30 backdrop-blur-md border-white/40 shadow-lg w-80 h-40 absolute top-[-35%] left-[20%] rotate-[-10deg]">
+                    <p className="font-semibold text-gray-800">Your Coverage</p>
+                    <div className="space-y-2 mt-2">
+                        <div className="h-3 bg-gray-200/70 rounded-full w-full"></div>
+                        <div className="h-3 bg-gray-200/70 rounded-full w-5/6"></div>
+                    </div>
+                </Card>
+              </motion.div>
+              <motion.div
                 animate={{ y: [0, 15, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 whileHover={{ scale: 1.1, boxShadow: "0px 0px 20px rgba(45, 212, 191, 0.7)" }}
               >
-                 <Card className="p-4 bg-teal-400/70 backdrop-blur-md border-white/70 shadow-xl w-60 h-24 absolute top-[5%] left-[5%] z-10">
+                 <Card className="p-4 bg-teal-400/70 backdrop-blur-md border-white/70 shadow-xl w-60 h-24 absolute top-[5%] left-[55%] z-10">
                    <div className="h-3 bg-white/50 rounded-full w-full mt-2"></div>
                    <div className="h-3 bg-white/50 rounded-full w-3/4 mt-2"></div>
                 </Card>
