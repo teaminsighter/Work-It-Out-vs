@@ -10,12 +10,7 @@ const HeroB = () => {
   const { scrollToWizard } = useForm();
 
   return (
-    <div className="relative w-full overflow-hidden bg-white">
-      <div 
-        className="absolute inset-0 bg-gradient-to-r from-purple-400 via-blue-500 to-blue-600"
-        style={{ clipPath: 'polygon(0 0, 100% 0, 100% 75%, 0 100%)' }}
-      ></div>
-      
+    <div className="relative w-full overflow-hidden bg-gradient-to-r from-purple-400 via-blue-500 to-blue-600">
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start min-h-screen pt-40 pb-12">
           
@@ -49,7 +44,7 @@ const HeroB = () => {
                     <div className="h-3 bg-gray-200/70 rounded-full w-5/6"></div>
                 </div>
               </Card>
-               <Card className="p-4 bg-teal-400/70 backdrop-blur-md border-white/70 shadow-xl w-60 h-24 absolute top-[25%] left-1/4 z-10">
+               <Card className="p-4 bg-teal-400/70 backdrop-blur-md border-white/70 shadow-xl w-60 h-24 absolute top-[5%] left-[60%] z-10">
                  <div className="h-3 bg-white/50 rounded-full w-full mt-2"></div>
                  <div className="h-3 bg-white/50 rounded-full w-3/4 mt-2"></div>
               </Card>
