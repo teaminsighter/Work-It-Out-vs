@@ -47,7 +47,7 @@ const InsuranceCardsD = () => {
     "md:row-start-3 md:col-start-2", // Liability
     "md:row-start-1 md:col-start-4", // Car
     "md:row-start-2 md:col-start-4", // Education
-    "md:row-start-3 md:col-start-3", // Travel
+    "md:row-start-1 md:col-start-3", // Travel
     "md:row-start-3 md:col-start-4", // Health
   ];
 
