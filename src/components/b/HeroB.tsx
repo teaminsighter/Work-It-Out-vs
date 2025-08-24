@@ -50,7 +50,7 @@ const HeroB = () => {
                  <div className="h-3 bg-white/50 rounded-full w-full mt-2"></div>
                  <div className="h-3 bg-white/50 rounded-full w-3/4 mt-2"></div>
               </Card>
-              <Card className="p-4 bg-white/30 backdrop-blur-md border-white/40 shadow-lg w-80 h-40 absolute bottom-[35%] right-0 translate-x-1/4 rotate-[8deg]">
+              <Card className="p-4 bg-white/30 backdrop-blur-md border-white/40 shadow-lg w-80 h-40 absolute bottom-[45%] right-0 translate-x-1/4 rotate-[8deg]">
                 <p className="font-semibold text-gray-800">Premium Details</p>
                 <div className="space-y-2 mt-2">
                     <div className="h-3 bg-gray-200/70 rounded-full w-full"></div>
