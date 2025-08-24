@@ -52,7 +52,7 @@ const InsuranceCards = () => {
   ];
 
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section className="bg-white pt-8 pb-16 sm:pb-24">
       <div className="container mx-auto px-4">
         <motion.div 
             className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-3 gap-4 items-center"
