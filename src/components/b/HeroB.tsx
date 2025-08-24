@@ -39,7 +39,7 @@ const HeroB = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <Card className="p-4 bg-white/30 backdrop-blur-md border-white/40 shadow-lg w-80 h-40 absolute top-[10%] left-0 -translate-x-1/4 rotate-[-10deg]">
+              <Card className="p-4 bg-white/30 backdrop-blur-md border-white/40 shadow-lg w-80 h-40 absolute top-[10%] left-0 rotate-[-10deg]">
                 <p className="font-semibold text-gray-800">Your Coverage</p>
                 <div className="space-y-2 mt-2">
                     <div className="h-3 bg-gray-200/70 rounded-full w-full"></div>
