@@ -14,7 +14,7 @@ const HeroB = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-purple-400 via-blue-500 to-blue-600"></div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-screen pt-24 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start min-h-screen pt-40 pb-12">
           
           <motion.div 
             className="text-white"
