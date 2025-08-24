@@ -40,6 +40,7 @@ const HeroB = () => {
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                whileHover={{ scale: 1.1, boxShadow: "0px 0px 20px rgba(255, 255, 255, 0.7)" }}
               >
                 <Card className="p-4 bg-white/30 backdrop-blur-md border-white/40 shadow-lg w-80 h-40 absolute top-[-5%] left-[20%] rotate-[-10deg]">
                   <p className="font-semibold text-gray-800">Your Coverage</p>
@@ -52,6 +53,7 @@ const HeroB = () => {
               <motion.div
                 animate={{ y: [0, 15, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                whileHover={{ scale: 1.1, boxShadow: "0px 0px 20px rgba(255, 255, 255, 0.7)" }}
               >
                  <Card className="p-4 bg-teal-400/70 backdrop-blur-md border-white/70 shadow-xl w-60 h-24 absolute top-[5%] left-[5%] z-10">
                    <div className="h-3 bg-white/50 rounded-full w-full mt-2"></div>
@@ -61,6 +63,7 @@ const HeroB = () => {
               <motion.div
                 animate={{ y: [0, -12, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                whileHover={{ scale: 1.1, boxShadow: "0px 0px 20px rgba(255, 255, 255, 0.7)" }}
               >
                 <Card className="p-4 bg-white/30 backdrop-blur-md border-white/40 shadow-lg w-80 h-40 absolute bottom-[45%] right-0 translate-x-1/4 rotate-[8deg]">
                   <p className="font-semibold text-gray-800">Premium Details</p>
