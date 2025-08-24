@@ -3,7 +3,7 @@
 
 import { Card } from '@/components/ui/card';
 import { useForm } from '@/contexts/FormContext';
-import { Home, Heart, Shield, Car, Umbrella, BookOpen, Plane, Layers } from 'lucide-react';
+import { Home, Heart, Shield, Car, Umbrella, BookOpen, Plane, Layers, Landmark } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
@@ -16,6 +16,7 @@ const insuranceOptions = [
   { value: 'education', label: 'Education Insurance', icon: BookOpen, nextStepId: 'security-systems' },
   { value: 'travel', label: 'Travel Insurance', icon: Plane, nextStepId: 'security-systems' },
   { value: 'health', label: 'Health Insurance', icon: Shield, nextStepId: 'security-systems' },
+  { value: 'mortgage', label: 'Mortgage', icon: Landmark, nextStepId: 'security-systems' },
 ];
 
 const containerVariants = {
@@ -49,10 +50,11 @@ const InsuranceCards = () => {
     "md:row-start-2 md:col-start-4", // Education
     "md:row-start-3 md:col-start-3", // Travel
     "md:row-start-3 md:col-start-4", // Health
+    "md:row-start-1 md:col-start-3", // Mortgage
   ];
 
   return (
-    <section className="pt-8 pb-16 sm:pb-24">
+    <section className="py-8 sm:py-12">
       <div className="container mx-auto px-4">
         <motion.div 
             className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-3 gap-4 items-center"
