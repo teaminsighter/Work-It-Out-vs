@@ -13,19 +13,11 @@ import { useRef } from 'react';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
-// Since we can't export metadata from a client component, we'll keep it separate.
-// In a real app, you might move this to a parent server component if needed.
-// export const metadata: Metadata = {
-//   title: 'QuoteFlow Insurance',
-//   description: 'Get your insurance quote in minutes.',
-// };
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const wizardRef = useRef<HTMLDivElement>(null);
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -40,7 +32,7 @@ export default function RootLayout({
         />
       </head>
       <body className={cn('font-sans antialiased', inter.variable)}>
-        <FormProvider wizardRef={wizardRef}>
+        <FormProvider>
           <Header />
           <div id="wizard-ref-parent">
             {children}

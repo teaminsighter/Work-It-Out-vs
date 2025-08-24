@@ -22,11 +22,11 @@ interface FormContextType {
 
 const FormContext = createContext<FormContextType | undefined>(undefined);
 
-export const FormProvider: React.FC<{ children: React.ReactNode, wizardRef?: React.RefObject<HTMLDivElement> }> = ({ children, wizardRef }) => {
+export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [formData, setFormData] = useState<FormData>({});
   const [stepHistory, setStepHistory] = useState<string[]>(['insurance-type']);
   const [totalSteps, setTotalSteps] = useState(TOTAL_STEPS_ESTIMATE);
-  const [quoteWizardRef, setQuoteWizardRefState] = useState<React.RefObject<HTMLDivElement> | null>(wizardRef || null);
+  const [quoteWizardRef, setQuoteWizardRefState] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const { toast } = useToast();
 
   const currentStepId = useMemo(() => stepHistory[stepHistory.length - 1], [stepHistory]);
@@ -36,11 +36,14 @@ export const FormProvider: React.FC<{ children: React.ReactNode, wizardRef?: Rea
   }
 
   const scrollToWizard = () => {
-    quoteWizardRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    quoteWizardRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if(stepHistory.length > 0 && stepHistory[stepHistory.length -1 ] !== 'insurance-type') {
+         setStepHistory(['insurance-type']);
+    }
   };
 
   const handleAnswer = (questionId: string, value: any, nextStepId?: string) => {
-    const newFormData = { ...formData, [questionId]: value };
+    const newFormData = { ...formData };
     
     if (typeof value === 'object' && value !== null) {
       Object.assign(newFormData, value);
@@ -67,7 +70,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, wizardRef?: Rea
       } else if (question?.options) {
         const selectedOption = question.options.find(opt => opt.value === value);
         if (selectedOption?.nextStepId) {
-            nextStep = selectedOption.nextStepId;
+            nextStep = selected.nextStepId;
         }
       }
     }

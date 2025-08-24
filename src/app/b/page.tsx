@@ -3,7 +3,8 @@
 
 import { useEffect, useRef } from 'react';
 import { useForm } from '@/contexts/FormContext';
-import Hero from '@/components/Hero';
+import HeroB from '@/components/b/HeroB';
+import InsuranceCards from '@/components/b/InsuranceCards';
 import Insurers from '@/components/Insurers';
 import FinancialProtection from '@/components/FinancialProtection';
 import Services from '@/components/Services';
@@ -22,8 +23,9 @@ export default function BPage() {
 
   return (
       <main className="w-full text-foreground bg-white">
+        <HeroB />
         <div ref={quoteWizardRef}>
-          <Hero />
+            <InsuranceCards />
         </div>
         <Insurers />
         <FinancialProtection />
