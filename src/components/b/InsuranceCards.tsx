@@ -55,7 +55,7 @@ const InsuranceCards = () => {
     <section className="bg-white py-16 sm:py-24">
       <div className="container mx-auto px-4">
         <motion.div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center"
+            className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-3 gap-4 items-center"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -70,7 +70,7 @@ const InsuranceCards = () => {
               <Card
                 onClick={() => onOptionSelect(option.value, option.nextStepId)}
                 className={cn(
-                  'group flex flex-col items-center justify-center text-center p-2 aspect-square rounded-2xl shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-2xl',
+                  'group flex flex-col items-center justify-center text-center p-2 md:p-4 aspect-square rounded-2xl shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-2xl',
                   option.value === 'home'
                     ? 'bg-teal-400 text-white'
                     : 'bg-white hover:bg-gray-50'
@@ -78,7 +78,7 @@ const InsuranceCards = () => {
               >
                 <div
                   className={cn(
-                    'p-1.5 rounded-lg mb-2 transition-colors',
+                    'p-1.5 md:p-2 rounded-lg mb-2 transition-colors',
                     option.value === 'home'
                       ? 'bg-white/20'
                       : 'bg-teal-100/30 group-hover:bg-teal-100/60'
@@ -86,12 +86,12 @@ const InsuranceCards = () => {
                 >
                   <option.icon
                     className={cn(
-                      'h-5 w-5 transition-colors',
+                      'h-4 w-4 md:h-6 md:w-6 transition-colors',
                       option.value === 'home' ? 'text-white' : 'text-teal-500'
                     )}
                   />
                 </div>
-                <h3 className="font-semibold text-sm">{option.label}</h3>
+                <h3 className="font-semibold text-xs md:text-base">{option.label}</h3>
               </Card>
             </motion.div>
           ))}
