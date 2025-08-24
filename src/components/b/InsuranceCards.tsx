@@ -41,21 +41,21 @@ const InsuranceCards = () => {
   };
   
   const gridPositions = [
-    "row-start-1 col-start-2",
-    "row-start-2 col-start-1",
-    "row-start-2 col-start-2",
-    "row-start-3 col-start-2",
-    "row-start-2 col-start-4",
-    "row-start-3 col-start-4",
-    "row-start-4 col-start-3",
-    "row-start-4 col-start-5",
+    "md:row-start-1 md:col-start-1", // Life
+    "md:row-start-2 md:col-start-1", // General
+    "md:row-start-1 md:col-start-2 md:row-span-2", // Home
+    "md:row-start-3 md:col-start-2", // Liability
+    "md:row-start-1 md:col-start-4", // Car
+    "md:row-start-2 md:col-start-4", // Education
+    "md:row-start-3 md:col-start-3", // Travel
+    "md:row-start-3 md:col-start-4", // Health
   ];
 
   return (
     <section className="bg-white py-16 sm:py-24">
       <div className="container mx-auto px-4">
         <motion.div 
-            className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center"
+            className="grid grid-cols-1 md:grid-cols-4 gap-8 items-center"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -98,7 +98,7 @@ const InsuranceCards = () => {
           
           <motion.div 
             variants={itemVariants}
-            className="md:col-span-2 md:col-start-3 row-start-3 md:row-start-2 text-center md:text-left"
+            className="md:col-span-2 md:col-start-2 row-start-2 md:row-start-2 text-center"
           >
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                   Get best insurance deals from us
@@ -115,5 +115,3 @@ const InsuranceCards = () => {
 };
 
 export default InsuranceCards;
-
-    
