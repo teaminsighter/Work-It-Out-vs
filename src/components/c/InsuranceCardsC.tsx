@@ -11,8 +11,8 @@ const insuranceOptions = [
   { value: 'life', label: 'Life Insurance', icon: Heart, nextStepId: 'security-systems' },
   { value: 'general', label: 'General Insurance', icon: Umbrella, nextStepId: 'security-systems' },
   { value: 'home', label: 'Home Insurance', icon: Home, nextStepId: 'home-property-type' },
-  { value: 'mortgage', label: 'Mortgage', icon: Landmark, nextStepId: 'security-systems' },
   { value: 'liability', label: 'Liability Insurance', icon: Layers, nextStepId: 'security-systems' },
+  { value: 'mortgage', label: 'Mortgage', icon: Landmark, nextStepId: 'security-systems' },
   { value: 'car', label: 'Car Insurance', icon: Car, nextStepId: 'vehicle-type' },
   { value: 'education', label: 'Education Insurance', icon: BookOpen, nextStepId: 'security-systems' },
   { value: 'travel', label: 'Travel Insurance', icon: Plane, nextStepId: 'security-systems' },
@@ -45,12 +45,12 @@ const InsuranceCardsC = () => {
     "md:row-start-1 md:col-start-1", // Life
     "md:row-start-2 md:col-start-1", // General
     "md:row-start-1 md:col-start-2 md:row-span-2", // Home
-    "md:row-start-3 md:col-start-2", // Mortgage
-    "md:row-start-3 md:col-start-3", // Liability
+    "md:row-start-3 md:col-start-2", // Liability
+    "md:row-start-1 md:col-start-3", // Mortgage
     "md:row-start-1 md:col-start-4", // Car
     "md:row-start-2 md:col-start-4", // Education
     "md:row-start-3 md:col-start-4", // Travel
-    "md:row-start-1 md:col-start-3", // Health
+    "md:row-start-3 md:col-start-3", // Health
   ];
 
   return (
