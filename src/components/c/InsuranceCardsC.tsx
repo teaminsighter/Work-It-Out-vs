@@ -46,7 +46,7 @@ const InsuranceCardsC = () => {
     "md:row-start-2 md:col-start-1", // General
     "md:row-start-1 md:col-start-2 md:row-span-2", // Home
     "md:row-start-3 md:col-start-2", // Liability
-    "md:row-start-1 md:col-start-3", // Mortgage
+    "md:row-start-2 md:col-start-3", // Mortgage
     "md:row-start-1 md:col-start-4", // Car
     "md:row-start-2 md:col-start-4", // Education
     "md:row-start-3 md:col-start-4", // Travel
@@ -100,7 +100,7 @@ const InsuranceCardsC = () => {
           
           <motion.div 
             variants={itemVariants}
-            className="md:col-span-2 md:col-start-2 row-start-2 md:row-start-2 text-center px-4"
+            className="md:col-start-1 md:col-span-2 md:row-start-3 text-center px-4"
           >
               <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                   Get best insurance deals from us
