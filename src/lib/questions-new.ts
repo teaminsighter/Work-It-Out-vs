@@ -58,7 +58,8 @@ export const ALL_QUESTIONS: Questions = {
       { value: 'life', label: 'Life Insurance', icon: Heart, nextStepId: 'security-systems' },
       { value: 'trauma', label: 'Trauma Insurance', icon: Activity, nextStepId: 'security-systems' },
       { value: 'income', label: 'Income Protection', icon: FileDigit, nextStepId: 'security-systems' },
-      { value: 'mortgage', label: 'Mortgage Protection', icon: Home, nextStepId: 'security-systems' },
+      { value: 'mortgage', label: 'Mortgage Protection', icon: Landmark, nextStepId: 'security-systems' },
+      { value: 'home', label: 'Home Insurance', icon: Home, nextStepId: 'home-property-type' },
     ],
   },
   'home-property-type': {
