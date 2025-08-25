@@ -45,10 +45,10 @@ export default function QuestionStep({ question }: QuestionStepProps) {
       
       <motion.div 
         className={cn(
-          "mt-6 grid w-full gap-3",
+          "mt-6 w-full",
           isInsuranceTypeStep 
-            ? "grid-cols-3 max-w-md"
-            : "grid-cols-1 max-w-sm"
+            ? "flex flex-wrap justify-center gap-3 max-w-md"
+            : "grid grid-cols-1 max-w-sm gap-3"
         )}
         variants={containerVariants}
         initial="hidden"
@@ -60,8 +60,9 @@ export default function QuestionStep({ question }: QuestionStepProps) {
             option={option}
             onClick={() => onOptionSelect(option.value, option.nextStepId)}
             className={cn(
-              isInsuranceTypeStep && index > 2 ? "col-start-2" : "",
-              isInsuranceTypeStep ? "p-3 aspect-square text-xs sm:text-sm" : ""
+              isInsuranceTypeStep 
+                ? "p-3 aspect-square text-xs sm:text-sm w-[calc(33.33%-0.75rem)]" 
+                : ""
             )}
           />
         ))}
