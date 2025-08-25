@@ -76,6 +76,12 @@ body {
     border: 1px solid hsla(0, 0%, 100%, 0.1);
   }
 
+  .glass-green {
+    background: rgba(74, 222, 128, 0.2); /* green-400 with 20% opacity */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+  }
+
   .teal-gradient {
     background: linear-gradient(45deg, hsl(177, 68%, 41%), hsl(177, 80%, 60%));
   }

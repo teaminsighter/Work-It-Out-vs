@@ -30,6 +30,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
   };
 
   const isGalleryView = id === 'insurance-type' || id === 'security-systems' || id === 'previous-claims';
+  const isInsuranceType = id === 'insurance-type';
 
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
@@ -46,8 +47,10 @@ export default function QuestionStep({ question }: QuestionStepProps) {
       <motion.div 
         className={cn(
           "mt-6 w-full",
-          isGalleryView
+          isInsuranceType
             ? "flex flex-wrap justify-center gap-3 max-w-md"
+            : isGalleryView
+            ? "flex flex-wrap justify-center gap-3 max-w-sm"
             : "grid grid-cols-1 max-w-sm gap-3"
         )}
         variants={containerVariants}
@@ -60,9 +63,12 @@ export default function QuestionStep({ question }: QuestionStepProps) {
             option={option}
             onClick={() => onOptionSelect(option.value, option.nextStepId)}
             className={cn(
-              isGalleryView
+              isInsuranceType
+                ? "p-3 aspect-square text-xs sm:text-sm w-[calc(33.33%-0.75rem)]"
+                : isGalleryView
                 ? "p-3 aspect-square text-xs sm:text-sm w-[calc(33.33%-0.75rem)]" 
-                : ""
+                : "",
+              id === 'previous-claims' && option.value === 'yes' ? 'glass-green' : ''
             )}
           />
         ))}
