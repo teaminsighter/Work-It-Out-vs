@@ -29,7 +29,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
     handleAnswer(id, value, nextStepId);
   };
 
-  const isGalleryView = id === 'insurance-type' || id === 'security-systems';
+  const isGalleryView = id === 'insurance-type' || id === 'security-systems' || id === 'previous-claims';
 
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
