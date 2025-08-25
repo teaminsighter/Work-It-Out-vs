@@ -29,7 +29,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
     handleAnswer(id, value, nextStepId);
   };
 
-  const isInsuranceTypeStep = id === 'insurance-type';
+  const isGalleryView = id === 'insurance-type' || id === 'security-systems';
 
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
@@ -46,7 +46,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
       <motion.div 
         className={cn(
           "mt-6 w-full",
-          isInsuranceTypeStep 
+          isGalleryView
             ? "flex flex-wrap justify-center gap-3 max-w-md"
             : "grid grid-cols-1 max-w-sm gap-3"
         )}
@@ -60,7 +60,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
             option={option}
             onClick={() => onOptionSelect(option.value, option.nextStepId)}
             className={cn(
-              isInsuranceTypeStep 
+              isGalleryView
                 ? "p-3 aspect-square text-xs sm:text-sm w-[calc(33.33%-0.75rem)]" 
                 : ""
             )}
