@@ -29,7 +29,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
     handleAnswer(id, value, nextStepId);
   };
 
-  const isGalleryView = id === 'insurance-type' || id === 'security-systems' || id === 'previous-claims';
+  const isGalleryView = id === 'insurance-type' || id === 'security-systems' || id === 'previous-claims' || id === 'coverage-level';
   const isInsuranceType = id === 'insurance-type';
 
   return (
@@ -68,8 +68,8 @@ export default function QuestionStep({ question }: QuestionStepProps) {
                 : isGalleryView
                 ? "p-3 aspect-square text-xs sm:text-sm w-[calc(33.33%-0.75rem)]" 
                 : "",
-              id === 'previous-claims' && option.value === 'yes' ? 'glass-green' : '',
-              id === 'previous-claims' && option.value === 'no' ? 'glass-red' : ''
+              (id === 'previous-claims' || id === 'coverage-level') && option.value === 'yes' ? 'glass-green' : '',
+              (id === 'previous-claims' || id === 'coverage-level') && option.value === 'no' ? 'glass-red' : ''
             )}
           />
         ))}
