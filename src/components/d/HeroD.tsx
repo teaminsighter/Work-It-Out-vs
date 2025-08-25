@@ -38,10 +38,10 @@ const gridPositions = [
     "md:row-start-1 md:col-start-1", // Life
     "md:row-start-2 md:col-start-1", // General
     "md:row-start-1 md:col-start-2 md:row-span-2", // Home
-    "md:row-start-2 md:col-start-2", // Liability - MOVED
+    "md:row-start-3 md:col-start-1", // Liability 
     "md:row-start-1 md:col-start-4", // Car
     "md:row-start-2 md:col-start-4", // Education
-    "md:row-start-3 md:col-start-3", // Travel
+    "md:row-start-3 md:col-start-2", // Travel
     "md:row-start-1 md:col-start-3", // Health
   ];
 
