@@ -13,7 +13,6 @@ const insuranceOptions = [
   { value: 'general', label: 'General Insurance', icon: Umbrella, nextStepId: 'security-systems' },
   { value: 'home', label: 'Home Insurance', icon: Home, nextStepId: 'home-property-type' },
   { value: 'liability', label: 'Liability Insurance', icon: Layers, nextStepId: 'security-systems' },
-  { value: 'travel', label: 'Travel Insurance', icon: Plane, nextStepId: 'security-systems' },
   { value: 'health', label: 'Health Insurance', icon: Shield, nextStepId: 'security-systems' },
 ];
 
@@ -36,9 +35,8 @@ const gridPositions = [
     "md:row-start-1 md:col-start-1", // Life
     "md:row-start-2 md:col-start-1", // General
     "md:row-start-1 md:col-start-2 md:row-span-2", // Home
-    "md:row-start-3 md:col-start-1", // Liability 
-    "md:row-start-3 md:col-start-2", // Travel
-    "md:row-start-1 md:col-start-3", // Health
+    "md:row-start-3 md:col-start-1", // Liability
+    "md:row-start-3 md:col-start-2", // Health
   ];
 
 
