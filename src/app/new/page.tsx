@@ -3,7 +3,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useForm } from '@/contexts/FormContext';
-import Hero from '@/components/Hero';
+import HeroNew from '@/components/HeroNew';
 import Insurers from '@/components/Insurers';
 import FinancialProtection from '@/components/FinancialProtection';
 import Services from '@/components/Services';
@@ -23,7 +23,7 @@ export default function NewPage() {
   return (
       <main className="w-full text-foreground bg-white">
         <div ref={quoteWizardRef}>
-          <Hero />
+          <HeroNew />
         </div>
         <Insurers />
         <FinancialProtection />
