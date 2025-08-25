@@ -1,9 +1,11 @@
+
 "use client";
 
 import type { Question } from '@/types';
 import { useForm } from '@/contexts/FormContext';
 import OptionCard from './OptionCard';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface QuestionStepProps {
   question: Question;
@@ -27,6 +29,8 @@ export default function QuestionStep({ question }: QuestionStepProps) {
     handleAnswer(id, value, nextStepId);
   };
 
+  const isInsuranceTypeStep = id === 'insurance-type';
+
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
       <motion.div
@@ -40,16 +44,25 @@ export default function QuestionStep({ question }: QuestionStepProps) {
       {description && <p className="mt-2 text-muted-foreground">{description}</p>}
       
       <motion.div 
-        className="mt-6 grid w-full max-w-sm grid-cols-1 gap-4"
+        className={cn(
+          "mt-6 grid w-full gap-3",
+          isInsuranceTypeStep 
+            ? "grid-cols-3 max-w-md"
+            : "grid-cols-1 max-w-sm"
+        )}
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {options?.map(option => (
+        {options?.map((option, index) => (
           <OptionCard
             key={option.value}
             option={option}
             onClick={() => onOptionSelect(option.value, option.nextStepId)}
+            className={cn(
+              isInsuranceTypeStep && index > 2 ? "col-start-2" : "",
+              isInsuranceTypeStep ? "p-3 aspect-square text-xs sm:text-sm" : ""
+            )}
           />
         ))}
       </motion.div>
