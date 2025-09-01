@@ -1,3 +1,4 @@
+
 import type { Question, Questions, Option } from '@/types';
 import {
   Home,
@@ -125,6 +126,7 @@ export const ALL_QUESTIONS: Questions = {
     nextStepId: 'previous-claims',
     options: [
       { value: 'myself', label: 'Myself', icon: User },
+      { value: 'my-partner', label: 'My Partner', icon: User },
       { value: 'myself-and-partner', label: 'Myself & partner', icon: Users },
     ],
   },
