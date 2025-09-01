@@ -23,7 +23,7 @@ const Hero = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-white">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg">
-              COMPARE NZ'S BEST INSURANCE DEALS IN 60 SECONDS
+              Compare Insurance Plans
             </h1>
             <p className="text-lg md:text-xl text-gray-200 mb-8">
               Get quick comparisons from leading NZ insurers and receive expert advice to find the perfect cover for you.

@@ -4,8 +4,10 @@ import Image from 'next/image';
 import { Button } from './ui/button';
 import { CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useForm } from '@/contexts/FormContext';
 
 const FinancialProtection = () => {
+  const { scrollToWizard } = useForm();
   return (
     <section className="bg-gray-50 py-16 sm:py-24">
       <div className="container mx-auto px-4">
@@ -55,7 +57,7 @@ const FinancialProtection = () => {
                 <span>Expert guidance every step of the way.</span>
               </li>
             </ul>
-            <Button size="lg">Learn More</Button>
+            <Button size="lg" onClick={scrollToWizard}>Get Your Quote</Button>
           </motion.div>
         </div>
       </div>
