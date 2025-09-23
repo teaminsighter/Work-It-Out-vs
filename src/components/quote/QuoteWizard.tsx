@@ -11,14 +11,21 @@ import { AnimatePresence, motion } from 'framer-motion';
 import CoverageRecommendationStep from './CoverageRecommendationStep';
 import ContactForm from './ContactForm';
 import SelectForm from './SelectForm';
+import WelcomeStep from './WelcomeStep';
+import { usePathname } from 'next/navigation';
 
 export default function QuoteWizard() {
   const { currentStepId, goBack, stepHistory } = useForm();
+  const pathname = usePathname();
+  const isHealthPage = pathname === '/health';
 
   const currentQuestion = ALL_QUESTIONS[currentStepId];
-  const isFirstStep = stepHistory.length <= 1;
+  const isFirstStep = isHealthPage ? stepHistory.length <= 1 && currentStepId === 'security-systems' : stepHistory.length <= 1;
 
   const renderStep = () => {
+    if (currentStepId === 'start' || (stepHistory.length === 1 && currentStepId === 'insurance-type' && !isHealthPage)) {
+      return <WelcomeStep />;
+    }
     if (currentStepId === 'results') {
       return <ResultsPage />;
     }
@@ -40,7 +47,7 @@ export default function QuoteWizard() {
   return (
     <div className="relative w-full max-w-2xl mx-auto">
       <AnimatePresence>
-        {currentStepId !== 'start' && currentStepId !== 'results' && (
+        {currentStepId !== 'start' && currentStepId !== 'results' && !(stepHistory.length === 1 && currentStepId === 'insurance-type') && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}

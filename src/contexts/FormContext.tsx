@@ -1,7 +1,8 @@
 
 "use client";
 
-import React, { createContext, useContext, useState, useMemo, useRef } from 'react';
+import React, { createContext, useContext, useState, useMemo, useRef, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import type { FormData, Question } from '@/types';
 import { ALL_QUESTIONS, TOTAL_STEPS_ESTIMATE } from '@/lib/questions';
 import { useToast } from "@/hooks/use-toast";
@@ -23,8 +24,11 @@ interface FormContextType {
 const FormContext = createContext<FormContextType | undefined>(undefined);
 
 export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [formData, setFormData] = useState<FormData>({});
-  const [stepHistory, setStepHistory] = useState<string[]>(['insurance-type']);
+  const pathname = usePathname();
+  const isHealthPage = pathname === '/health';
+  
+  const [formData, setFormData] = useState<FormData>(isHealthPage ? { insuranceType: 'health' } : {});
+  const [stepHistory, setStepHistory] = useState<string[]>(isHealthPage ? ['security-systems'] : ['insurance-type']);
   const [totalSteps, setTotalSteps] = useState(TOTAL_STEPS_ESTIMATE);
   const [quoteWizardRef, setQuoteWizardRefState] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const { toast } = useToast();
@@ -70,7 +74,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } else if (question?.options) {
         const selectedOption = question.options.find(opt => opt.value === value);
         if (selectedOption?.nextStepId) {
-            nextStep = selected.nextStepId;
+            nextStep = selectedOption.nextStepId;
         }
       }
     }
@@ -87,8 +91,10 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const goBack = () => {
-    if (stepHistory.length > 1) {
-      setStepHistory(prev => prev.slice(0, -1));
+    const initialStep = isHealthPage ? 'security-systems' : 'insurance-type';
+    if (stepHistory.length > 1 && stepHistory[stepHistory.length-2] !== 'start') {
+        if(currentStepId === initialStep) return;
+        setStepHistory(prev => prev.slice(0, -1));
     }
   };
 
