@@ -29,7 +29,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
     handleAnswer(id, value, nextStepId);
   };
 
-  const isGalleryView = id === 'insurance-type' || id === 'security-systems' || id === 'previous-claims' || id === 'coverage-level';
+  const isGalleryView = id === 'insurance-type' || id === 'security-systems' || id === 'previous-claims' || id === 'coverage-level' || id === 'gender';
   const isInsuranceType = id === 'insurance-type';
 
   return (
@@ -48,7 +48,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
         className={cn(
           "mt-6 w-full",
           isInsuranceType
-            ? "flex flex-wrap justify-center gap-3 max-w-md"
+            ? "flex flex-wrap justify-center gap-3 max-w-lg"
             : isGalleryView
             ? "flex flex-wrap justify-center gap-3 max-w-sm"
             : "grid grid-cols-1 max-w-sm gap-3"

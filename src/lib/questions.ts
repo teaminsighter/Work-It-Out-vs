@@ -144,10 +144,20 @@ export const ALL_QUESTIONS: Questions = {
     id: 'coverage-level',
     question: 'Have you smoked in the past 12 months?',
     Icon: Cigarette,
-    nextStepId: 'age',
+    nextStepId: 'gender',
     options: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
+    ],
+  },
+  'gender': {
+    id: 'gender',
+    question: 'What is your gender?',
+    Icon: Users,
+    nextStepId: 'age',
+    options: [
+      { value: 'male', label: 'Male' },
+      { value: 'female', label: 'Female' },
     ],
   },
   'coverage-recommendation': {
