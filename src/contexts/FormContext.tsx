@@ -26,9 +26,21 @@ const FormContext = createContext<FormContextType | undefined>(undefined);
 export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
   const isHealthPage = pathname === '/health';
+  const isLifePage = pathname === '/life';
   
-  const [formData, setFormData] = useState<FormData>(isHealthPage ? { insuranceType: 'health' } : {});
-  const [stepHistory, setStepHistory] = useState<string[]>(isHealthPage ? ['security-systems'] : ['insurance-type']);
+  const getInitialFormData = () => {
+    if (isHealthPage) return { insuranceType: 'health' };
+    if (isLifePage) return { insuranceType: 'life' };
+    return {};
+  };
+
+  const getInitialStepHistory = () => {
+    if (isHealthPage || isLifePage) return ['security-systems'];
+    return ['insurance-type'];
+  };
+
+  const [formData, setFormData] = useState<FormData>(getInitialFormData());
+  const [stepHistory, setStepHistory] = useState<string[]>(getInitialStepHistory());
   const [totalSteps, setTotalSteps] = useState(TOTAL_STEPS_ESTIMATE);
   const [quoteWizardRef, setQuoteWizardRefState] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const { toast } = useToast();
@@ -91,7 +103,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const goBack = () => {
-    const initialStep = isHealthPage ? 'security-systems' : 'insurance-type';
+    const initialStep = isHealthPage || isLifePage ? 'security-systems' : 'insurance-type';
     if (stepHistory.length > 1 && stepHistory[stepHistory.length-2] !== 'start') {
         if(currentStepId === initialStep) return;
         setStepHistory(prev => prev.slice(0, -1));

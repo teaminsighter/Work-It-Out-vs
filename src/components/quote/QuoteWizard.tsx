@@ -18,12 +18,14 @@ export default function QuoteWizard() {
   const { currentStepId, goBack, stepHistory } = useForm();
   const pathname = usePathname();
   const isHealthPage = pathname === '/health';
+  const isLifePage = pathname === '/life';
 
   const currentQuestion = ALL_QUESTIONS[currentStepId];
-  const isFirstStep = isHealthPage ? stepHistory.length <= 1 && currentStepId === 'security-systems' : stepHistory.length <= 1;
+  const isSpecialPage = isHealthPage || isLifePage;
+  const isFirstStep = isSpecialPage ? stepHistory.length <= 1 && currentStepId === 'security-systems' : stepHistory.length <= 1;
 
   const renderStep = () => {
-    if (currentStepId === 'start' || (stepHistory.length === 1 && currentStepId === 'insurance-type' && !isHealthPage)) {
+    if (currentStepId === 'start' || (stepHistory.length === 1 && currentStepId === 'insurance-type' && !isSpecialPage)) {
       return <WelcomeStep />;
     }
     if (currentStepId === 'results') {
