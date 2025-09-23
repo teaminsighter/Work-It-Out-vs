@@ -40,7 +40,7 @@ import {
 } from 'lucide-react';
 import { NZ_TOWNS } from './nz-towns';
 
-export const TOTAL_STEPS_ESTIMATE = 8;
+export const TOTAL_STEPS_ESTIMATE = 9;
 
 export const ALL_QUESTIONS: Questions = {
   'start': {
@@ -172,7 +172,17 @@ export const ALL_QUESTIONS: Questions = {
     question: 'How old are you?',
     Icon: User,
     fields: ['age'],
+    nextStepId: 'medical-condition',
+  },
+  'medical-condition': {
+    id: 'medical-condition',
+    question: 'Do you have any medical conditions?',
+    Icon: Activity,
     nextStepId: 'household-income',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
+    ],
   },
   'household-income': {
     id: 'household-income',
