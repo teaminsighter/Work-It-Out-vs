@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from '@/contexts/FormContext';
@@ -19,9 +20,10 @@ export default function QuoteWizard() {
   const pathname = usePathname();
   const isHealthPage = pathname === '/health';
   const isLifePage = pathname === '/life';
+  const isIncomePage = pathname === '/income';
 
   const currentQuestion = ALL_QUESTIONS[currentStepId];
-  const isSpecialPage = isHealthPage || isLifePage;
+  const isSpecialPage = isHealthPage || isLifePage || isIncomePage;
   const isFirstStep = isSpecialPage ? stepHistory.length <= 1 && currentStepId === 'security-systems' : stepHistory.length <= 1;
 
   const renderStep = () => {

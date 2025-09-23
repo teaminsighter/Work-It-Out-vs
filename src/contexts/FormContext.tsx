@@ -27,15 +27,17 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const pathname = usePathname();
   const isHealthPage = pathname === '/health';
   const isLifePage = pathname === '/life';
+  const isIncomePage = pathname === '/income';
   
   const getInitialFormData = () => {
     if (isHealthPage) return { insuranceType: 'health' };
     if (isLifePage) return { insuranceType: 'life' };
+    if (isIncomePage) return { insuranceType: 'income' };
     return {};
   };
 
   const getInitialStepHistory = () => {
-    if (isHealthPage || isLifePage) return ['security-systems'];
+    if (isHealthPage || isLifePage || isIncomePage) return ['security-systems'];
     return ['insurance-type'];
   };
 
@@ -103,7 +105,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const goBack = () => {
-    const initialStep = isHealthPage || isLifePage ? 'security-systems' : 'insurance-type';
+    const initialStep = isHealthPage || isLifePage || isIncomePage ? 'security-systems' : 'insurance-type';
     if (stepHistory.length > 1 && stepHistory[stepHistory.length-2] !== 'start') {
         if(currentStepId === initialStep) return;
         setStepHistory(prev => prev.slice(0, -1));

@@ -1,0 +1,56 @@
+
+'use client';
+
+import QuoteWizard from '@/components/quote/QuoteWizard';
+import { ShieldCheck } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useForm } from '@/contexts/FormContext';
+
+const HeroIncome = () => {
+  const { scrollToWizard, quoteWizardRef } = useForm();
+
+  return (
+    <section
+      className="relative w-full pt-40 pb-16 md:pt-48 md:pb-24 lg:pt-56 lg:pb-32"
+    >
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-fixed opacity-30"
+        style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/Lanind%20Page%201%2Ffamily.jpeg?alt=media&token=424b8995-e4f0-4cf9-b257-623ca0287635')" }}
+        data-ai-hint="insurance office"
+      ></div>
+      <div className="absolute inset-0 z-10" style={{ backgroundColor: 'rgba(53, 162, 231, 0.7)' }}></div>
+      <div className="container mx-auto px-4 relative z-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="text-white">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg">
+              Compare income protection insurance plans
+            </h1>
+            <p className="text-lg md:text-xl text-gray-200 mb-8">
+              Get quick comparisons from leading NZ insurers and receive expert advice to find the perfect cover for you.
+            </p>
+            <ul className="space-y-3">
+               <li className="flex items-center text-lg gap-3">
+                <ShieldCheck className="h-6 w-6 text-white" />
+                <span>We compare 50+ NZ insurers</span>
+              </li>
+               <li className="flex items-center text-lg gap-3">
+                <ShieldCheck className="h-6 w-6 text-white" />
+                <span>Get independent advice</span>
+              </li>
+               <li className="flex items-center text-lg gap-3">
+                <ShieldCheck className="h-6 w-6 text-white" />
+                <span>Trusted by thousands of Kiwis</span>
+              </li>
+            </ul>
+             <Button size="lg" className="mt-8 bg-primary hover:bg-primary/90" onClick={scrollToWizard}>Get Your Quote</Button>
+          </div>
+          <div ref={quoteWizardRef}>
+            <QuoteWizard />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default HeroIncome;
