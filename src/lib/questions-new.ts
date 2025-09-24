@@ -37,6 +37,7 @@ import {
   FileDigit,
   Users,
   Cigarette,
+  HeartPulse,
 } from 'lucide-react';
 import { NZ_TOWNS } from './nz-towns';
 
@@ -178,10 +179,21 @@ export const ALL_QUESTIONS: Questions = {
     id: 'medical-condition',
     question: 'Do you have any medical conditions?',
     Icon: Activity,
-    nextStepId: 'household-income',
+    getNextStepId: (value: string) => value === 'yes' ? 'medical-condition-details' : 'household-income',
     options: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
+    ],
+  },
+    'medical-condition-details': {
+    id: 'medical-condition-details',
+    question: 'What kind of medical condition do you have?',
+    Icon: HeartPulse,
+    nextStepId: 'household-income',
+    options: [
+      { value: 'diabetics', label: 'Diabetics' },
+      { value: 'asthma', label: 'Asthma' },
+      { value: 'cancer', label: 'Cancer' },
     ],
   },
   'household-income': {
