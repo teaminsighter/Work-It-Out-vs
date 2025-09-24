@@ -4,9 +4,6 @@ import { Star, Quote, ShieldCheck, BarChart2 } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { motion } from 'framer-motion';
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import Autoplay from "embla-carousel-autoplay";
-
 
 const testimonials = [
   {
@@ -64,59 +61,41 @@ const Testimonials = () => {
           </p>
         </div>
 
-        <Carousel 
-            opts={{
-                align: "start",
-                loop: true,
-            }}
-            plugins={[
-                Autoplay({
-                  delay: 4000,
-                  stopOnInteraction: true,
-                }),
-              ]}
-            className="w-full"
-        >
-          <CarouselContent>
-            {testimonials.map((testimonial, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.1 * index }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    className="p-1 h-full"
-                >
-                    <Card className="flex flex-col justify-between shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
-                        <CardContent className="p-6">
-                            <Quote className="h-8 w-8 text-primary/50 mb-4" />
-                            <p className="text-gray-600 italic mb-6">"{testimonial.quote}"</p>
-                            <div className="flex items-center">
-                                <Avatar className="h-12 w-12 mr-4">
-                                    <AvatarImage src={testimonial.avatar} alt={testimonial.name} data-ai-hint={testimonial.hint} />
-                                    <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                    <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+        <div className="relative w-full overflow-hidden">
+            <div className="testimonial-marquee flex gap-8">
+                {[...testimonials, ...testimonials].map((testimonial, index) => (
+                    <div key={index} className="flex-shrink-0 w-[90vw] max-w-sm">
+                        <Card className="flex flex-col justify-between shadow-lg h-full">
+                            <CardContent className="p-6">
+                                <Quote className="h-8 w-8 text-primary/50 mb-4" />
+                                <p className="text-gray-600 italic mb-6">"{testimonial.quote}"</p>
+                                <div className="flex items-center">
+                                    <Avatar className="h-12 w-12 mr-4">
+                                        <AvatarImage src={testimonial.avatar} alt={testimonial.name} data-ai-hint={testimonial.hint} />
+                                        <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                                    </Avatar>
+                                    <div>
+                                        <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                                        <p className="text-sm text-gray-500">{testimonial.role}</p>
+                                    </div>
+                                    <div className="ml-auto flex items-center">
+                                        {Array.from({ length: 5 }).map((_, i) => (
+                                        <Star
+                                            key={i}
+                                            className={`h-5 w-5 ${i < testimonial.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                                            fill="currentColor"
+                                        />
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className="ml-auto flex items-center">
-                                    {Array.from({ length: 5 }).map((_, i) => (
-                                    <Star
-                                        key={i}
-                                        className={`h-5 w-5 ${i < testimonial.rating ? 'text-yellow-400' : 'text-gray-300'}`}
-                                        fill="currentColor"
-                                    />
-                                    ))}
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </motion.div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+                            </CardContent>
+                        </Card>
+                    </div>
+                ))}
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white pointer-events-none"></div>
+        </div>
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center pt-12 mt-16">
             <div className="border border-dashed border-gray-300 rounded-lg p-8">

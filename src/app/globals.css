@@ -99,6 +99,10 @@ body {
   .marquee {
     animation: marquee 30s linear infinite;
   }
+  
+  .testimonial-marquee {
+    animation: marquee 60s linear infinite;
+  }
 
   @keyframes marquee {
     0% { transform: translateX(0%); }
