@@ -193,6 +193,7 @@ export const ALL_QUESTIONS: Questions = {
       { value: 'diabetics', label: 'Diabetics' },
       { value: 'asthma', label: 'Asthma' },
       { value: 'cancer', label: 'Cancer' },
+      { value: 'heart-condition', label: 'Heart Condition' },
     ],
   },
   'household-income': {
