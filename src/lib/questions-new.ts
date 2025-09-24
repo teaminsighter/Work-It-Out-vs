@@ -159,7 +159,7 @@ export const ALL_QUESTIONS: Questions = {
     nextStepId: 'age',
     options: [
       { value: 'male', label: 'Male' },
-      { value: 'female', label: 'Female' },
+      { value 'female', label: 'Female' },
     ],
   },
   'coverage-recommendation': {
@@ -190,6 +190,7 @@ export const ALL_QUESTIONS: Questions = {
     question: 'What kind of medical condition do you have?',
     Icon: HeartPulse,
     nextStepId: 'household-income',
+    multiSelect: true,
     options: [
       { value: 'diabetics', label: 'Diabetics' },
       { value: 'asthma', label: 'Asthma' },

@@ -189,6 +189,7 @@ export const ALL_QUESTIONS: Questions = {
     question: 'What kind of medical condition do you have?',
     Icon: HeartPulse,
     nextStepId: 'household-income',
+    multiSelect: true,
     options: [
       { value: 'diabetics', label: 'Diabetics' },
       { value: 'asthma', label: 'Asthma' },

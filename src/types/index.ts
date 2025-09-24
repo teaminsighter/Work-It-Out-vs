@@ -1,3 +1,4 @@
+
 import type { LucideIcon } from "lucide-react";
 import type React from "react";
 
@@ -22,6 +23,7 @@ export interface Question {
   field?: string; // For single-field forms like SelectForm
   nextStepId?: string;
   getNextStepId?: (value: any) => string;
+  multiSelect?: boolean;
 }
 
 export type Questions = {

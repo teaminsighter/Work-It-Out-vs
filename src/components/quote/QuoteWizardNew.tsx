@@ -12,6 +12,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import CoverageRecommendationStep from './CoverageRecommendationStep';
 import ContactForm from './ContactForm';
 import SelectForm from './SelectForm';
+import MultiSelectStep from './MultiSelectStep';
 
 export default function QuoteWizardNew() {
   const { currentStepId, goBack, stepHistory } = useForm();
@@ -24,6 +25,9 @@ export default function QuoteWizardNew() {
       return <ResultsPage />;
     }
     if (currentQuestion) {
+      if (currentQuestion.multiSelect) {
+        return <MultiSelectStep question={currentQuestion} />;
+      }
       if (currentQuestion.id === 'coverage-recommendation') {
         return <CoverageRecommendationStep question={currentQuestion} />;
       }
