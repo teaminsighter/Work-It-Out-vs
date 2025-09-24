@@ -194,6 +194,7 @@ export const ALL_QUESTIONS: Questions = {
       { value: 'asthma', label: 'Asthma' },
       { value: 'cancer', label: 'Skin Cancer' },
       { value: 'heart-condition', label: 'Heart Condition' },
+      { value: 'other', label: 'Other' },
     ],
   },
   'household-income': {
