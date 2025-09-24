@@ -93,7 +93,7 @@ const Testimonials = () => {
                     </div>
                 ))}
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-white via-white/0 via-40% to-white pointer-events-none"></div>
         </div>
 
 
