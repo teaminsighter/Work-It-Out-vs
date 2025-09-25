@@ -19,7 +19,7 @@ const testimonials = [
     role: 'Small Business Owner',
     quote: "QuoteFlow saved me hours of research. Their comparison tool is top-notch, and I feel confident I've got the right cover for my business.",
     rating: 5,
-    avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.54.05%20(1).webp?alt=media&token=4b8ba3c2-b019-4870-a414-ee5eee50d451',
+    avatar: '',
     hint: 'person portrait'
   },
   {
@@ -27,7 +27,7 @@ const testimonials = [
     role: 'Young Family',
     quote: "Finding the right life insurance felt overwhelming, but QuoteFlow made it easy to understand our options. We now have peace of mind.",
     rating: 5,
-    avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.54.05%20(1).webp?alt=media&token=4b8ba3c2-b019-4870-a414-ee5eee50d451',
+    avatar: '',
     hint: 'person portrait'
   },
   {
@@ -35,7 +35,7 @@ const testimonials = [
     role: 'First-time Buyer',
     quote: "As a first-time insurance buyer, the expert advice was invaluable. I found a great policy that fit my budget perfectly.",
     rating: 5,
-    avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.54.05%20(1).webp?alt=media&token=4b8ba3c2-b019-4870-a414-ee5eee50d451',
+    avatar: '',
     hint: 'person portrait'
   },
     {
@@ -43,7 +43,7 @@ const testimonials = [
     role: 'Christchurch Professional',
     quote: "The team was incredibly knowledgeable and patient. They answered all my questions and found me a policy with better coverage for less.",
     rating: 5,
-    avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.54.05%20(1).webp?alt=media&token=4b8ba3c2-b019-4870-a414-ee5eee50d451',
+    avatar: '',
     hint: 'person portrait'
   }
 ];
