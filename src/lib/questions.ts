@@ -202,7 +202,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'household-income',
     question: 'What is your annual household income?',
     Icon: CircleDollarSign,
-    nextStepId: 'location',
+    nextStepId: 'contact-details',
     options: [
       { value: 'less-than-49k', label: 'Less than $49,000' },
       { value: '50k-99k', label: '$50,000 - $99,000' },
@@ -210,15 +210,6 @@ export const ALL_QUESTIONS: Questions = {
       { value: '150k-199k', label: '$150,000 - $199,000' },
       { value: '200k+', label: '$200,000+' },
     ],
-  },
-  'location': {
-    id: 'location',
-    question: "You're almost there! Where do you live?",
-    description: 'Select your town from the list below.',
-    Icon: MapPin,
-    field: 'location', // This will be the key in formData
-    options: NZ_TOWNS.map(town => ({ value: town, label: town })),
-    nextStepId: 'contact-details',
   },
   'contact-details': {
     id: 'contact-details',
