@@ -35,7 +35,7 @@ const testimonials = [
     role: 'First-time Buyer',
     quote: "As a first-time insurance buyer, the expert advice was invaluable. I found a great policy that fit my budget perfectly.",
     rating: 5,
-    avatar: '',
+    avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.57.26.webp?alt=media&token=72fb7682-e942-4a85-8af9-71efb50986b0',
     hint: 'person portrait'
   },
     {
