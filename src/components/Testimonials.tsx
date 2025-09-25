@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 const testimonials = [
   {
     name: 'Sarah L.',
-    role: 'Auckland Homeowner',
+    role: 'Auckland',
     quote: "The process was so simple and fast. I got a much better deal than I expected, and the advice was genuinely helpful. Highly recommend!",
     rating: 5,
     avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.54.05%20(1).webp?alt=media&token=4b8ba3c2-b019-4870-a414-ee5eee50d451',
@@ -16,7 +16,7 @@ const testimonials = [
   },
   {
     name: 'Mike P.',
-    role: 'Small Business Owner',
+    role: 'Wellington',
     quote: "work it out saved me hours of research. Their comparison tool is top-notch, and I feel confident I've got the right cover for my business.",
     rating: 5,
     avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.57.25.webp?alt=media&token=e5c2bb48-bb63-45c5-9e3d-65c6165347c4',
@@ -24,7 +24,7 @@ const testimonials = [
   },
   {
     name: 'Jessica W.',
-    role: 'Young Family',
+    role: 'Christchurch',
     quote: "Finding the right life insurance felt overwhelming, but work it out made it easy to understand our options. We now have peace of mind.",
     rating: 5,
     avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.57.25%20(2).webp?alt=media&token=1bfa0a75-4743-44a1-851f-32526fad0d84',
@@ -32,7 +32,7 @@ const testimonials = [
   },
   {
     name: 'Tom H.',
-    role: 'First-time Buyer',
+    role: 'Dunedin',
     quote: "As a first-time insurance buyer, the expert advice was invaluable. I found a great policy that fit my budget perfectly.",
     rating: 5,
     avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.57.26.webp?alt=media&token=72fb7682-e942-4a85-8af9-71efb50986b0',
@@ -40,7 +40,7 @@ const testimonials = [
   },
     {
     name: 'Emily R.',
-    role: 'Christchurch Professional',
+    role: 'Tauranga',
     quote: "The team was incredibly knowledgeable and patient. They answered all my questions and found me a policy with better coverage for less.",
     rating: 5,
     avatar: '',
