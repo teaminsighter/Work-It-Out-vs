@@ -27,7 +27,7 @@ const testimonials = [
     role: 'Young Family',
     quote: "Finding the right life insurance felt overwhelming, but QuoteFlow made it easy to understand our options. We now have peace of mind.",
     rating: 5,
-    avatar: '',
+    avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.57.25%20(2).webp?alt=media&token=1bfa0a75-4743-44a1-851f-32526fad0d84',
     hint: 'person portrait'
   },
   {
@@ -93,7 +93,7 @@ const Testimonials = () => {
                     </div>
                 ))}
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-white via-white/0 to-white pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white pointer-events-none"></div>
         </div>
 
 
