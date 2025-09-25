@@ -1,13 +1,10 @@
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
 
 const logos = [
   { src: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/health-logo1.webp?alt=media&token=8b1a5f1a-7253-47a7-a2c3-a3ecc27bedbb', alt: 'Insurance Company 1', hint: 'company logo' },
   { src: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/health-logo2.webp?alt=media&token=73bd1e36-30d0-4f89-b9e3-43a69252b91c', alt: 'Insurance Company 2', hint: 'company logo' },
   { src: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/health-logo3.webp?alt=media&token=2925601e-e5b0-4638-b92c-d647fe62e841', alt: 'Insurance Company 3', hint: 'company logo' },
   { src: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/health-logo4.webp?alt=media&token=2f16c66a-ddf7-4b79-b9fc-3299d1181023', alt: 'Insurance Company 4', hint: 'company logo' },
-  { src: 'https://placehold.co/160x80.png', alt: 'Insurance Company 5', hint: 'company logo' },
-  { src: 'https://placehold.co/160x80.png', alt: 'Insurance Company 6', hint: 'company logo' },
 ];
 
 const Insurers = () => {
@@ -22,22 +19,19 @@ const Insurers = () => {
             We compare NZ's top insurance companies to find you the best deal.
           </p>
         </div>
-        <div className="relative w-full overflow-hidden">
-          <div className="marquee flex gap-16">
-            {[...logos, ...logos].map((logo, index) => (
-              <div key={index} className="flex-shrink-0">
-                <Image
-                  className="max-h-12 w-auto object-contain"
-                  src={logo.src}
-                  alt={logo.alt}
-                  width={160}
-                  height={80}
-                  data-ai-hint={logo.hint}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white pointer-events-none"></div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 md:gap-16 items-center justify-items-center max-w-4xl mx-auto">
+          {logos.map((logo, index) => (
+            <div key={index} className="flex-shrink-0">
+              <Image
+                className="max-h-12 w-auto object-contain"
+                src={logo.src}
+                alt={logo.alt}
+                width={160}
+                height={80}
+                data-ai-hint={logo.hint}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>
