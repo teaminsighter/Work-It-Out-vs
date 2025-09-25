@@ -17,7 +17,7 @@ const testimonials = [
   {
     name: 'Mike P.',
     role: 'Small Business Owner',
-    quote: "QuoteFlow saved me hours of research. Their comparison tool is top-notch, and I feel confident I've got the right cover for my business.",
+    quote: "work it out saved me hours of research. Their comparison tool is top-notch, and I feel confident I've got the right cover for my business.",
     rating: 5,
     avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.57.25.webp?alt=media&token=e5c2bb48-bb63-45c5-9e3d-65c6165347c4',
     hint: 'person portrait'
@@ -25,7 +25,7 @@ const testimonials = [
   {
     name: 'Jessica W.',
     role: 'Young Family',
-    quote: "Finding the right life insurance felt overwhelming, but QuoteFlow made it easy to understand our options. We now have peace of mind.",
+    quote: "Finding the right life insurance felt overwhelming, but work it out made it easy to understand our options. We now have peace of mind.",
     rating: 5,
     avatar: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/WhatsApp%20Image%202025-09-25%20at%2014.57.25%20(2).webp?alt=media&token=1bfa0a75-4743-44a1-851f-32526fad0d84',
     hint: 'person portrait'
