@@ -56,17 +56,17 @@ export const ALL_QUESTIONS: Questions = {
     description: "Select the main type of cover you're looking for.",
     Icon: ShieldQuestion,
     options: [
-      { value: 'life', label: 'Life Insurance', icon: Heart, nextStepId: 'security-systems' },
-      { value: 'trauma', label: 'Trauma Insurance', icon: Activity, nextStepId: 'security-systems' },
-      { value: 'income', label: 'Income Protection', icon: FileDigit, nextStepId: 'security-systems' },
-      { value: 'mortgage', label: 'Mortgage Protection', icon: Home, nextStepId: 'security-systems' },
+      { value: 'life', label: 'Life Insurance', icon: Heart, nextStepId: 'previous-claims' },
+      { value: 'trauma', label: 'Trauma Insurance', icon: Activity, nextStepId: 'previous-claims' },
+      { value: 'income', label: 'Income Protection', icon: FileDigit, nextStepId: 'previous-claims' },
+      { value: 'mortgage', label: 'Mortgage Protection', icon: Home, nextStepId: 'previous-claims' },
     ],
   },
   'home-property-type': {
     id: 'home-property-type',
     question: 'What type of property is it?',
     Icon: Home,
-    nextStepId: 'security-systems',
+    nextStepId: 'previous-claims',
     options: [
       { value: 'house', label: 'House', icon: Home },
       { value: 'apartment', label: 'Apartment', icon: Building },
@@ -90,7 +90,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'vehicle-year',
     question: 'How old is the vehicle?',
     Icon: Calendar,
-    nextStepId: 'security-systems',
+    nextStepId: 'previous-claims',
      options: [
       { value: 'newer-3', label: '0-3 years old' },
       { value: '3-10', label: '3-10 years old' },
@@ -101,7 +101,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'business-type',
     question: 'What is your business type?',
     Icon: Building2,
-    nextStepId: 'security-systems',
+    nextStepId: 'previous-claims',
     options: [
         { value: 'trades', label: 'Trades & Services', icon: Wrench },
         { value: 'professional', label: 'Professional Services', icon: Laptop },
@@ -113,7 +113,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'landlord-property-type',
     question: 'What type of property do you rent out?',
     Icon: KeyRound,
-    nextStepId: 'security-systems',
+    nextStepId: 'previous-claims',
     options: [
       { value: 'house', label: 'House', icon: Home },
       { value: 'apartment', label: 'Apartment', icon: Building },
@@ -124,7 +124,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'security-systems',
     question: 'Who do you want to cover?',
     Icon: Users,
-    nextStepId: 'previous-claims',
+    nextStepId: 'coverage-level',
     options: [
       { value: 'myself', label: 'Myself', icon: User },
       { value: 'my-partner', label: 'My Partner', icon: User },
@@ -135,7 +135,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'previous-claims',
     question: 'Do you have an existing policy?',
     Icon: FileText,
-    nextStepId: 'coverage-level',
+    nextStepId: 'security-systems',
     options: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
