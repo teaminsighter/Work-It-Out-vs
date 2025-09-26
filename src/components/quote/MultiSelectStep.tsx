@@ -67,7 +67,7 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
         initial="hidden"
         animate="visible"
       >
-        {options?.map((option) => (
+        {options?.map((option, index) => (
           <motion.button
             key={option.value}
             variants={itemVariants}
@@ -77,7 +77,8 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
               'overflow-hidden text-card-foreground',
               'flex flex-col items-center justify-center',
               selected.includes(option.value) ? 'border-primary bg-primary/10' : 'border-border bg-white',
-              'hover:border-primary hover:shadow-md'
+              'hover:border-primary hover:shadow-md',
+               options.length % 2 !== 0 && index === options.length -1 ? 'sm:col-span-1 sm:w-1/2 sm:mx-auto' : ''
             )}
             whileHover={{ y: -5 }}
             whileTap={{ scale: 0.98 }}
@@ -94,7 +95,7 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
         ))}
       </motion.div>
 
-      <Button onClick={onSubmit} size="lg" className="mt-8 w-full max-w-sm">
+      <Button onClick={onSubmit} size="lg" className="mt-8 w-full max-w-sm bg-accent text-accent-foreground hover:bg-accent/90">
         Next
       </Button>
     </div>
