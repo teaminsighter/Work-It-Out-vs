@@ -5,7 +5,6 @@ import { useForm } from '@/contexts/FormContext';
 import { ALL_QUESTIONS } from '@/lib/questions-new';
 import QuestionStep from './QuestionStep';
 import ResultsPage from './ResultsPage';
-import ProgressBar from './ProgressBar';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, RotateCcw } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -44,21 +43,7 @@ export default function QuoteWizardNew() {
 
   return (
     <div className="relative w-full max-w-2xl mx-auto">
-      <AnimatePresence>
-        {currentStepId !== 'results' && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="mb-6 px-6"
-          >
-            <ProgressBar />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="relative rounded-xl border bg-card/90 text-card-foreground p-6 shadow-2xl backdrop-blur-sm sm:p-10">
+      <div className="relative rounded-xl border bg-card/90 text-card-foreground p-6 shadow-2xl backdrop-blur-sm sm:p-10 mt-6">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStepId}
