@@ -22,15 +22,17 @@ const containerVariants = {
 };
 
 export default function QuestionStep({ question }: QuestionStepProps) {
-  const { handleAnswer } = useForm();
+  const { handleAnswer, formData } = useForm();
   const { id, Icon, question: questionText, description, options } = question;
 
   const onOptionSelect = (value: string, nextStepId?: string) => {
     handleAnswer(id, value, nextStepId);
   };
 
-  const isGalleryView = id === 'insurance-type' || id === 'security-systems' || id === 'previous-claims' || id === 'coverage-level' || id === 'gender';
+  const isGalleryView = id === 'insurance-type' || id === 'security-systems' || id === 'previous-claims' || id === 'coverage-level' || id === 'gender' || id === 'welcome-specialty';
   const isInsuranceType = id === 'insurance-type';
+
+  const processedQuestion = questionText.replace('{{insuranceType}}', formData.insuranceType || 'insurance');
 
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
@@ -41,7 +43,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
       >
         <Icon className="mb-4 h-12 w-12 text-primary" />
       </motion.div>
-      <h2 className="text-2xl font-bold sm:text-3xl font-headline">{questionText}</h2>
+      <h2 className="text-2xl font-bold sm:text-3xl font-headline capitalize">{processedQuestion}</h2>
       {description && <p className="mt-2 text-muted-foreground">{description}</p>}
       
       <motion.div 

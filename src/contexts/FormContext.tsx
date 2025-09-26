@@ -28,6 +28,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const isHealthPage = pathname === '/health';
   const isLifePage = pathname === '/life';
   const isIncomePage = pathname === '/income';
+  const isSpecialtyPage = isHealthPage || isLifePage || isIncomePage;
   
   const getInitialFormData = () => {
     if (isHealthPage) return { insuranceType: 'health' };
@@ -37,7 +38,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const getInitialStepHistory = () => {
-    if (isHealthPage || isLifePage || isIncomePage) return ['security-systems'];
+    if (isSpecialtyPage) return ['welcome-specialty'];
     return ['insurance-type'];
   };
 
@@ -55,7 +56,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const scrollToWizard = () => {
     quoteWizardRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    if(stepHistory.length > 0 && stepHistory[0] !== 'insurance-type') {
+    if(stepHistory.length > 0 && stepHistory[0] !== 'insurance-type' && !isSpecialtyPage) {
          setStepHistory(['insurance-type']);
     }
   };
@@ -105,7 +106,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const goBack = () => {
-    const initialStep = isHealthPage || isLifePage || isIncomePage ? 'security-systems' : 'insurance-type';
+    const initialStep = isSpecialtyPage ? 'welcome-specialty' : 'insurance-type';
     if (stepHistory.length > 1) {
         if(currentStepId === initialStep) return;
         setStepHistory(prev => prev.slice(0, -1));

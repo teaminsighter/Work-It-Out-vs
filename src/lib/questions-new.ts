@@ -51,6 +51,16 @@ export const ALL_QUESTIONS: Questions = {
     Icon: ShieldCheck,
     nextStepId: 'insurance-type',
   },
+  'welcome-specialty': {
+    id: 'welcome-specialty',
+    question: 'Do you currently have any {{insuranceType}} insurance?',
+    Icon: ShieldQuestion,
+    nextStepId: 'security-systems',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
+    ],
+  },
   'insurance-type': {
     id: 'insurance-type',
     question: "What type of insurance do you need?",
