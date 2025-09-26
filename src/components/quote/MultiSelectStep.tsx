@@ -49,6 +49,8 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
     handleAnswer(id, selected, nextStepId);
   }
 
+  const isOddNumberofOptions = options && options.length % 2 !== 0;
+
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
       <motion.div
@@ -67,7 +69,7 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
         initial="hidden"
         animate="visible"
       >
-        {options?.map((option) => (
+        {options?.map((option, index) => (
           <motion.button
             key={option.value}
             variants={itemVariants}
@@ -77,7 +79,8 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
               'overflow-hidden text-card-foreground',
               'flex flex-col items-center justify-center',
               selected.includes(option.value) ? 'border-primary bg-primary/10' : 'border-border bg-white',
-              'hover:border-primary hover:shadow-md'
+              'hover:border-primary hover:shadow-md',
+              isOddNumberofOptions && index === options.length - 1 ? 'col-span-2' : ''
             )}
             whileHover={{ y: -5 }}
             whileTap={{ scale: 0.98 }}
