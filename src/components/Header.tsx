@@ -45,7 +45,7 @@ const Header = () => {
                 <Phone className="h-4 w-4" />
                 <span className="font-medium">0800 123 456</span>
              </a>
-            <Button onClick={scrollToWizard}>Get Quote</Button>
+            <Button onClick={scrollToWizard} className="bg-accent hover:bg-accent/90 text-accent-foreground">Get Quote</Button>
           </div>
 
           <div className="md:hidden">
