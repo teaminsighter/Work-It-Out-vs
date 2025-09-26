@@ -38,6 +38,7 @@ import {
   Users,
   Cigarette,
   HeartPulse,
+  Shield,
 } from 'lucide-react';
 import { NZ_TOWNS } from './nz-towns';
 
@@ -61,6 +62,7 @@ export const ALL_QUESTIONS: Questions = {
       { value: 'income', label: 'Income Protection', icon: FileDigit, nextStepId: 'previous-claims' },
       { value: 'mortgage', label: 'Mortgage Protection', icon: Landmark, nextStepId: 'previous-claims' },
       { value: 'home', label: 'Home Insurance', icon: Home, nextStepId: 'home-property-type' },
+      { value: 'health', label: 'Health Insurance', icon: Shield, nextStepId: 'previous-claims' },
     ],
   },
   'home-property-type': {
@@ -226,3 +228,5 @@ export const ALL_QUESTIONS: Questions = {
     Icon: Gem,
   },
 };
+
+    
