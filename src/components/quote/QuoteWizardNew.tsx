@@ -45,7 +45,7 @@ export default function QuoteWizardNew() {
   return (
     <div className="relative w-full max-w-2xl mx-auto">
       <AnimatePresence>
-        {currentStepId !== 'start' && currentStepId !== 'results' && (
+        {currentStepId !== 'results' && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}

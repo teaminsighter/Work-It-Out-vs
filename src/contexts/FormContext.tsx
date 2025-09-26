@@ -55,8 +55,8 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const scrollToWizard = () => {
     quoteWizardRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    if(stepHistory.length > 0 && stepHistory[stepHistory.length -1 ] !== 'insurance-type') {
-         setStepHistory(['insurance-type']);
+    if(stepHistory.length > 0 && stepHistory[0] !== 'insurance-type') {
+         setStepHistory(getInitialStepHistory());
     }
   };
 
@@ -113,7 +113,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const progress = useMemo(() => {
-    const currentStepIndex = stepHistory.length -1;
+    const currentStepIndex = stepHistory.length;
     if (currentStepId === 'results') return 100;
     return Math.min(99, Math.round((currentStepIndex / totalSteps) * 100));
   }, [stepHistory.length, totalSteps, currentStepId]);
