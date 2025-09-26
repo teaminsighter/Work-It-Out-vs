@@ -60,8 +60,8 @@ export const ALL_QUESTIONS: Questions = {
     nextStepId: 'previous-claims',
     options: [
       { value: 'life', label: 'Life Insurance', icon: Heart },
-      { value: 'health', label: 'Health Insurance', icon: Shield },
       { value: 'trauma', label: 'Trauma Insurance', icon: Activity },
+      { value: 'health', label: 'Health Insurance', icon: Shield },
       { value: 'income', label: 'Income Protection', icon: FileDigit },
       { value: 'mortgage', label: 'Mortgage Protection', icon: Landmark },
       { value: 'home', label: 'Home Insurance', icon: Home, nextStepId: 'home-property-type' },
