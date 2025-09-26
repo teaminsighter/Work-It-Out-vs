@@ -77,8 +77,7 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
               'overflow-hidden text-card-foreground',
               'flex flex-col items-center justify-center',
               selected.includes(option.value) ? 'border-primary bg-primary/10' : 'border-border bg-white',
-              'hover:border-primary hover:shadow-md',
-               options.length % 2 !== 0 && index === options.length -1 ? 'sm:col-span-1 sm:w-1/2 sm:mx-auto' : ''
+              'hover:border-primary hover:shadow-md'
             )}
             whileHover={{ y: -5 }}
             whileTap={{ scale: 0.98 }}
