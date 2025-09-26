@@ -49,8 +49,6 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
     handleAnswer(id, selected, nextStepId);
   }
 
-  const isOddNumberofOptions = options && options.length % 2 !== 0;
-
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
       <motion.div
@@ -64,12 +62,12 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
       {description && <p className="mt-2 text-muted-foreground">{description}</p>}
       
       <motion.div 
-        className="mt-6 grid grid-cols-2 gap-3 max-w-sm"
+        className="mt-6 grid grid-cols-1 gap-3 w-full max-w-sm"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {options?.map((option, index) => (
+        {options?.map((option) => (
           <motion.button
             key={option.value}
             variants={itemVariants}
@@ -79,15 +77,14 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
               'overflow-hidden text-card-foreground',
               'flex flex-col items-center justify-center',
               selected.includes(option.value) ? 'border-primary bg-primary/10' : 'border-border bg-white',
-              'hover:border-primary hover:shadow-md',
-              isOddNumberofOptions && index === options.length - 1 ? 'col-span-2' : ''
+              'hover:border-primary hover:shadow-md'
             )}
             whileHover={{ y: -5 }}
             whileTap={{ scale: 0.98 }}
           >
-            <div className="flex flex-col items-center justify-center">
-              {option.icon && <option.icon className="mb-2 h-6 w-6 text-primary sm:mb-2" />}
-              <span className="font-semibold">{option.label}</span>
+            <div className="flex flex-row items-center justify-center w-full">
+              {option.icon && <option.icon className="mr-4 h-6 w-6 text-primary sm:mb-0" />}
+              <span className="font-semibold flex-grow text-left">{option.label}</span>
             </div>
             <div className={cn(
                 "absolute bottom-0 left-0 h-1 w-full origin-left transform bg-primary transition-transform duration-300 ease-in-out",
