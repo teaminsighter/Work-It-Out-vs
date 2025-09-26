@@ -40,7 +40,7 @@ import {
   HeartPulse,
   Shield,
 } from 'lucide-react';
-import { NZ_TOWNS } from './nz-towns';
+import { ALL_LOCATION_QUESTIONS } from './questions-location';
 
 export const TOTAL_STEPS_ESTIMATE = 9;
 
@@ -228,6 +228,7 @@ export const ALL_QUESTIONS: Questions = {
     question: 'Your Quote Results',
     Icon: Gem,
   },
+  ...ALL_LOCATION_QUESTIONS
 };
 
     

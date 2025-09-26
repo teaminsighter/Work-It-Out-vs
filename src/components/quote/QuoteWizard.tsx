@@ -23,7 +23,7 @@ export default function QuoteWizard() {
 
   const currentQuestion = ALL_QUESTIONS[currentStepId];
   const isSpecialPage = isHealthPage || isLifePage || isIncomePage;
-  const isFirstStep = stepHistory.length <= 1;
+  const isFirstStep = stepHistory.length <= (isSpecialPage ? 0 : 1);
 
   const renderStep = () => {
     if (currentStepId === 'results') {

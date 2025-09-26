@@ -56,7 +56,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const scrollToWizard = () => {
     quoteWizardRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     if(stepHistory.length > 0 && stepHistory[0] !== 'insurance-type') {
-         setStepHistory(getInitialStepHistory());
+         setStepHistory(['insurance-type']);
     }
   };
 
@@ -106,7 +106,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const goBack = () => {
     const initialStep = isHealthPage || isLifePage || isIncomePage ? 'security-systems' : 'insurance-type';
-    if (stepHistory.length > 1 && stepHistory[stepHistory.length-2] !== 'start') {
+    if (stepHistory.length > 1) {
         if(currentStepId === initialStep) return;
         setStepHistory(prev => prev.slice(0, -1));
     }
