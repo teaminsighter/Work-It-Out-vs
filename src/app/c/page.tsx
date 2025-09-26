@@ -2,9 +2,9 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { useForm } from '@/contexts/FormContext';
 import HeroC from '@/components/c/HeroC';
-import InsuranceCardsC from '@/components/c/InsuranceCardsC';
 import Insurers from '@/components/Insurers';
 import FinancialProtection from '@/components/FinancialProtection';
 import Services from '@/components/Services';
@@ -12,6 +12,13 @@ import Benefits from '@/components/Benefits';
 import HowItWorks from '@/components/HowItWorks';
 import Testimonials from '@/components/Testimonials';
 import CTA from '@/components/CTA';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const InsuranceCardsC = dynamic(() => import('@/components/c/InsuranceCardsC'), {
+  loading: () => <div className="w-full max-w-2xl mx-auto p-6 sm:p-10 mt-6"><Skeleton className="h-[400px] w-full" /></div>,
+  ssr: false
+});
+
 
 export default function CPage() {
   const { setQuoteWizardRef } = useForm();

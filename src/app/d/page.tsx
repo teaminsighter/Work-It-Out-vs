@@ -2,6 +2,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { useForm } from '@/contexts/FormContext';
 import HeroD from '@/components/d/HeroD';
 import Insurers from '@/components/Insurers';
@@ -11,6 +12,8 @@ import Benefits from '@/components/Benefits';
 import HowItWorks from '@/components/HowItWorks';
 import Testimonials from '@/components/Testimonials';
 import CTA from '@/components/CTA';
+import { Skeleton } from '@/components/ui/skeleton';
+
 
 export default function DPage() {
   const { setQuoteWizardRef } = useForm();

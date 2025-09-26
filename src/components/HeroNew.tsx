@@ -1,10 +1,17 @@
 
 'use client';
 
-import QuoteWizardNew from '@/components/quote/QuoteWizardNew';
+import dynamic from 'next/dynamic';
 import { ShieldCheck } from 'lucide-react';
 import { Button } from './ui/button';
 import { useForm } from '@/contexts/FormContext';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const QuoteWizardNew = dynamic(() => import('@/components/quote/QuoteWizardNew'), {
+  loading: () => <div className="w-full max-w-2xl mx-auto p-6 sm:p-10 mt-6"><Skeleton className="h-[400px] w-full" /></div>,
+  ssr: false,
+});
+
 
 const HeroNew = () => {
   const { scrollToWizard, quoteWizardRef } = useForm();
