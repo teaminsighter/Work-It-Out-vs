@@ -24,6 +24,18 @@ export default function SliderStep({ question }: SliderStepProps) {
     handleAnswer(id, value, nextStepId);
   };
 
+  const sliderPoints = 4;
+  const points = Array.from({ length: sliderPoints }, (_, i) => {
+    const position = (i / (sliderPoints - 1)) * 100;
+    return (
+      <div
+        key={i}
+        className="absolute h-2 w-2 rounded-full bg-gray-300"
+        style={{ left: `calc(${position}% - 4px)` }}
+      />
+    );
+  });
+
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
       <motion.div
@@ -40,13 +52,16 @@ export default function SliderStep({ question }: SliderStepProps) {
         <div className="text-4xl font-bold text-primary">
           <NumericFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
         </div>
-        <Slider
-          defaultValue={[value]}
-          min={min}
-          max={max}
-          step={step}
-          onValueChange={(values) => setValue(values[0])}
-        />
+        <div className="relative pt-2">
+            <Slider
+              defaultValue={[value]}
+              min={min}
+              max={max}
+              step={step}
+              onValueChange={(values) => setValue(values[0])}
+            />
+            <div className="relative mt-2 flex items-center">{points}</div>
+        </div>
         <Button onClick={onContinue} className="w-full">
           Continue
         </Button>
