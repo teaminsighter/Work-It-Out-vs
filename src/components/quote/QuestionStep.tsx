@@ -29,7 +29,8 @@ export default function QuestionStep({ question }: QuestionStepProps) {
     handleAnswer(id, value, nextStepId);
   };
 
-  const isGalleryView = id === 'insurance-type' || id === 'security-systems' || id === 'previous-claims' || id === 'coverage-level' || id === 'gender' || id === 'welcome-specialty';
+  const isGalleryView = id === 'insurance-type' || id === 'security-systems' || id === 'previous-claims' || id === 'coverage-level' || id === 'gender';
+  const isWelcomeSpecialty = id === 'welcome-specialty';
   const isInsuranceType = id === 'insurance-type';
 
   const processedQuestion = questionText.replace('{{insuranceType}}', formData.insuranceType || 'insurance');
@@ -53,6 +54,8 @@ export default function QuestionStep({ question }: QuestionStepProps) {
             ? "flex flex-wrap justify-center gap-3 max-w-lg"
             : isGalleryView
             ? "flex flex-wrap justify-center gap-3 max-w-sm"
+            : isWelcomeSpecialty
+            ? "grid grid-cols-2 gap-3 max-w-sm"
             : "grid grid-cols-1 max-w-sm gap-3"
         )}
         variants={containerVariants}
@@ -68,7 +71,9 @@ export default function QuestionStep({ question }: QuestionStepProps) {
               isInsuranceType
                 ? "p-3 aspect-square text-xs sm:text-sm w-[calc(33.33%-0.75rem)]"
                 : isGalleryView
-                ? "p-3 aspect-square text-xs sm:text-sm w-[calc(33.33%-0.75rem)]" 
+                ? "p-3 aspect-square text-xs sm:text-sm w-[calc(33.33%-0.75rem)]"
+                : isWelcomeSpecialty
+                ? "aspect-auto" 
                 : "",
               (id === 'previous-claims' || id === 'coverage-level') && option.value === 'yes' ? 'glass-green' : '',
               (id === 'previous-claims' || id === 'coverage-level') && option.value === 'no' ? 'glass-red' : ''
