@@ -1,0 +1,87 @@
+
+{
+  "indexes": [
+    {
+      "collectionGroup": "leads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "user_id", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "events",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "user_id", "order": "ASCENDING" },
+        { "fieldPath": "event_timestamp", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "sessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "user_id", "order": "ASCENDING" },
+        { "fieldPath": "start_time", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "leads", "fieldPath": "form_id",
+      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "leads", "fieldPath": "landing_page_id",
+      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "leads", "fieldPath": "last_submission",
+      "indexes": [{"order": "DESCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "events", "fieldPath": "session_id",
+      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "events", "fieldPath": "event_name",
+      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "form_analytics", "fieldPath": "user_id",
+      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "form_analytics", "fieldPath": "session_id",
+      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "landing_pages", "fieldPath": "created_by",
+      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "landing_pages", "fieldPath": "created_at",
+      "indexes": [{"order": "DESCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "ab_tests", "fieldPath": "original_page_id",
+      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "ab_tests", "fieldPath": "start_date",
+      "indexes": [{"order": "DESCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "gtm_templates", "fieldPath": "container_id",
+      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "chat_queries", "fieldPath": "user_id",
+      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
+    },
+    {
+      "collectionGroup": "chat_queries", "fieldPath": "timestamp",
+      "indexes": [{"order": "DESCENDING", "queryScope": "COLLECTION"}]
+    }
+  ]
+}
