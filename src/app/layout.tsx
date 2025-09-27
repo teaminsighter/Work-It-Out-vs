@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { FormProvider } from '@/contexts/FormContext';
+import { AuthProvider } from '@/contexts/AuthContext';
 import { useRef } from 'react';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
@@ -32,14 +33,16 @@ export default function RootLayout({
         />
       </head>
       <body className={cn('font-sans antialiased', inter.variable)}>
-        <FormProvider>
-          <Header />
-          <div id="wizard-ref-parent">
-            {children}
-          </div>
-          <Toaster />
-          <Footer />
-        </FormProvider>
+        <AuthProvider>
+          <FormProvider>
+            <Header />
+            <div id="wizard-ref-parent">
+              {children}
+            </div>
+            <Toaster />
+            <Footer />
+          </FormProvider>
+        </AuthProvider>
       </body>
     </html>
   );
