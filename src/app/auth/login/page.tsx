@@ -134,8 +134,8 @@ export default function LoginPage() {
                   {error}
                   {unverifiedEmail && (
                     <Button
-                      variant="link"
-                      className="p-0 h-auto font-semibold !text-destructive-foreground underline"
+                      variant="outline"
+                      className="p-1 h-auto text-xs mt-2 border-destructive/50 text-destructive hover:bg-destructive/10 hover:text-destructive"
                       onClick={handleResendVerification}
                       disabled={loading}
                     >
