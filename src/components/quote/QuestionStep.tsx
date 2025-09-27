@@ -6,6 +6,7 @@ import { useForm } from '@/contexts/FormContext';
 import OptionCard from './OptionCard';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { ShieldCheck } from 'lucide-react';
 
 interface QuestionStepProps {
   question: Question;
@@ -81,6 +82,12 @@ export default function QuestionStep({ question }: QuestionStepProps) {
           />
         ))}
       </motion.div>
+      {isWelcomeSpecialty && (
+        <div className="mt-4 flex items-center text-xs text-muted-foreground">
+          <ShieldCheck className="mr-1 h-3 w-3 text-green-500" />
+          <span>Secure, and Free</span>
+        </div>
+      )}
     </div>
   );
 }
