@@ -114,7 +114,7 @@ export const ALL_QUESTIONS: Questions = {
       id: 'smoker-individual',
       question: 'Are you a smoker?',
       Icon: Cigarette,
-      nextStepId: 'policy-change',
+      nextStepId: 'contact-details',
       options: [
           { value: 'yes', label: 'Yes' },
           { value: 'no', label: 'No' },
@@ -133,29 +133,7 @@ export const ALL_QUESTIONS: Questions = {
       description: 'Please provide the smoking status for both individuals.',
       Icon: Cigarette,
       fields: ['yourSmokerStatus', 'partnerSmokerStatus'],
-      nextStepId: 'policy-change',
-  },
-  'notice-period': {
-    id: 'notice-period',
-    question: 'Select Your Notice Period?',
-    Icon: CalendarClock,
-    nextStepId: 'policy-change',
-    options: [
-      { value: '1_month', label: '1 Month' },
-      { value: '2_months', label: '2 Months' },
-      { value: '3_months', label: '3 Months' },
-    ],
-  },
-  'policy-change': {
-    id: 'policy-change',
-    question: "What's changed since taking out your policy?",
-    Icon: Briefcase,
-    nextStepId: 'security-systems',
-    options: [
-      { value: '2-years', label: '2 years' },
-      { value: '5-years', label: '5 years' },
-      { value: 'age-65', label: 'till age 65' },
-    ],
+      nextStepId: 'contact-details',
   },
   'insurance-type': {
     id: 'insurance-type',
