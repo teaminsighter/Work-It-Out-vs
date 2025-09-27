@@ -49,7 +49,6 @@ const HeroLife = () => {
                 <span>Trusted by thousands of Kiwis</span>
               </li>
             </ul>
-             <Button size="lg" className="mt-8 bg-accent hover:bg-accent/90 text-accent-foreground" onClick={scrollToWizard}>Get Your Quote</Button>
           </div>
           <div ref={quoteWizardRef}>
             <QuoteWizardLife />
