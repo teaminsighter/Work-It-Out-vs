@@ -53,7 +53,7 @@ export const ALL_QUESTIONS: Questions = {
   },
   'welcome-specialty': {
     id: 'welcome-specialty',
-    question: 'Do you currently have any {{insuranceType}} insurance?',
+    question: 'Do you currently have medical insurance?',
     Icon: ShieldQuestion,
     nextStepId: 'security-systems',
     options: [
