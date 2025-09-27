@@ -156,6 +156,46 @@
       ]
     },
     {
+      "collectionGroup": "ab_tests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "start_date", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "ab_tests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "test_type", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "landing_pages",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "page_slug", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "landing_pages",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "landing_pages",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "page_type", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
       "collectionGroup": "chat_queries",
       "queryScope": "COLLECTION",
       "fields": [
