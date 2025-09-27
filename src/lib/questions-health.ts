@@ -55,7 +55,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'welcome-specialty',
     question: 'Do you currently have medical insurance?',
     Icon: ShieldQuestion,
-    nextStepId: 'security-systems',
+    getNextStepId: (value: string) => value === 'yes' ? 'medical-condition-details' : 'security-systems',
     options: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
@@ -200,16 +200,15 @@ export const ALL_QUESTIONS: Questions = {
   },
   'medical-condition-details': {
     id: 'medical-condition-details',
-    question: 'What kind of medical condition do you have?',
+    question: 'What type of medical condition do you have?',
     Icon: HeartPulse,
-    nextStepId: 'household-income',
+    nextStepId: 'security-systems',
     multiSelect: true,
     options: [
       { value: 'diabetics', label: 'Diabetics' },
       { value: 'asthma', label: 'Asthma' },
       { value: 'cancer', label: 'Skin Cancer' },
-      { value: 'heart-condition', label: 'Heart Condition' },
-      { value: 'other', label: 'Other' },
+      { value: 'heart-condition', label: 'Heart Diseases' },
     ],
   },
   'household-income': {
