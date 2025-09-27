@@ -25,7 +25,7 @@ const Hero = () => {
         style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/Lanind%20Page%201%2Ffamily.jpeg?alt=media&token=424b8995-e4f0-4cf9-b257-623ca0287635')" }}
         data-ai-hint="insurance office"
       ></div>
-      <div className="absolute inset-0 z-10" style={{ backgroundColor: 'rgba(53, 162, 231, 0.7)' }}></div>
+      <div className="absolute inset-0 z-10" style={{ backgroundColor: 'rgba(96, 112, 134, 0.7)' }}></div>
       <div className="container mx-auto px-4 relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-white">
@@ -49,7 +49,7 @@ const Hero = () => {
                 <span>Trusted by thousands of Kiwis</span>
               </li>
             </ul>
-             <Button size="lg" className="mt-8 bg-primary hover:bg-primary/90" onClick={scrollToWizard}>Get Your Quote</Button>
+             <Button size="lg" className="mt-8 bg-accent hover:bg-accent/90 text-accent-foreground" onClick={scrollToWizard}>Get Your Quote</Button>
           </div>
           <div ref={quoteWizardRef}>
             <QuoteWizard />
