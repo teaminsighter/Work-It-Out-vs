@@ -17,7 +17,7 @@ interface UserProfile {
   role: UserRole;
   permissions: string[];
   company?: string;
-  emailVerified: boolean;
+  photoURL?: string | null;
 }
 
 interface AuthContextType {
@@ -64,20 +64,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               uid: firebaseUser.uid,
               email: firebaseUser.email,
               displayName: firebaseUser.displayName,
-              emailVerified: firebaseUser.emailVerified,
+              photoURL: firebaseUser.photoURL,
               role: userData.role || 'viewer',
               permissions: userData.permissions || [],
               company: userData.profile?.company,
             });
           } else {
-            // If user exists in Auth but not Firestore, create a default profile.
-            // This can happen with social sign-ins for the first time.
+            // If user exists in Auth but not Firestore, it's likely a new social sign-in.
+            // The createUserDocument cloud function will create the user doc with a role.
+            // We can provide a temporary profile here.
              setUser({
               uid: firebaseUser.uid,
               email: firebaseUser.email,
               displayName: firebaseUser.displayName,
-              emailVerified: firebaseUser.emailVerified,
-              role: 'viewer',
+              photoURL: firebaseUser.photoURL,
+              role: 'viewer', // Default role until function runs
               permissions: [],
             });
           }
@@ -111,7 +112,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     user,
     loading,
     error,
-    isAuthenticated: !!user && user.emailVerified,
+    isAuthenticated: !!user,
     checkPermission,
     hasRole
   };
