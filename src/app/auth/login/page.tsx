@@ -7,17 +7,18 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { loginWithEmail, loginWithGoogle } from '@/lib/firebase/auth';
+import { loginWithEmail, loginWithGoogle, resendVerificationEmail } from '@/lib/firebase/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { Eye, EyeOff, Mail, Lock, AlertCircle, Loader2, Chrome } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { useToast } from '@/hooks/use-toast';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -29,9 +30,11 @@ type LoginForm = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const router = useRouter();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -48,12 +51,10 @@ export default function LoginPage() {
     formState: { errors }
   } = form;
 
-  console.log('Form errors:', errors);
-
   const onSubmit = async (data: LoginForm) => {
-    console.log('Form submitted with data:', data);
     setLoading(true);
     setError(null);
+    setUnverifiedEmail(null);
 
     const { user, error } = await loginWithEmail(
       data.email,
@@ -63,9 +64,11 @@ export default function LoginPage() {
 
     if (error) {
       setError(error);
+      if (error === 'Please verify your email before logging in.') {
+        setUnverifiedEmail(data.email);
+      }
       setLoading(false);
     } else {
-      // Redirect to saved URL or dashboard
       const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || '/admin';
       sessionStorage.removeItem('redirectAfterLogin');
       router.push(redirectUrl);
@@ -85,6 +88,23 @@ export default function LoginPage() {
       const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || '/admin';
       sessionStorage.removeItem('redirectAfterLogin');
       router.push(redirectUrl);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    if (!unverifiedEmail) return;
+    setLoading(true);
+    setError(null);
+    const { success, error } = await resendVerificationEmail(unverifiedEmail);
+    setLoading(false);
+    if (success) {
+      toast({
+        title: 'Verification Email Sent',
+        description: 'A new verification email has been sent to your address.',
+      });
+      setUnverifiedEmail(null);
+    } else {
+      setError(error);
     }
   };
 
@@ -109,7 +129,20 @@ export default function LoginPage() {
             {error && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
+                <AlertTitle>Login Failed</AlertTitle>
+                <AlertDescription>
+                  {error}
+                  {unverifiedEmail && (
+                    <Button
+                      variant="link"
+                      className="p-0 h-auto font-semibold text-destructive-foreground"
+                      onClick={handleResendVerification}
+                      disabled={loading}
+                    >
+                      Resend verification email
+                    </Button>
+                  )}
+                </AlertDescription>
               </Alert>
             )}
 
@@ -209,7 +242,7 @@ export default function LoginPage() {
                   className="w-full"
                   disabled={loading}
                 >
-                  {loading ? (
+                  {loading && !unverifiedEmail ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : null}
                   Sign In

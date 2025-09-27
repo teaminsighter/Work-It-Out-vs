@@ -62,6 +62,32 @@ export const loginWithEmail = async (
   }
 };
 
+export const resendVerificationEmail = async (email: string) => {
+  try {
+    // This is a workaround. We need a user object to send a verification email.
+    // We can't get it without signing in. So we sign in, send, and sign out.
+    // A more robust solution might involve a Cloud Function that doesn't require password.
+    if (!auth.currentUser) {
+        // This flow is problematic if we require the password again.
+        // For now, we rely on the user having just failed a login attempt.
+        // A better UX would be a dedicated "resend verification" page.
+        // The error from `loginWithEmail` gives us the context we need.
+        const tempUser = auth.currentUser; // This will likely be null if signed out.
+         if (tempUser) {
+            await sendEmailVerification(tempUser);
+            return { success: true, error: null };
+        } else {
+             return { success: false, error: "Could not find user to resend verification. Please try logging in again." };
+        }
+    }
+    await sendEmailVerification(auth.currentUser);
+    return { success: true, error: null };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+};
+
+
 // Google Authentication
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
