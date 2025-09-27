@@ -14,6 +14,7 @@ import ContactForm from './ContactForm';
 import SelectForm from './SelectForm';
 import { usePathname } from 'next/navigation';
 import MultiSelectStep from './MultiSelectStep';
+import SliderStep from './SliderStep';
 
 const ALL_WIZARD_QUESTIONS = {...ALL_QUESTIONS, ...ALL_LOCATION_QUESTIONS};
 
@@ -33,6 +34,9 @@ export default function QuoteWizardLife() {
       return <ResultsPage />;
     }
     if (currentQuestion) {
+      if (currentQuestion.type === 'slider') {
+        return <SliderStep question={currentQuestion} />;
+      }
       if (currentQuestion.multiSelect) {
         return <MultiSelectStep question={currentQuestion} />;
       }

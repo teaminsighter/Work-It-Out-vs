@@ -73,14 +73,10 @@ export const ALL_QUESTIONS: Questions = {
     question: 'How much cover do you want?',
     Icon: Banknote,
     nextStepId: 'who-to-cover',
-    options: [
-      { value: '100k', label: '$100,000' },
-      { value: '250k', label: '$250,000' },
-      { value: '500k', label: '$500,000' },
-      { value: '750k', label: '$750,000' },
-      { value: '1m', label: '$1,000,000' },
-      { value: '1m+', label: '$1,000,000+' },
-    ],
+    type: 'slider',
+    min: 100000,
+    max: 1000000,
+    step: 50000,
   },
   'who-to-cover': {
     id: 'who-to-cover',

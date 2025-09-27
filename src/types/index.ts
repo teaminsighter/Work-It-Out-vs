@@ -24,6 +24,10 @@ export interface Question {
   nextStepId?: string;
   getNextStepId?: (value: any, formData?: FormData) => string;
   multiSelect?: boolean;
+  type?: 'slider';
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
 export type Questions = {
