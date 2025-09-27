@@ -114,7 +114,7 @@ export const ALL_QUESTIONS: Questions = {
       id: 'smoker-individual',
       question: 'Are you a smoker?',
       Icon: Cigarette,
-      nextStepId: 'contact-details',
+      nextStepId: 'medical-condition',
       options: [
           { value: 'yes', label: 'Yes' },
           { value: 'no', label: 'No' },
@@ -266,7 +266,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'medical-condition',
     question: 'Do you have any medical conditions?',
     Icon: Activity,
-    getNextStepId: (value: string) => value === 'yes' ? 'medical-condition-details' : 'household-income',
+    getNextStepId: (value: string) => value === 'yes' ? 'medical-condition-details' : 'contact-details',
     options: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
@@ -274,16 +274,15 @@ export const ALL_QUESTIONS: Questions = {
   },
   'medical-condition-details': {
     id: 'medical-condition-details',
-    question: 'What kind of medical condition do you have?',
+    question: "What's your medical condition?",
     Icon: HeartPulse,
-    nextStepId: 'household-income',
+    nextStepId: 'contact-details',
     multiSelect: true,
     options: [
-      { value: 'diabetics', label: 'Diabetics' },
+      { value: 'diabetic', label: 'Diabetic' },
+      { value: 'skin-cancer', label: 'Skin Cancer' },
       { value: 'asthma', label: 'Asthma' },
-      { value: 'cancer', label: 'Skin Cancer' },
-      { value: 'heart-condition', label: 'Heart Condition' },
-      { value: 'other', label: 'Other' },
+      { value: 'heart-diseases', label: 'Heart Diseases' },
     ],
   },
   'household-income': {
