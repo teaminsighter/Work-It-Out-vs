@@ -1,23 +1,38 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Users can read/write their own profile, admins have full access
+    // Users can read their own profile
     match /users/{userId} {
       allow read: if request.auth != null && request.auth.uid == userId;
-      allow write: if request.auth != null &&
-        (request.auth.uid == userId ||
-         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin');
+      allow write: if request.auth != null && 
+                   (request.auth.uid == userId || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin');
     }
 
     // Leads access based on role
     match /leads/{leadId} {
-      allow read: if request.auth != null && 
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['super_admin', 'admin', 'analyst', 'viewer'];
-      allow create: if request.auth != null; // Typically more open for anonymous submissions, but restricting to auth for now
-      allow update: if request.auth != null && 
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['super_admin', 'admin'];
-      allow delete: if request.auth != null && 
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin';
+      allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['super_admin', 'admin', 'analyst', 'viewer'];
+      allow create: if true; // Allows lead creation from frontend
+      allow update: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['super_admin', 'admin'];
+      allow delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin';
+    }
+
+    // Analytics collections rules
+    match /events/{eventId} {
+      allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['super_admin', 'admin', 'analyst'];
+      allow create: if true; // Public can create events
+      allow update, delete: if false; // Events are immutable
+    }
+
+    match /sessions/{sessionId} {
+      allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['super_admin', 'admin', 'analyst'];
+      allow create, update: if true; // Sessions can be created/updated by client
+      allow delete: if false;
+    }
+
+    match /form_analytics/{docId} {
+      allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['super_admin', 'admin', 'analyst'];
+      allow create, update: if true; // Form analytics can be created/updated by client
+      allow delete: if false;
     }
   }
 }
