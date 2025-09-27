@@ -66,7 +66,6 @@ export default function RegisterPage() {
     } else if (user) {
       // The Cloud Function 'createUserDocument' will handle profile creation.
       setSuccess(true);
-      // No need to push to verify-email, user will be redirected after login if not verified.
       setTimeout(() => {
         router.push('/auth/login');
       }, 3000);
