@@ -1,0 +1,69 @@
+
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
+
+admin.initializeApp();
+
+const db = admin.firestore();
+
+/**
+ * A Firebase Function that triggers when a new user is created in Firebase Authentication.
+ * It creates a corresponding user document in the 'users' collection in Firestore.
+ */
+export const createUserDocument = functions.auth.user().onCreate(async (user) => {
+  const { uid, email, displayName, photoURL } = user;
+
+  const newUserRef = db.collection('users').doc(uid);
+
+  try {
+    await newUserRef.set({
+      user_id: uid,
+      email: email,
+      created_at: admin.firestore.FieldValue.serverTimestamp(),
+      last_login: null,
+      role: 'viewer', // Default role for new users
+      permissions: [], // Default empty permissions
+      account_status: 'active',
+      profile: {
+        name: displayName || '',
+        company: '',
+        phone: '',
+        avatar_url: photoURL || '',
+      },
+    });
+    console.log(`Successfully created user document for UID: ${uid}`);
+  } catch (error) {
+    console.error(`Error creating user document for UID: ${uid}`, error);
+  }
+});
+
+
+/**
+ * Processes and aggregates dataLayer events as they are created in Firestore.
+ */
+exports.processDataLayerEvent = functions.firestore
+  .document('events/{eventId}')
+  .onCreate(async (snap, context) => {
+    const eventData = snap.data();
+    console.log('Processing event:', context.params.eventId, eventData);
+    // TODO:
+    // - Aggregate by variant
+    // - Update real-time dashboards
+    // - Calculate statistical significance
+    // - Trigger webhooks
+    // - Update user journey map
+  });
+
+/**
+ * A scheduled function that runs every 5 minutes to monitor A/B test performance.
+ */
+exports.monitorABTestPerformance = functions.pubsub
+  .schedule('every 5 minutes')
+  .onRun(async (context) => {
+    console.log('Monitoring A/B test performance...');
+    // TODO:
+    // - Calculate conversion rates per variant
+    // - Check statistical significance
+    // - Auto-pause if one variant significantly underperforms
+    // - Send alerts for test milestones
+  });
