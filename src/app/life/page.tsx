@@ -14,6 +14,11 @@ import Testimonials from '@/components/Testimonials';
 import CTA from '@/components/CTA';
 import { Skeleton } from '@/components/ui/skeleton';
 
+const QuoteWizardLife = dynamic(() => import('@/components/quote/QuoteWizardLife'), {
+  loading: () => <div className="w-full max-w-2xl mx-auto p-6 sm:p-10 mt-6"><Skeleton className="h-[400px] w-full" /></div>,
+  ssr: false,
+});
+
 
 export default function LifePage() {
   const { setQuoteWizardRef } = useForm();
