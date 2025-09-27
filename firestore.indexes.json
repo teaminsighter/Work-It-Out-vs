@@ -24,6 +24,14 @@
         { "fieldPath": "user_id", "order": "ASCENDING" },
         { "fieldPath": "start_time", "order": "DESCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "chat_queries",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "user_id", "order": "ASCENDING" },
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": [
@@ -49,7 +57,7 @@
     },
     {
       "collectionGroup": "form_analytics", "fieldPath": "user_id",
-      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
+      "indexes": [{"order": "ASCENDING", "queryScope": "COLlection"}]
     },
     {
       "collectionGroup": "form_analytics", "fieldPath": "session_id",
@@ -74,14 +82,6 @@
     {
       "collectionGroup": "gtm_templates", "fieldPath": "container_id",
       "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
-    },
-    {
-      "collectionGroup": "chat_queries", "fieldPath": "user_id",
-      "indexes": [{"order": "ASCENDING", "queryScope": "COLLECTION"}]
-    },
-    {
-      "collectionGroup": "chat_queries", "fieldPath": "timestamp",
-      "indexes": [{"order": "DESCENDING", "queryScope": "COLLECTION"}]
     }
   ]
 }

@@ -67,3 +67,39 @@ exports.monitorABTestPerformance = functions.pubsub
     // - Auto-pause if one variant significantly underperforms
     // - Send alerts for test milestones
   });
+
+/**
+ * Process complex queries asynchronously.
+ */
+exports.processComplexQuery = functions.https.onCall(async (data, context) => {
+    // TODO:
+    // - Validate user permissions
+    // - Process query with Gemini
+    // - Cache results
+    // - Return insights
+});
+
+/**
+ * Generate scheduled insights.
+ */
+exports.generateDailyInsights = functions.pubsub
+    .schedule('every day 09:00')
+    .onRun(async (context) => {
+        // TODO:
+        // - Analyze yesterday's data
+        // - Identify anomalies
+        // - Generate insights
+        // - Send notifications
+    });
+
+/**
+ * Real-time anomaly detection.
+ */
+exports.detectAnomalies = functions.firestore
+    .document('events/{eventId}')
+    .onCreate(async (snap, context) => {
+        // TODO:
+        // - Check for unusual patterns
+        // - Alert if anomaly detected
+        // - Suggest investigation queries
+    });
