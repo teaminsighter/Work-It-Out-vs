@@ -7,7 +7,8 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { loginWithEmail, loginWithGoogle, resendVerificationEmail } from '@/lib/firebase/auth';
+import { loginWithEmail, loginWithGoogle } from '@/lib/firebase/auth';
+import { resendVerificationEmailAction } from '@/lib/auth-actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -46,7 +47,6 @@ export default function LoginPage() {
   });
 
   const {
-    register,
     handleSubmit,
     formState: { errors }
   } = form;
@@ -95,7 +95,7 @@ export default function LoginPage() {
     if (!unverifiedEmail) return;
     setLoading(true);
     setError(null);
-    const { success, error } = await resendVerificationEmail(unverifiedEmail);
+    const { success, error } = await resendVerificationEmailAction(unverifiedEmail);
     setLoading(false);
     if (success) {
       toast({

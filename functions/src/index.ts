@@ -47,64 +47,6 @@ export const createUserDocument = functions.auth.user().onCreate(async (user) =>
 
 
 /**
- * A callable function to resend a verification email.
- */
-export const sendVerificationEmail = functions.https.onCall(async (data, context) => {
-  const email = data.email;
-
-  if (!email || typeof email !== 'string') {
-    throw new functions.https.HttpsError(
-      'invalid-argument',
-      'The function must be called with one argument "email" containing the user\'s email address.'
-    );
-  }
-
-  try {
-    const user = await admin.auth().getUserByEmail(email);
-    if (user.emailVerified) {
-       throw new functions.https.HttpsError(
-        'already-exists',
-        'This email address has already been verified.'
-      );
-    }
-    
-    const link = await admin.auth().generateEmailVerificationLink(email);
-    // In a real app, you would send this link using a transactional email service
-    // For this example, we'll rely on Firebase's ability to re-trigger its own email flow,
-    // which requires regenerating the user's verification status.
-    // The simplest way to do that is often just to ask the user to re-register or use password-reset flow
-    // but a proper backend can do this.
-    
-    // For our case, let's just log it and the client toast will be enough.
-    // A more robust solution is needed for production. The client call is what matters.
-    console.log(`Generated verification link for ${email}: ${link}`);
-    
-    // The Firebase Admin SDK does not have a direct method to re-send the verification email.
-    // The link generation is for custom email handlers.
-    // The workaround is to update the user, which can sometimes re-trigger system emails, but it is not guaranteed.
-    // A more reliable way is a custom email sender.
-    // However, the user is experiencing an issue where the client-side resend fails.
-    // A callable function that just confirms the user exists is a good first step.
-    
-    return { message: `A new verification email has been sent to ${email}.` };
-
-  } catch (error: any) {
-     console.error('Error resending verification email:', error);
-    if (error.code === 'auth/user-not-found') {
-      throw new functions.https.HttpsError(
-        'not-found',
-        'There is no user corresponding to the given email.'
-      );
-    }
-    throw new functions.https.HttpsError(
-      'internal',
-      'An unexpected error occurred.'
-    );
-  }
-});
-
-
-/**
  * Process and aggregate dataLayer events as they are created in Firestore.
  */
 exports.processDataLayerEvent = functions.firestore

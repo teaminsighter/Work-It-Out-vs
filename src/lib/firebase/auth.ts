@@ -6,7 +6,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged,
   User,
   sendPasswordResetEmail,
   updateProfile,
@@ -18,10 +17,10 @@ import {
   browserSessionPersistence,
 } from 'firebase/auth';
 import { app } from './config';
-import { getFunctions, httpsCallable } from 'firebase/functions';
+
 
 export const auth = getAuth(app);
-const functions = getFunctions(app);
+
 
 // Set persistence
 export const setAuthPersistence = async (rememberMe: boolean) => {
@@ -79,28 +78,6 @@ export const loginWithEmail = async (
   }
 };
 
-export const resendVerificationEmail = async (email: string) => {
-  try {
-    const sendVerificationEmail = httpsCallable(
-      functions,
-      'sendVerificationEmail'
-    );
-    await sendVerificationEmail({ email });
-    return { success: true, error: null };
-  } catch (error: any) {
-    console.error('Error resending verification email:', error);
-    if (error.message.includes('user-not-found')) {
-      return {
-        success: false,
-        error: 'Could not find an account with that email address.',
-      };
-    }
-    return {
-      success: false,
-      error: 'An unexpected error occurred. Please try again.',
-    };
-  }
-};
 
 // Google Authentication
 const googleProvider = new GoogleAuthProvider();
