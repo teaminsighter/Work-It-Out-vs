@@ -22,7 +22,7 @@ export interface Question {
   fields?: string[]; // For multi-field forms like ContactForm
   field?: string; // For single-field forms like SelectForm
   nextStepId?: string;
-  getNextStepId?: (value: any) => string;
+  getNextStepId?: (value: any, formData?: FormData) => string;
   multiSelect?: boolean;
 }
 

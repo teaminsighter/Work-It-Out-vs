@@ -4,7 +4,11 @@
 import React, { createContext, useContext, useState, useMemo, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import type { FormData, Question } from '@/types';
-import { ALL_QUESTIONS, TOTAL_STEPS_ESTIMATE } from '@/lib/questions';
+import { ALL_QUESTIONS as ALL_MAIN_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_MAIN } from '@/lib/questions';
+import { ALL_QUESTIONS as ALL_LIFE_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_LIFE } from '@/lib/questions-life';
+import { ALL_QUESTIONS as ALL_HEALTH_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_HEALTH } from '@/lib/questions-health';
+import { ALL_QUESTIONS as ALL_INCOME_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_INCOME } from '@/lib/questions-income';
+
 import { useToast } from "@/hooks/use-toast";
 
 interface FormContextType {
@@ -23,8 +27,18 @@ interface FormContextType {
 
 const FormContext = createContext<FormContextType | undefined>(undefined);
 
+const getQuestionSet = (pathname: string) => {
+    if (pathname === '/life') return { questions: ALL_LIFE_QUESTIONS, totalSteps: TOTAL_STEPS_LIFE };
+    if (pathname === '/health') return { questions: ALL_HEALTH_QUESTIONS, totalSteps: TOTAL_STEPS_HEALTH };
+    if (pathname === '/income') return { questions: ALL_INCOME_QUESTIONS, totalSteps: TOTAL_STEPS_INCOME };
+    return { questions: ALL_MAIN_QUESTIONS, totalSteps: TOTAL_STEPS_MAIN };
+}
+
+
 export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
+  const { questions, totalSteps: initialTotalSteps } = getQuestionSet(pathname);
+
   const isHealthPage = pathname === '/health';
   const isLifePage = pathname === '/life';
   const isIncomePage = pathname === '/income';
@@ -44,7 +58,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [formData, setFormData] = useState<FormData>(getInitialFormData());
   const [stepHistory, setStepHistory] = useState<string[]>(getInitialStepHistory());
-  const [totalSteps, setTotalSteps] = useState(TOTAL_STEPS_ESTIMATE);
+  const [totalSteps, setTotalSteps] = useState(initialTotalSteps);
   const [quoteWizardRef, setQuoteWizardRefState] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const { toast } = useToast();
 
@@ -81,9 +95,9 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     let nextStep: string | undefined = nextStepId;
     
     if (!nextStep) {
-      const question = ALL_QUESTIONS[currentStepId];
+      const question = questions[currentStepId];
       if (question?.getNextStepId) {
-        nextStep = question.getNextStepId(value);
+        nextStep = question.getNextStepId(value, newFormData);
       } else if (question?.nextStepId) {
         nextStep = question.nextStepId
       } else if (question?.options) {

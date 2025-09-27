@@ -42,10 +42,11 @@ import {
   Briefcase,
   DollarSign,
   BookUser,
+  Banknote,
 } from 'lucide-react';
 import { ALL_LOCATION_QUESTIONS } from './questions-location';
 
-export const TOTAL_STEPS_ESTIMATE = 9;
+export const TOTAL_STEPS_ESTIMATE = 10;
 
 export const ALL_QUESTIONS: Questions = {
   'start': {
@@ -58,10 +59,31 @@ export const ALL_QUESTIONS: Questions = {
     id: 'welcome-specialty',
     question: 'Do you currently have any {{insuranceType}} insurance?',
     Icon: ShieldQuestion,
-    getNextStepId: (value: string) => value === 'yes' ? 'improve-on-cover' : 'notice-period',
+    // This will now be handled by the getNextStepId in the new cover-amount question
+    nextStepId: 'cover-amount', 
     options: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
+    ],
+  },
+   'cover-amount': {
+    id: 'cover-amount',
+    question: 'How much cover do you want?',
+    Icon: Banknote,
+    getNextStepId: (value: any, formData?: FormData) => {
+        // value here is the cover amount, but we need to check the answer from welcome-specialty
+        if (formData && formData['welcome-specialty'] === 'yes') {
+            return 'improve-on-cover';
+        }
+        return 'notice-period';
+    },
+    options: [
+      { value: '100k', label: '$100,000' },
+      { value: '250k', label: '$250,000' },
+      { value: '500k', label: '$500,000' },
+      { value: '750k', label: '$750,000' },
+      { value: '1m', label: '$1,000,000' },
+      { value: '1m+', label: '$1,000,000+' },
     ],
   },
   'improve-on-cover': {
