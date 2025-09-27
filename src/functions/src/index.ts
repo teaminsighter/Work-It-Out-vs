@@ -39,7 +39,7 @@ export const createUserDocument = functions.auth.user().onCreate(async (user) =>
 
 
 /**
- * Processes and aggregates dataLayer events as they are created in Firestore.
+ * Process and aggregate dataLayer events as they are created in Firestore.
  */
 exports.processDataLayerEvent = functions.firestore
   .document('events/{eventId}')

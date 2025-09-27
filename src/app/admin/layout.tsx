@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -50,10 +51,18 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { logout } from '@/lib/firebase/auth';
+import { useRouter } from 'next/navigation';
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await logout();
+    router.push('/auth/login');
+  };
 
   const renderNavItems = (items: NavItem[]) => {
     return items.map((item) => {
@@ -208,7 +217,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                   <span>Settings</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
                 </DropdownMenuItem>

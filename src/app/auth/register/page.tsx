@@ -6,8 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { registerWithEmail } from '@/lib/firebase/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -45,28 +44,20 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterFormValues) => {
     setLoading(true);
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+    const { error } = await registerWithEmail(data.email, data.password, data.name);
       
-      if (userCredential.user) {
-        await updateProfile(userCredential.user, {
-          displayName: data.name,
-        });
-      }
-      
-      // The Firestore user document creation is handled by a Firebase Function.
-      
-      toast({ title: 'Success', description: 'Account created successfully. Please check your email to verify your account.' });
-      router.push('/dashboard'); 
-    } catch (error: any) {
+    if (error) {
       toast({
         variant: 'destructive',
         title: 'Registration Failed',
-        description: error.message,
+        description: error,
       });
-    } finally {
-      setLoading(false);
+    } else {
+      // The Firestore user document creation is handled by a Firebase Function.
+      toast({ title: 'Success', description: 'Account created successfully. Please check your email to verify your account.' });
+      router.push('/dashboard'); 
     }
+    setLoading(false);
   };
 
   return (

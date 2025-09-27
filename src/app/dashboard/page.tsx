@@ -4,8 +4,7 @@
 import withAuth from '@/components/auth/withAuth';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/firebase';
-import { signOut } from 'firebase/auth';
+import { logout } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
 
 function DashboardPage() {
@@ -13,7 +12,7 @@ function DashboardPage() {
   const router = useRouter();
 
   const handleSignOut = async () => {
-    await signOut(auth);
+    await logout();
     router.push('/auth/login');
   };
 

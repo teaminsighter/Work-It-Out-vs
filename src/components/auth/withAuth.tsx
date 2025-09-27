@@ -17,7 +17,7 @@ export default function withAuth<P extends object>(
   options: WithAuthOptions = {}
 ) {
   const WithAuth = (props: P) => {
-    const { user, loading } = useAuth();
+    const { user, loading, isAuthenticated, hasRole } = useAuth();
     const router = useRouter();
     const { allowedRoles } = options;
 
@@ -29,17 +29,30 @@ export default function withAuth<P extends object>(
       );
     }
 
-    if (!user) {
-      router.replace('/auth/login');
+    if (!isAuthenticated) {
+      // In a real app, you might want to redirect to a login page
+      if (typeof window !== 'undefined') {
+        router.replace('/auth/login');
+      }
       return null;
     }
 
     if (allowedRoles && allowedRoles.length > 0) {
-      const userRole = (user as any).role;
-      if (!userRole || !allowedRoles.includes(userRole)) {
-        router.replace('/unauthorized'); // Or a custom 403 page
+      if (!user || !hasRole(allowedRoles)) {
+        // Redirect to an unauthorized page if role is not allowed
+        if (typeof window !== 'undefined') {
+          router.replace('/unauthorized'); 
+        }
         return null;
       }
+    }
+    
+    // Fallback for when user is null after loading and not redirected
+    if (!user) {
+       if (typeof window !== 'undefined') {
+        router.replace('/auth/login');
+      }
+      return null;
     }
 
     return <WrappedComponent {...props} />;

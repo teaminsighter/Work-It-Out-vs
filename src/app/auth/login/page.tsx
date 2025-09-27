@@ -6,8 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { loginWithEmail, loginWithGoogle } from '@/lib/firebase/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -41,33 +40,31 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormValues) => {
     setLoading(true);
-    try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
-      toast({ title: 'Success', description: 'Logged in successfully.' });
-      router.push('/dashboard');
-    } catch (error: any) {
+    const { error } = await loginWithEmail(data.email, data.password, data.rememberMe);
+    if (error) {
       toast({
         variant: 'destructive',
         title: 'Login Failed',
-        description: error.message,
+        description: error,
       });
-    } finally {
-      setLoading(false);
+    } else {
+      toast({ title: 'Success', description: 'Logged in successfully.' });
+      router.push('/dashboard');
     }
+    setLoading(false);
   };
 
   const handleGoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-      toast({ title: 'Success', description: 'Logged in with Google.' });
-      router.push('/dashboard');
-    } catch (error: any) {
+    const { error } = await loginWithGoogle();
+    if (error) {
        toast({
         variant: 'destructive',
         title: 'Google Sign-In Failed',
-        description: error.message,
+        description: error,
       });
+    } else {
+      toast({ title: 'Success', description: 'Logged in with Google.' });
+      router.push('/dashboard');
     }
   };
 
