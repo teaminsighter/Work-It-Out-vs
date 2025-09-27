@@ -43,6 +43,9 @@ import {
   DollarSign,
   BookUser,
   Banknote,
+  UserCheck,
+  Users2,
+  UserSquare,
 } from 'lucide-react';
 import { ALL_LOCATION_QUESTIONS } from './questions-location';
 
@@ -59,7 +62,6 @@ export const ALL_QUESTIONS: Questions = {
     id: 'welcome-specialty',
     question: 'Do you currently have any {{insuranceType}} insurance?',
     Icon: ShieldQuestion,
-    // This will now be handled by the getNextStepId in the new cover-amount question
     nextStepId: 'cover-amount', 
     options: [
       { value: 'yes', label: 'Yes' },
@@ -70,13 +72,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'cover-amount',
     question: 'How much cover do you want?',
     Icon: Banknote,
-    getNextStepId: (value: any, formData?: FormData) => {
-        // value here is the cover amount, but we need to check the answer from welcome-specialty
-        if (formData && formData['welcome-specialty'] === 'yes') {
-            return 'improve-on-cover';
-        }
-        return 'notice-period';
-    },
+    nextStepId: 'who-to-cover',
     options: [
       { value: '100k', label: '$100,000' },
       { value: '250k', label: '$250,000' },
@@ -86,16 +82,58 @@ export const ALL_QUESTIONS: Questions = {
       { value: '1m+', label: '$1,000,000+' },
     ],
   },
-  'improve-on-cover': {
-    id: 'improve-on-cover',
-    question: 'Because you already have cover, what are you looking to improve on?',
-    Icon: Briefcase,
-    nextStepId: 'policy-change',
+  'who-to-cover': {
+    id: 'who-to-cover',
+    question: 'Who are you looking to cover?',
+    Icon: Users,
     options: [
-      { value: 'monthly-premiums', label: 'Monthly premiums', icon: DollarSign },
-      { value: 'policy-wording', label: 'Policy wording', icon: BookUser },
-      { value: 'better-deal', label: 'Just looking for a better deal!', icon: Gem },
+        { value: 'just-me', label: 'Just me', icon: UserCheck, nextStepId: 'age-individual' },
+        { value: 'couple', label: 'Couple', icon: Users2, nextStepId: 'age-couple' },
+        { value: 'someone-else', label: 'Someone else', icon: UserSquare, nextStepId: 'cover-for-whom' },
     ],
+  },
+  'cover-for-whom': {
+      id: 'cover-for-whom',
+      question: 'Who is the cover for?',
+      Icon: Users,
+      nextStepId: 'age-individual',
+      options: [
+          { value: 'family-member', label: 'Family Member' },
+          { value: 'partner', label: 'Partner' },
+          { value: 'someone-else', label: 'Someone Else' },
+      ],
+  },
+  'age-individual': {
+    id: 'age-individual',
+    question: 'How old are you?',
+    Icon: User,
+    fields: ['age'],
+    nextStepId: 'smoker-individual',
+  },
+  'smoker-individual': {
+      id: 'smoker-individual',
+      question: 'Are you a smoker?',
+      Icon: Cigarette,
+      nextStepId: 'policy-change',
+      options: [
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
+      ]
+  },
+  'age-couple': {
+    id: 'age-couple',
+    question: "What are your ages?",
+    Icon: Users,
+    fields: ['yourAge', 'partnerAge'],
+    nextStepId: 'smoker-couple',
+  },
+  'smoker-couple': {
+      id: 'smoker-couple',
+      question: 'Are you smokers?',
+      description: 'Please provide the smoking status for both individuals.',
+      Icon: Cigarette,
+      fields: ['yourSmokerStatus', 'partnerSmokerStatus'],
+      nextStepId: 'policy-change',
   },
   'notice-period': {
     id: 'notice-period',

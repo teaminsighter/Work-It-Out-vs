@@ -16,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import type { Question } from '@/types';
 import { motion } from 'framer-motion';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 interface ContactFormProps {
   question: Question;
@@ -28,12 +29,16 @@ const createSchema = (fields: string[] = []) => {
     if (fields.includes('phone')) shape.phone = z.string().min(10, 'Phone number seems too short.');
     if (fields.includes('postcode')) shape.postcode = z.string().min(4, 'Postcode must be at least 4 digits.').max(4, 'Postcode must be at most 4 digits.');
     if (fields.includes('age')) shape.age = z.string().refine(val => !isNaN(parseInt(val, 10)) && parseInt(val, 10) > 0, { message: 'Please enter a valid age.' });
+    if (fields.includes('yourAge')) shape.yourAge = z.string().refine(val => !isNaN(parseInt(val, 10)) && parseInt(val, 10) > 0, { message: 'Please enter a valid age.' });
+    if (fields.includes('partnerAge')) shape.partnerAge = z.string().refine(val => !isNaN(parseInt(val, 10)) && parseInt(val, 10) > 0, { message: 'Please enter a valid age.' });
+    if (fields.includes('yourSmokerStatus')) shape.yourSmokerStatus = z.enum(['yes', 'no']);
+    if (fields.includes('partnerSmokerStatus')) shape.partnerSmokerStatus = z.enum(['yes', 'no']);
     return z.object(shape);
 };
 
 export default function ContactForm({ question }: ContactFormProps) {
   const { handleAnswer, formData, setFormData } = useForm();
-  const { id, Icon, question: questionText, description, fields = [], nextStepId } = question;
+  const { id, question: questionText, description, fields = [], nextStepId } = question;
 
   const formSchema = createSchema(fields);
   type FormValues = z.infer<typeof formSchema>;
@@ -58,7 +63,7 @@ export default function ContactForm({ question }: ContactFormProps) {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <Icon className="mb-4 h-12 w-12 text-primary" />
+        {question.Icon && <question.Icon className="mb-4 h-12 w-12 text-primary" />}
       </motion.div>
       <h2 className="text-2xl font-bold sm:text-3xl font-headline">{questionText}</h2>
       {description && <p className="mt-2 text-muted-foreground">{description}</p>}
@@ -138,6 +143,100 @@ export default function ContactForm({ question }: ContactFormProps) {
                     <FormMessage />
                 </FormItem>
                 )}
+            />
+          )}
+          {fields.includes('yourAge') && (
+            <FormField
+                control={form.control}
+                name="yourAge"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Your Age</FormLabel>
+                    <FormControl>
+                    <Input placeholder="e.g. 35" type="number" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+          )}
+          {fields.includes('partnerAge') && (
+            <FormField
+                control={form.control}
+                name="partnerAge"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Partner's Age</FormLabel>
+                    <FormControl>
+                    <Input placeholder="e.g. 34" type="number" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+          )}
+          {fields.includes('yourSmokerStatus') && (
+            <FormField
+              control={form.control}
+              name="yourSmokerStatus"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Are you a smoker?</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex space-x-4"
+                    >
+                      <FormItem className="flex items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="yes" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Yes</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="no" />
+                        </FormControl>
+                        <FormLabel className="font-normal">No</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          {fields.includes('partnerSmokerStatus') && (
+            <FormField
+              control={form.control}
+              name="partnerSmokerStatus"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Is your partner a smoker?</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex space-x-4"
+                    >
+                      <FormItem className="flex items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="yes" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Yes</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="no" />
+                        </FormControl>
+                        <FormLabel className="font-normal">No</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           )}
           
