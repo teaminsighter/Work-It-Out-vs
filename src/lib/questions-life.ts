@@ -89,19 +89,8 @@ export const ALL_QUESTIONS: Questions = {
     options: [
         { value: 'just-me', label: 'Just me', icon: UserCheck, nextStepId: 'age-individual' },
         { value: 'couple', label: 'Couple', icon: Users2, nextStepId: 'age-couple' },
-        { value: 'someone-else', label: 'Someone else', icon: UserSquare, nextStepId: 'cover-for-whom' },
+        { value: 'someone-else', label: 'Someone else', icon: UserSquare, nextStepId: 'age-individual' },
     ],
-  },
-  'cover-for-whom': {
-      id: 'cover-for-whom',
-      question: 'Who is the cover for?',
-      Icon: Users,
-      nextStepId: 'age-individual',
-      options: [
-          { value: 'family-member', label: 'Family Member' },
-          { value: 'partner', label: 'Partner' },
-          { value: 'someone-else', label: 'Someone Else' },
-      ],
   },
   'age-individual': {
     id: 'age-individual',
