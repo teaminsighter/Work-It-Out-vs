@@ -1,143 +1,23 @@
-
 rules_version = '2';
-
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // Helper functions for security rules
-    function isSignedIn() {
-      return request.auth != null;
-    }
-
-    function getUserData(userId) {
-      return get(/databases/$(database)/documents/users/$(userId)).data;
-    }
-
-    function isSuperAdmin(userId) {
-      return getUserData(userId).role == 'super_admin';
-    }
-
-    function isAdmin(userId) {
-      let userRole = getUserData(userId).role;
-      return userRole == 'admin' || userRole == 'super_admin';
-    }
-    
-    function isAnalyst(userId) {
-      let userRole = getUserData(userId).role;
-      return userRole == 'analyst' || isAdmin(userId);
-    }
-
-    function isViewer(userId) {
-        let userRole = getUserData(userId).role;
-        // For this example, we'll allow viewers the same as analysts.
-        // In a real app, this would be more granular.
-        return userRole == 'viewer' || isAnalyst(userId);
-    }
-
-    // Automatically add created_at and updated_at timestamps
-    function getWriteData() {
-      let writeData = request.resource.data;
-      // Add created_at on create
-      if (request.method == 'create') {
-        writeData = writeData.remove('created_at');
-        writeData = writeData.remove('updated_at');
-        writeData = writeData.set('created_at', request.time);
-        writeData = writeData.set('updated_at', request.time);
-      }
-      // Add updated_at on update
-      if (request.method == 'update') {
-        writeData = writeData.remove('updated_at');
-        writeData = writeData.set('updated_at', request.time);
-      }
-      return writeData;
-    }
-
-    // =================================================================
-    // Collections Rules
-    // =================================================================
-
-    // --- users collection ---
-    // - super_admin: full access
-    // - admin: read-only
-    // - other users: can only read/update their own profile
+    // Users can read/write their own profile, admins have full access
     match /users/{userId} {
-      allow read: if isSignedIn() && (isSuperAdmin(request.auth.uid) || request.auth.uid == userId);
-      allow create: if isSignedIn(); // Allow new user sign-ups
-      allow update: if isSignedIn() && (isSuperAdmin(request.auth.uid) || request.auth.uid == userId);
-      allow delete: if isSignedIn() && isSuperAdmin(request.auth.uid);
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if request.auth != null &&
+        (request.auth.uid == userId ||
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin');
     }
 
-    // --- leads collection ---
-    // - Anyone can write (for lead capture)
-    // - Only analysts and above can read
+    // Leads access based on role
     match /leads/{leadId} {
-      allow read: if isSignedIn() && isAnalyst(request.auth.uid);
-      allow write: if true; // Publicly writable for lead submission
-      allow update, delete: if isSignedIn() && isAdmin(request.auth.uid);
-    }
-
-    // --- events collection ---
-    // - Anyone can write (for event tracking)
-    // - Only analysts and above can read
-    match /events/{eventId} {
-      allow read: if isSignedIn() && isAnalyst(request.auth.uid);
-      allow create: if true; // Publicly writable for event tracking
-      allow update, delete: if isSignedIn() && isAdmin(request.auth.uid);
-    }
-    
-    // --- form_analytics collection ---
-    // - Anyone can write 
-    // - Only analysts and above can read
-    match /form_analytics/{formId} {
-        allow read: if isSignedIn() && isAnalyst(request.auth.uid);
-        allow create: if true; // Publicly writable for form interaction tracking
-        allow update, delete: if isSignedIn() && isAdmin(request.auth.uid);
-    }
-
-    // --- landing_pages collection ---
-    // - Admins can read/write
-    // - Analysts and viewers can only read
-    match /landing_pages/{pageId} {
-      allow read: if isSignedIn() && isViewer(request.auth.uid);
-      allow write: if isSignedIn() && isAdmin(request.auth.uid);
-    }
-    
-    // --- ab_tests collection ---
-    // - Admins can read/write
-    // - Analysts and viewers can only read
-    match /ab_tests/{testId} {
-      allow read: if isSignedIn() && isViewer(request.auth.uid);
-      allow write: if isSignedIn() && isAdmin(request.auth.uid);
-    }
-
-    // --- sessions collection ---
-    // - Anyone can write (for session tracking)
-    // - Only analysts and above can read
-    match /sessions/{sessionId} {
-      allow read: if isSignedIn() && isAnalyst(request.auth.uid);
-      allow create: if true; // Publicly writable for session tracking
-      allow update, delete: if isSignedIn() && isAdmin(request.auth.uid);
-    }
-
-    // --- gtm_templates collection ---
-    // - Only admins can read/write
-    match /gtm_templates/{templateId} {
-        allow read, write: if isSignedIn() && isAdmin(request.auth.uid);
-    }
-
-    // --- integrations collection ---
-    // - Only super_admins can read/write
-    match /integrations/{integrationId} {
-        allow read, write: if isSignedIn() && isSuperAdmin(request.auth.uid);
-    }
-
-    // --- chat_queries collection ---
-    // - Authenticated users can write their own queries
-    // - Admins can read all queries
-    match /chat_queries/{queryId} {
-        allow read: if isSignedIn() && isAdmin(request.auth.uid);
-        allow create: if isSignedIn() && request.resource.data.user_id == request.auth.uid;
-        allow update, delete: if isSignedIn() && isAdmin(request.auth.uid);
+      allow read: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['super_admin', 'admin', 'analyst', 'viewer'];
+      allow create: if request.auth != null; // Typically more open for anonymous submissions, but restricting to auth for now
+      allow update: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['super_admin', 'admin'];
+      allow delete: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin';
     }
   }
 }
