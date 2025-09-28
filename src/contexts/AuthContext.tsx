@@ -49,12 +49,10 @@ export const useAuth = () => {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [initialLoad, setInitialLoad] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      setLoading(true);
       try {
         if (firebaseUser) {
           const userDocRef = doc(db, 'users', firebaseUser.uid);
@@ -77,8 +75,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               email: firebaseUser.email,
               displayName: firebaseUser.displayName,
               photoURL: firebaseUser.photoURL,
-              // This is likely a new user. The createUserDocument cloud function will create the db record.
-              // We can set a default role here to avoid a null user state during the async operation.
               role: 'viewer', 
               permissions: [],
             });
@@ -91,7 +87,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(null);
       } finally {
         setLoading(false);
-        setInitialLoad(false);
       }
     });
 
@@ -100,7 +95,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkPermission = (permission: string): boolean => {
     if (!user) return false;
-    // Super admin has all permissions
     if (user.role === 'super_admin') return true;
     return user.permissions.includes(permission);
   };
@@ -119,17 +113,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     hasRole
   };
 
-  if (initialLoad) {
-      return (
-        <div className="flex h-screen items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin" />
-        </div>
-      );
-  }
-
   return (
     <AuthContext.Provider value={value}>
-      {children}
+      {loading ? (
+         <div className="flex h-screen items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin" />
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 }
