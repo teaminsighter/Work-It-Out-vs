@@ -22,15 +22,15 @@ export default function withAuth<P extends object>(
     const router = useRouter();
 
     useEffect(() => {
-      // Only redirect if loading is finished and user is not authenticated.
+      // If the initial auth check is done and the user is not authenticated, redirect.
       if (!loading && !isAuthenticated) {
         sessionStorage.setItem('redirectAfterLogin', window.location.pathname);
         router.replace('/auth/login');
       }
     }, [isAuthenticated, loading, router]);
 
-    // While loading, show a spinner to prevent the content from flashing.
-    if (loading) {
+    // While loading, or if not authenticated yet (and we are about to redirect), show a spinner.
+    if (loading || !isAuthenticated) {
       return (
         <div className="flex h-screen items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin" />
@@ -39,16 +39,7 @@ export default function withAuth<P extends object>(
     }
     
     // If authenticated, render the component.
-    if (isAuthenticated) {
-        return <WrappedComponent {...props} />;
-    }
-    
-    // If not loading and not authenticated, show a loader while redirecting.
-    return (
-        <div className="flex h-screen items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin" />
-        </div>
-    );
+    return <WrappedComponent {...props} />;
   };
 
   WithAuth.displayName = `WithAuth(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;

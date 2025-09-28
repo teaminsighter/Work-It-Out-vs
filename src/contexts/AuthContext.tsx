@@ -49,6 +49,7 @@ export const useAuth = () => {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -90,6 +91,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(null);
       } finally {
         setLoading(false);
+        setInitialLoad(false);
       }
     });
 
@@ -116,6 +118,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     checkPermission,
     hasRole
   };
+
+  if (initialLoad) {
+      return (
+        <div className="flex h-screen items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin" />
+        </div>
+      );
+  }
 
   return (
     <AuthContext.Provider value={value}>
