@@ -39,24 +39,6 @@ export default function QuestionStep({ question }: QuestionStepProps) {
 
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.3 }}
-        className="mb-4"
-      >
-        {Icon === ShieldQuestion ? (
-            <Image 
-              src="https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/transparent_wit_icon-01.png?alt=media&token=9453da6d-ede1-4be9-9eb9-d5670481dcf9"
-              alt="QuoteFlow Logo"
-              width={48}
-              height={48}
-              className="h-12 w-12"
-            />
-        ) : (
-            <Icon className="h-12 w-12 text-primary" />
-        )}
-      </motion.div>
       <h2 className="text-2xl font-bold sm:text-3xl font-headline capitalize">{processedQuestion}</h2>
       {description && <p className="mt-2 text-muted-foreground">{description}</p>}
       
