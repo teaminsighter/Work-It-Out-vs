@@ -29,7 +29,7 @@ const HeroLife = () => {
       <div className="container mx-auto px-4 relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg text-purple-200">
               Compare Life Insurance Quote
             </h1>
             <p className="text-lg md:text-xl text-gray-200 mb-8">
