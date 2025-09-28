@@ -1,7 +1,6 @@
 
 'use client';
 
-import withAuth from '@/components/auth/withAuth';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { logout } from '@/lib/firebase/auth';
@@ -51,5 +50,5 @@ function DashboardPage() {
   );
 }
 
-// Protect the dashboard page, only authenticated users can access it.
-export default withAuth(DashboardPage);
+// The dashboard page is now protected by the AdminLayout, so withAuth is no longer needed here.
+export default DashboardPage;

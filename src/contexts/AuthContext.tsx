@@ -108,7 +108,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value = {
     user,
-    loading,
+    loading: initialLoad, // Expose initialLoad as loading
     error,
     isAuthenticated: !!user,
     checkPermission,
