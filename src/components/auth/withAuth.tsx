@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
 import type { ComponentType } from 'react';
+import { useEffect } from 'react';
 
 type Role = 'super_admin' | 'admin' | 'analyst' | 'viewer';
 
@@ -21,39 +22,50 @@ export default function withAuth<P extends object>(
     const router = useRouter();
     const { allowedRoles } = options;
 
-    if (loading) {
+    useEffect(() => {
+      if (loading) {
+        return; // Don't do anything while loading
+      }
+
+      if (!isAuthenticated) {
+        router.replace('/auth/login');
+        return;
+      }
+
+      if (allowedRoles && allowedRoles.length > 0) {
+        if (!user || !hasRole(allowedRoles)) {
+          router.replace('/unauthorized');
+          return;
+        }
+      }
+
+      // Fallback for when user is null after loading and not redirected
+      if (!user) {
+        router.replace('/auth/login');
+      }
+    }, [isAuthenticated, loading, user, router, hasRole, allowedRoles]);
+
+    if (loading || !isAuthenticated || !user) {
       return (
         <div className="flex h-screen items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin" />
         </div>
       );
     }
-
-    if (!isAuthenticated) {
-      // In a real app, you might want to redirect to a login page
-      if (typeof window !== 'undefined') {
-        router.replace('/auth/login');
-      }
-      return null;
-    }
-
-    if (allowedRoles && allowedRoles.length > 0) {
-      if (!user || !hasRole(allowedRoles)) {
-        // Redirect to an unauthorized page if role is not allowed
-        if (typeof window !== 'undefined') {
-          router.replace('/unauthorized'); 
-        }
-        return null;
-      }
-    }
     
-    // Fallback for when user is null after loading and not redirected
-    if (!user) {
-       if (typeof window !== 'undefined') {
-        router.replace('/auth/login');
+    // Check roles after loading and authentication is confirmed
+    if (allowedRoles && allowedRoles.length > 0) {
+      if (!hasRole(allowedRoles)) {
+        // This will be handled by the useEffect, but we can show a loader
+        // while redirecting.
+        return (
+          <div className="flex h-screen items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin" />
+          </div>
+        );
       }
-      return null;
     }
+
 
     return <WrappedComponent {...props} />;
   };
