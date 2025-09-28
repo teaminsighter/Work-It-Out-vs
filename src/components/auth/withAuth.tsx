@@ -22,14 +22,12 @@ export default function withAuth<P extends object>(
     const router = useRouter();
 
     useEffect(() => {
-      // If the initial auth check is done and the user is not authenticated, redirect.
       if (!loading && !isAuthenticated) {
         sessionStorage.setItem('redirectAfterLogin', window.location.pathname);
         router.replace('/auth/login');
       }
     }, [isAuthenticated, loading, router]);
 
-    // While loading, or if not authenticated yet (and we are about to redirect), show a spinner.
     if (loading || !isAuthenticated) {
       return (
         <div className="flex h-screen items-center justify-center">
@@ -38,7 +36,6 @@ export default function withAuth<P extends object>(
       );
     }
     
-    // If authenticated, render the component.
     return <WrappedComponent {...props} />;
   };
 
