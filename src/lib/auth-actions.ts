@@ -7,12 +7,16 @@ import * as admin from 'firebase-admin';
 if (!admin.apps.length) {
   const serviceAccountString = process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string;
   if (serviceAccountString) {
-    const serviceAccount = JSON.parse(serviceAccountString);
-    // The private_key needs to have its newlines correctly formatted.
-    serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-    });
+    try {
+        const serviceAccount = JSON.parse(serviceAccountString);
+        // The private_key needs to have its newlines correctly formatted.
+        serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+        admin.initializeApp({
+          credential: admin.credential.cert(serviceAccount),
+        });
+    } catch (e: any) {
+        console.error('Failed to parse or initialize Firebase Admin SDK:', e.message);
+    }
   } else {
     console.error('FIREBASE_SERVICE_ACCOUNT_KEY is not set in environment variables.');
   }
@@ -23,6 +27,15 @@ export const resendVerificationEmailAction = async (email: string) => {
   if (!email) {
     return { success: false, error: 'Email is required.' };
   }
+  
+  if (!admin.apps.length || !admin.app()) {
+    console.error('Firebase Admin SDK not initialized.');
+    return {
+      success: false,
+      error: 'Server configuration error. Please try again later.',
+    };
+  }
+
 
   try {
     const user = await admin.auth().getUserByEmail(email);
