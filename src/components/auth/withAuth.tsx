@@ -36,6 +36,21 @@ export default function withAuth<P extends object>(
       );
     }
     
+    // This check is now safe because we wait for loading to be false
+    // and isAuthenticated to be true.
+    if (options.allowedRoles && user) {
+        const userRole = (user as any).role;
+        if (!options.allowedRoles.includes(userRole)) {
+            // Redirect to a 'not-authorized' page or back to dashboard
+            router.replace('/admin/dashboard'); 
+            return (
+                 <div className="flex h-screen items-center justify-center">
+                    <p>You are not authorized to view this page.</p>
+                </div>
+            );
+        }
+    }
+    
     return <WrappedComponent {...props} />;
   };
 
