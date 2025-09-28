@@ -5,12 +5,17 @@ import * as admin from 'firebase-admin';
 
 // Initialize Firebase Admin SDK if not already initialized
 if (!admin.apps.length) {
-  const serviceAccount = JSON.parse(
-    process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string
-  );
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
+  const serviceAccountString = process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string;
+  if (serviceAccountString) {
+    const serviceAccount = JSON.parse(serviceAccountString);
+    // The private_key needs to have its newlines correctly formatted.
+    serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+    });
+  } else {
+    console.error('FIREBASE_SERVICE_ACCOUNT_KEY is not set in environment variables.');
+  }
 }
 
 
