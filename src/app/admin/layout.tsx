@@ -56,14 +56,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(() => {
-    // Only redirect if auth has loaded and user is not authenticated.
-    if (!loading && !isAuthenticated) {
-      sessionStorage.setItem('redirectAfterLogin', pathname);
-      router.push('/auth/login');
-    }
-  }, [loading, isAuthenticated, router, pathname]);
-
   const handleSignOut = async () => {
     await logout();
     router.push('/auth/login');
@@ -115,14 +107,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const breadcrumbItems = pathname.split('/').filter(Boolean);
   
-  if (loading || !isAuthenticated) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
-
   return (
     <SidebarProvider>
       <Sidebar>
