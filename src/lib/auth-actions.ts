@@ -4,7 +4,6 @@
 import * as admin from 'firebase-admin';
 
 // Initialize Firebase Admin SDK if not already initialized
-/*
 if (!admin.apps.length) {
   const serviceAccount = JSON.parse(
     process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string
@@ -13,7 +12,6 @@ if (!admin.apps.length) {
     credential: admin.credential.cert(serviceAccount),
   });
 }
-*/
 
 
 export const resendVerificationEmailAction = async (email: string) => {
