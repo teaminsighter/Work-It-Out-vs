@@ -54,13 +54,6 @@ export default function QuoteWizard() {
   return (
     <div className="relative w-full max-w-2xl mx-auto">
       <div className="relative rounded-xl border bg-card/90 text-card-foreground p-6 shadow-2xl backdrop-blur-sm sm:p-10 mt-6">
-        {currentStepId !== 'results' && (
-          <div className="text-center mb-6">
-             <h1 className="text-xl font-bold tracking-tight sm:text-2xl font-headline">
-                Compare Quotes from Top Insurers
-            </h1>
-          </div>
-        )}
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStepId}
