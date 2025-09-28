@@ -6,8 +6,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { DollarSign, Users, CreditCard, Activity, Loader2 } from "lucide-react";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase/config';
+import withAuth from '@/components/auth/withAuth';
 
-export default function Dashboard() {
+function Dashboard() {
   const [userCount, setUserCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -94,3 +95,7 @@ export default function Dashboard() {
     </div>
   )
 }
+
+export default withAuth(Dashboard, {
+  allowedRoles: ['super_admin', 'admin', 'analyst'],
+});

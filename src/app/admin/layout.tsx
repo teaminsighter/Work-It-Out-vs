@@ -40,7 +40,6 @@ import {
 } from 'lucide-react';
 import { adminNavItems, NavItem } from '@/lib/admin-nav';
 import { useAuth } from '@/contexts/AuthContext';
-import withAuth from '@/components/auth/withAuth';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -54,7 +53,7 @@ import {
 import { logout } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
 
-function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
@@ -230,7 +229,3 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
     </SidebarProvider>
   );
 }
-
-export default withAuth(AdminLayout, {
-  allowedRoles: ['super_admin', 'admin', 'analyst'],
-});
