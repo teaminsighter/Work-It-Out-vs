@@ -70,19 +70,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               company: userData.profile?.company,
             });
           } else {
-            // If user exists in Auth but not Firestore, it's likely a new social sign-in.
-            // The createUserDocument cloud function will create the user doc.
-            // We can provide a temporary profile here, assuming the function will make them super_admin if they are first.
-            const isNewUser = firebaseUser.metadata.creationTime === firebaseUser.metadata.lastSignInTime;
-            const isGoogleSignIn = firebaseUser.providerData.some(p => p.providerId === 'google.com');
-            
              setUser({
               uid: firebaseUser.uid,
               email: firebaseUser.email,
               displayName: firebaseUser.displayName,
               photoURL: firebaseUser.photoURL,
-              // Optimistically set role for new social sign-ins to avoid race condition with cloud function.
-              role: (isNewUser && isGoogleSignIn) ? 'super_admin' : 'viewer',
+              // This is likely a new user. The createUserDocument cloud function will create the db record.
+              // We can set a default role here to avoid a null user state during the async operation.
+              role: 'viewer', 
               permissions: [],
             });
           }
