@@ -69,7 +69,7 @@ export default function LoginPage() {
       }
       setLoading(false);
     } else {
-      const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || '/admin';
+      const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || '/admin/dashboard';
       sessionStorage.removeItem('redirectAfterLogin');
       router.push(redirectUrl);
     }
@@ -85,7 +85,7 @@ export default function LoginPage() {
       setError(error);
       setLoading(false);
     } else {
-      const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || '/admin';
+      const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || '/admin/dashboard';
       sessionStorage.removeItem('redirectAfterLogin');
       router.push(redirectUrl);
     }
