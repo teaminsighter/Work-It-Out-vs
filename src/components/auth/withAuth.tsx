@@ -36,7 +36,7 @@ export default function withAuth<P extends object>(
       );
     }
     
-    // This check is now safe because we wait for loading to be false
+    // Role check is safe because we wait for loading to be false
     // and isAuthenticated to be true.
     if (options.allowedRoles && user) {
         const userRole = (user as any).role;
