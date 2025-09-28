@@ -48,7 +48,7 @@ const Header = () => {
             </nav>
 
             <div className="hidden md:flex items-center gap-4">
-              <Button onClick={scrollToWizard} className="bg-accent hover:bg-accent/90 text-accent-foreground">Get Quote</Button>
+              <Button onClick={scrollToWizard} className="bg-accent hover:bg-accent/90 text-accent-foreground">Compare Quotes</Button>
             </div>
 
             <div className="md:hidden">
@@ -76,7 +76,7 @@ const Header = () => {
                   </Link>
                 ))}
                 <div className="border-t my-2"></div>
-                <Button className="w-full mt-2" onClick={() => { scrollToWizard(); setIsOpen(false); }}>Get Quote</Button>
+                <Button className="w-full mt-2" onClick={() => { scrollToWizard(); setIsOpen(false); }}>Compare Quotes</Button>
             </div>
           </div>
         </div>

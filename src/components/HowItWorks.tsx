@@ -90,7 +90,7 @@ const HowItWorks = () => {
         </motion.div>
         <div className="text-center mt-16">
           <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" onClick={scrollToWizard}>
-            GET YOUR FREE QUOTE
+            Compare Quotes
           </Button>
         </div>
       </div>

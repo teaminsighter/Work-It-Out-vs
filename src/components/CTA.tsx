@@ -20,7 +20,7 @@ const CTA = () => {
             Start your comparison now and join thousands of Kiwis who have found better coverage for less. It's fast, free, and there's no obligation.
           </p>
           <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" onClick={scrollToWizard}>
-            GET YOUR FREE QUOTE TODAY
+            Compare Quotes
           </Button>
         </div>
       </div>

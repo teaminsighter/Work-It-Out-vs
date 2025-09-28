@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -57,7 +58,7 @@ const FinancialProtection = () => {
                 <span>Expert guidance every step of the way.</span>
               </li>
             </ul>
-            <Button size="lg" onClick={scrollToWizard}>Get Your Quote</Button>
+            <Button size="lg" onClick={scrollToWizard}>Compare Quotes</Button>
           </motion.div>
         </div>
       </div>
