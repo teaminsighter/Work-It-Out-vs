@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Shield, Facebook, Twitter, Linkedin, Phone, Mail } from 'lucide-react';
 
 const Footer = () => {
@@ -8,8 +9,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <Shield className="h-8 w-8 text-white" />
-              <span className="text-xl font-bold">QuoteFlow</span>
+               <Image 
+                src="https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/transparent_wit_horizontal-01.png?alt=media&token=d3b9cf1a-70aa-4010-a136-8eba88acb8d5"
+                alt="QuoteFlow Logo"
+                width={150}
+                height={40}
+                className="w-36"
+              />
             </Link>
             <p className="text-gray-300 text-sm">
               Helping Kiwis find the best insurance deals from top providers across New Zealand. Compare and save with confidence.

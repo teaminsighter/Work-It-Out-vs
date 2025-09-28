@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Shield, Menu, X, Phone } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { useForm } from '@/contexts/FormContext';
 
@@ -24,8 +25,13 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
           <Link href="/" className="flex items-center gap-2">
-            <Shield className="h-8 w-8 text-white" />
-            <span className="text-xl font-bold text-white">QuoteFlow</span>
+            <Image 
+              src="https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/transparent_wit_horizontal-01.png?alt=media&token=d3b9cf1a-70aa-4010-a136-8eba88acb8d5"
+              alt="QuoteFlow Logo"
+              width={150}
+              height={40}
+              className="w-36"
+            />
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
