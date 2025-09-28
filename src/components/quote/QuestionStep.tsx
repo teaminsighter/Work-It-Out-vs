@@ -47,11 +47,11 @@ export default function QuestionStep({ question }: QuestionStepProps) {
       >
         {Icon === ShieldQuestion ? (
             <Image 
-              src="https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/transparent_wit_horizontal-01.png?alt=media&token=d3b9cf1a-70aa-4010-a136-8eba88acb8d5"
+              src="https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/transparent_wit_icon-01.png?alt=media&token=9453da6d-ede1-4be9-9eb9-d5670481dcf9"
               alt="QuoteFlow Logo"
-              width={150}
-              height={40}
-              className="w-36"
+              width={48}
+              height={48}
+              className="h-12 w-12"
             />
         ) : (
             <Icon className="h-12 w-12 text-primary" />
