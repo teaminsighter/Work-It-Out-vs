@@ -28,6 +28,7 @@ export default function withAuth<P extends object>(
       }
 
       if (!isAuthenticated) {
+        sessionStorage.setItem('redirectAfterLogin', window.location.pathname);
         router.replace('/auth/login');
         return;
       }
