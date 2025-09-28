@@ -89,7 +89,7 @@ const HowItWorks = () => {
           ))}
         </motion.div>
         <div className="text-center mt-16">
-          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" onClick={scrollToWizard}>
+          <Button size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white" onClick={scrollToWizard}>
             Compare Quotes
           </Button>
         </div>

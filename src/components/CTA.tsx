@@ -19,7 +19,7 @@ const CTA = () => {
           <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
             Start your comparison now and join thousands of Kiwis who have found better coverage for less. It's fast, free, and there's no obligation.
           </p>
-          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground" onClick={scrollToWizard}>
+          <Button size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white" onClick={scrollToWizard}>
             Compare Quotes
           </Button>
         </div>

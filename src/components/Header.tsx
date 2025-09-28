@@ -46,7 +46,7 @@ const Header = () => {
             </nav>
 
             <div className="hidden md:flex items-center gap-4">
-              <Button onClick={scrollToWizard} className="bg-accent hover:bg-accent/90 text-accent-foreground">Compare Quotes</Button>
+              <Button onClick={scrollToWizard} className="bg-brand-purple hover:bg-brand-purple/90 text-white">Compare Quotes</Button>
             </div>
 
             <div className="md:hidden">
