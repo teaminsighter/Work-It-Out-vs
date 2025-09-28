@@ -14,10 +14,8 @@ const Header = () => {
   const { scrollToWizard } = useForm();
 
   const navLinks = [
-    { href: '/', label: 'Home' },
     { href: '/about', label: 'About' },
-    { href: '/services', label: 'Services' },
-    { href: '/contact', label: 'Contact' },
+    { href: '/faq', label: 'FAQ' },
   ];
 
   return (
