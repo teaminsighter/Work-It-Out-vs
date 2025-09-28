@@ -32,7 +32,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={cn('font-sans antialiased', inter.variable)}>
+      <body className={cn('font-sans antialiased', inter.variable)} suppressHydrationWarning>
         <AuthProvider>
           <FormProvider>
             <Header />
