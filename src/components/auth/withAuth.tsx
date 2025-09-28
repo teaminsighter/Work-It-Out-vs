@@ -35,18 +35,21 @@ export default function withAuth<P extends object>(
 
       if (allowedRoles && allowedRoles.length > 0) {
         if (!user || !hasRole(allowedRoles)) {
-          router.replace('/unauthorized');
+          // This check is important. It's possible the user object with roles is not yet available.
+          // However, if we are past the loading stage and still no user/role, then redirect.
+           if (!user) {
+             router.replace('/auth/login');
+           } else {
+             // User exists but doesn't have the role
+             router.replace('/unauthorized'); // A page to show "Access Denied"
+           }
           return;
         }
       }
 
-      // Fallback for when user is null after loading and not redirected
-      if (!user) {
-        router.replace('/auth/login');
-      }
     }, [isAuthenticated, loading, user, router, hasRole, allowedRoles]);
 
-    if (loading || !isAuthenticated || !user) {
+    if (loading || !isAuthenticated) {
       return (
         <div className="flex h-screen items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin" />
@@ -54,11 +57,12 @@ export default function withAuth<P extends object>(
       );
     }
     
-    // Check roles after loading and authentication is confirmed
+    // After loading and authentication is confirmed, check roles.
+    // This second check handles the case where user data arrives after the initial check.
     if (allowedRoles && allowedRoles.length > 0) {
-      if (!hasRole(allowedRoles)) {
-        // This will be handled by the useEffect, but we can show a loader
-        // while redirecting.
+      if (!user || !hasRole(allowedRoles)) {
+        // If still no user or role, show a loader while useEffect redirects.
+        // This prevents a flash of the component before redirecting.
         return (
           <div className="flex h-screen items-center justify-center">
             <Loader2 className="h-8 w-8 animate-spin" />
@@ -67,7 +71,7 @@ export default function withAuth<P extends object>(
       }
     }
 
-
+    // If we've made it here, the user is authenticated and has the correct role.
     return <WrappedComponent {...props} />;
   };
 
