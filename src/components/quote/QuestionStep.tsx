@@ -39,8 +39,8 @@ export default function QuestionStep({ question }: QuestionStepProps) {
 
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
-      <h2 className="text-2xl font-bold sm:text-3xl font-headline capitalize">{processedQuestion}</h2>
-      {description && <p className="mt-2 text-muted-foreground">{description}</p>}
+      <h2 className="text-lg font-semibold sm:text-xl font-headline capitalize">{processedQuestion}</h2>
+      {description && <p className="mt-2 text-muted-foreground text-sm">{description}</p>}
       
       <motion.div 
         className={cn(

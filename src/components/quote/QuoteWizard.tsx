@@ -14,6 +14,7 @@ import ContactForm from './ContactForm';
 import SelectForm from './SelectForm';
 import { usePathname } from 'next/navigation';
 import MultiSelectStep from './MultiSelectStep';
+import { ShieldCheck } from 'lucide-react';
 
 const ALL_WIZARD_QUESTIONS = {...ALL_QUESTIONS, ...ALL_LOCATION_QUESTIONS};
 
@@ -53,6 +54,13 @@ export default function QuoteWizard() {
   return (
     <div className="relative w-full max-w-2xl mx-auto">
       <div className="relative rounded-xl border bg-card/90 text-card-foreground p-6 shadow-2xl backdrop-blur-sm sm:p-10 mt-6">
+        {currentStepId !== 'results' && (
+          <div className="text-center mb-6">
+             <h1 className="text-xl font-bold tracking-tight sm:text-2xl font-headline">
+                Get Your Free Quote
+            </h1>
+          </div>
+        )}
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStepId}

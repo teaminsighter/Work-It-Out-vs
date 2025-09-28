@@ -51,15 +51,8 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
 
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        <Icon className="mb-4 h-12 w-12 text-primary" />
-      </motion.div>
-      <h2 className="text-2xl font-bold sm:text-3xl font-headline">{questionText}</h2>
-      {description && <p className="mt-2 text-muted-foreground">{description}</p>}
+      <h2 className="text-lg font-semibold sm:text-xl font-headline">{questionText}</h2>
+      {description && <p className="mt-2 text-muted-foreground text-sm">{description}</p>}
       
       <motion.div 
         className="mt-6 grid grid-cols-1 gap-3 w-full max-w-sm"

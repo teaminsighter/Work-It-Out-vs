@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -41,15 +42,8 @@ export default function SelectForm({ question }: SelectFormProps) {
 
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
-        <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.3 }}
-        >
-            <Icon className="mb-4 h-12 w-12 text-primary" />
-        </motion.div>
-        <h2 className="text-2xl font-bold sm:text-3xl font-headline">{questionText}</h2>
-        {description && <p className="mt-2 text-muted-foreground">{description}</p>}
+        <h2 className="text-lg font-semibold sm:text-xl font-headline">{questionText}</h2>
+        {description && <p className="mt-2 text-muted-foreground text-sm">{description}</p>}
 
         <div className="mt-8 w-full max-w-sm space-y-6 text-left">
             <Popover open={open} onOpenChange={setOpen}>
