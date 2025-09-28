@@ -48,10 +48,6 @@ const Header = () => {
             </nav>
 
             <div className="hidden md:flex items-center gap-4">
-               <a href="tel:0800123456" className="flex items-center gap-2 text-gray-700 hover:text-primary">
-                  <Phone className="h-4 w-4" />
-                  <span className="font-medium">0800 123 456</span>
-               </a>
               <Button onClick={scrollToWizard} className="bg-accent hover:bg-accent/90 text-accent-foreground">Get Quote</Button>
             </div>
 
@@ -80,10 +76,6 @@ const Header = () => {
                   </Link>
                 ))}
                 <div className="border-t my-2"></div>
-                <a href="tel:0800123456" className="flex items-center gap-2 text-gray-800 hover:text-primary p-2">
-                    <Phone className="h-4 w-4" />
-                    <span className="font-medium">0800 123 456</span>
-                 </a>
                 <Button className="w-full mt-2" onClick={() => { scrollToWizard(); setIsOpen(false); }}>Get Quote</Button>
             </div>
           </div>
