@@ -57,7 +57,7 @@ export default function QuoteWizard() {
         {currentStepId !== 'results' && (
           <div className="text-center mb-6">
              <h1 className="text-xl font-bold tracking-tight sm:text-2xl font-headline">
-                Get Your Free Quote
+                Compare Quotes from Top Insurers
             </h1>
           </div>
         )}
