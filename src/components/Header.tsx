@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <header className="absolute top-0 left-0 w-full z-50 pt-6">
       <div className="container mx-auto px-4">
-        <div className="relative bg-white rounded-xl shadow-md w-full md:w-[70%] mx-auto">
+        <div className="relative bg-white rounded-xl shadow-md w-full md:w-[90%] mx-auto">
           <div className="flex justify-between items-center h-20 px-6">
             <Link href="/" className="flex items-center gap-2">
               <Image 
