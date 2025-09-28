@@ -6,7 +6,8 @@ import { useForm } from '@/contexts/FormContext';
 import OptionCard from './OptionCard';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, ShieldQuestion } from 'lucide-react';
+import Image from 'next/image';
 
 interface QuestionStepProps {
   question: Question;
@@ -42,8 +43,19 @@ export default function QuestionStep({ question }: QuestionStepProps) {
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.3 }}
+        className="mb-4"
       >
-        <Icon className="mb-4 h-12 w-12 text-primary" />
+        {Icon === ShieldQuestion ? (
+            <Image 
+              src="https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/transparent_wit_horizontal-01.png?alt=media&token=d3b9cf1a-70aa-4010-a136-8eba88acb8d5"
+              alt="QuoteFlow Logo"
+              width={150}
+              height={40}
+              className="w-36"
+            />
+        ) : (
+            <Icon className="h-12 w-12 text-primary" />
+        )}
       </motion.div>
       <h2 className="text-2xl font-bold sm:text-3xl font-headline capitalize">{processedQuestion}</h2>
       {description && <p className="mt-2 text-muted-foreground">{description}</p>}
