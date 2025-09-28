@@ -106,4 +106,28 @@ body {
     0% { transform: translateX(0%); }
     100% { transform: translateX(-50%); }
   }
+
+  .animated-gradient {
+    background: linear-gradient(
+      -45deg,
+      rgba(141, 74, 217, 0.7),
+      rgba(74, 217, 153, 0.7),
+      rgba(141, 74, 217, 0.7),
+      rgba(74, 217, 153, 0.7)
+    );
+    background-size: 400% 400%;
+    animation: gradient-animation 15s ease infinite;
+  }
+
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 }
