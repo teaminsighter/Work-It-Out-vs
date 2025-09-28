@@ -47,7 +47,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
       >
         {Icon === ShieldQuestion ? (
             <Image 
-              src="https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/logo-horizontal-01.png?alt=media&token=c195f1a3-a9c8-4fe7-a36c-941e719582d9"
+              src="https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/transparent_wit_horizontal-01.png?alt=media&token=d3b9cf1a-70aa-4010-a136-8eba88acb8d5"
               alt="QuoteFlow Logo"
               width={150}
               height={40}
