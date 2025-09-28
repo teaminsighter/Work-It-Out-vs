@@ -1,9 +1,9 @@
 
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   SidebarProvider,
   Sidebar,
@@ -37,11 +37,10 @@ import {
   Settings,
   Sun,
   User,
+  Loader2,
 } from 'lucide-react';
 import { adminNavItems, NavItem } from '@/lib/admin-nav';
 import { useAuth } from '@/contexts/AuthContext';
-import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -51,12 +50,17 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { logout } from '@/lib/firebase/auth';
-import { useRouter } from 'next/navigation';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth();
+  const { user, isAuthenticated, loading } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      router.replace('/auth/login');
+    }
+  }, [loading, isAuthenticated, router]);
 
   const handleSignOut = async () => {
     await logout();
@@ -108,6 +112,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   const breadcrumbItems = pathname.split('/').filter(Boolean);
+
+  if (loading || !isAuthenticated) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <SidebarProvider>
