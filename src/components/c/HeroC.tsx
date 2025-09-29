@@ -23,7 +23,7 @@ const HeroC = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg">
               Smart insurance for your better family life
             </h1>
-            <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-lg">
+            <p className="text-lg md:text-xl text-white mb-8 max-w-lg text-shadow">
               Best Insurance helps you to get the best insurance quotes fast and easily.
             </p>
             <Button size="lg" className="bg-teal-500 hover:bg-teal-600 text-white rounded-full" onClick={scrollToWizard}>
