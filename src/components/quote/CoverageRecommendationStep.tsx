@@ -91,7 +91,7 @@ export default function CoverageRecommendationStep({ question }: CoverageRecomme
           <p className="text-muted-foreground">{recommendation.reasoning}</p>
         </CardContent>
       </Card>
-      <Button onClick={onContinue} size="lg" className="mt-8 bg-brand-purple hover:bg-brand-purple/90 text-white">
+      <Button onClick={onContinue} size="lg" className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90">
         Accept & Continue
       </Button>
     </motion.div>
