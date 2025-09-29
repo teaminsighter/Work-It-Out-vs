@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -40,9 +41,11 @@ import { useAuth, AuthProvider } from '@/contexts/AuthContext';
 import { FormProvider } from '@/contexts/FormContext';
 import { logout } from '@/lib/firebase/auth';
 import { cn } from '@/lib/utils';
+import { useTheme } from 'next-themes';
 
 function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const { user, isAuthenticated, loading } = useAuth();
+  const { setTheme, theme } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -111,7 +114,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
               <Search className="h-5 w-5" />
               <span className="sr-only">Search</span>
             </Button>
-            <Button variant="ghost" size="icon" className="relative">
+            <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
               <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               <span className="sr-only">Toggle theme</span>
@@ -133,14 +136,18 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
-                </DropdownMenuItem>
+                <Link href="/admin/settings/users" passHref>
+                  <DropdownMenuItem>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/admin/settings" passHref>
+                  <DropdownMenuItem>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </DropdownMenuItem>
+                </Link>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="mr-2 h-4 w-4" />

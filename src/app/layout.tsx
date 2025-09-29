@@ -12,6 +12,7 @@ import Footer from '@/components/Footer';
 import { FormProvider } from '@/contexts/FormContext';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { usePathname } from 'next/navigation';
+import { ThemeProvider } from '@/components/theme-provider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -38,9 +39,16 @@ export default function RootLayout({
         />
       </head>
       <body className={cn('font-sans antialiased', inter.variable)} suppressHydrationWarning>
-        <LayoutComponent>
-          {children}
-        </LayoutComponent>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <LayoutComponent>
+            {children}
+          </LayoutComponent>
+        </ThemeProvider>
       </body>
     </html>
   );
