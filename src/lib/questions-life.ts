@@ -234,12 +234,6 @@ export const ALL_QUESTIONS: Questions = {
       { value: 'female', label: 'Female' },
     ],
   },
-  'coverage-recommendation': {
-    id: 'coverage-recommendation',
-    question: 'Getting your recommendation...',
-    Icon: ShieldQuestion,
-    nextStepId: 'age'
-  },
   'age': {
     id: 'age',
     question: 'How old are you?',

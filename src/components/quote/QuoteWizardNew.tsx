@@ -8,7 +8,6 @@ import ResultsPage from './ResultsPage';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, RotateCcw } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import CoverageRecommendationStep from './CoverageRecommendationStep';
 import ContactForm from './ContactForm';
 import SelectForm from './SelectForm';
 import MultiSelectStep from './MultiSelectStep';
@@ -26,9 +25,6 @@ export default function QuoteWizardNew() {
     if (currentQuestion) {
       if (currentQuestion.multiSelect) {
         return <MultiSelectStep question={currentQuestion} />;
-      }
-      if (currentQuestion.id === 'coverage-recommendation') {
-        return <CoverageRecommendationStep question={currentQuestion} />;
       }
       if (currentQuestion.fields && currentQuestion.fields.length > 0) {
         return <ContactForm question={currentQuestion} />;
