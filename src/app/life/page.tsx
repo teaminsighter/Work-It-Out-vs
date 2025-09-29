@@ -86,7 +86,7 @@ const WhyCompareSection = () => {
         <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
           Most Kiwis grab the first number they see. But prices and features vary — sometimes by a lot. When you compare term life insurance in NZ, you’ll notice:
         </p>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {points.map((point, index) => (
                 <div key={index} className="group p-6 text-center rounded-lg border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all duration-300">
                     <div className="flex justify-center mb-4">
@@ -114,41 +114,43 @@ const SmartDealSection = () => {
             <div className="container mx-auto px-4">
                 <div className="text-center">
                     <h2 className="text-3xl font-bold text-primary mb-4">Why the cheapest life insurance isn’t always the best deal</h2>
-                    <p className="text-lg text-gray-600 mb-8">The lowest sticker price can cost more later. Watch for:</p>
+                    <p className="text-lg text-gray-600 mb-8 max-w-7xl mx-auto">The lowest sticker price can cost more later. Watch for:</p>
                 </div>
-                <ul className="space-y-4 mb-8 max-w-2xl mx-auto">
-                    <li className="flex items-start gap-3">
-                        <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
-                        <div><strong>Stepped vs level premiums.</strong> Stepped looks cheaper now but rises each year. <strong>Level premiums</strong> start higher but can be <strong>cheaper overall</strong> if you’ll hold cover long-term.</div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                        <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
-                        <div><strong>Coverage gaps.</strong> Cheap policies can skip useful features (e.g., premium waiver, clear terminal-illness wording).</div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                        <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
-                        <div><strong>Claim definitions.</strong> The fine print decides what gets paid — this is where “cheap” sometimes bites.</div>
-                    </li>
-                </ul>
-                <div className="bg-white border-l-4 border-primary p-6 rounded-r-lg shadow-md max-w-2xl mx-auto">
-                    <h4 className="font-bold text-lg mb-2">Example (illustrative):</h4>
-                    <div className="grid grid-cols-2 gap-4 text-center">
-                        <div>
-                            <p className="font-semibold text-gray-700">Cheapest today:</p>
-                            <p className="text-sm text-gray-500">$500k life insurance (stepped)</p>
-                            <p className="text-2xl font-bold text-primary mt-1">$30/month</p>
+                <div className="max-w-7xl mx-auto">
+                    <ul className="space-y-4 mb-8 max-w-2xl mx-auto">
+                        <li className="flex items-start gap-3">
+                            <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
+                            <div><strong>Stepped vs level premiums.</strong> Stepped looks cheaper now but rises each year. <strong>Level premiums</strong> start higher but can be <strong>cheaper overall</strong> if you’ll hold cover long-term.</div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
+                            <div><strong>Coverage gaps.</strong> Cheap policies can skip useful features (e.g., premium waiver, clear terminal-illness wording).</div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
+                            <div><strong>Claim definitions.</strong> The fine print decides what gets paid — this is where “cheap” sometimes bites.</div>
+                        </li>
+                    </ul>
+                    <div className="bg-white border-l-4 border-primary p-6 rounded-r-lg shadow-md max-w-2xl mx-auto">
+                        <h4 className="font-bold text-lg mb-2">Example (illustrative):</h4>
+                        <div className="grid grid-cols-2 gap-4 text-center">
+                            <div>
+                                <p className="font-semibold text-gray-700">Cheapest today:</p>
+                                <p className="text-sm text-gray-500">$500k life insurance (stepped)</p>
+                                <p className="text-2xl font-bold text-primary mt-1">$30/month</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-gray-700">Smarter alternative:</p>
+                                <p className="text-sm text-gray-500">$500k life insurance (<strong>level</strong>)</p>
+                                <p className="text-2xl font-bold text-primary mt-1">$36/month</p>
+                            </div>
                         </div>
-                        <div>
-                            <p className="font-semibold text-gray-700">Smarter alternative:</p>
-                            <p className="text-sm text-gray-500">$500k life insurance (<strong>level</strong>)</p>
-                            <p className="text-2xl font-bold text-primary mt-1">$36/month</p>
-                        </div>
+                        <p className="text-sm text-center mt-4 text-gray-600"><strong>Why it’s better:</strong> For a small step-up now, you can save over the years <strong>and</strong> avoid annual price creep — ideal while you raise kids or pay off the mortgage.</p>
                     </div>
-                     <p className="text-sm text-center mt-4 text-gray-600"><strong>Why it’s better:</strong> For a small step-up now, you can save over the years <strong>and</strong> avoid annual price creep — ideal while you raise kids or pay off the mortgage.</p>
-                </div>
-                 <p className="text-xs text-gray-500 text-center mt-4 max-w-2xl mx-auto">*Figures are illustrative; your premium depends on age, health, smoker status, occupation, and underwriting.</p>
-                <div className="text-center mt-8">
-                    <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Show me smarter options</Button>
+                    <p className="text-xs text-gray-500 text-center mt-4 max-w-2xl mx-auto">*Figures are illustrative; your premium depends on age, health, smoker status, occupation, and underwriting.</p>
+                    <div className="text-center mt-8">
+                        <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Show me smarter options</Button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -178,7 +180,7 @@ const MythBustingSection = () => {
         <section className="bg-white py-16 sm:py-24">
             <div className="container mx-auto px-4">
                 <h2 className="text-3xl font-bold text-primary text-center mb-12">Busting Common Life Insurance Myths</h2>
-                <div className="grid md:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     {myths.map((item, index) => (
                         <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow">
                             <CardHeader>
@@ -230,7 +232,7 @@ const HowItWorksSection = () => {
         <section className="bg-gray-50 py-16 sm:py-24">
             <div className="container mx-auto px-4">
                 <h2 className="text-3xl font-bold text-primary text-center mb-12">How our NZ life insurance comparison works</h2>
-                <div className="grid md:grid-cols-2 gap-x-8 gap-y-12">
+                <div className="grid md:grid-cols-2 gap-x-8 gap-y-12 max-w-7xl mx-auto">
                     {steps.map(step => (
                          <div key={step.title} className="flex items-start gap-4">
                             <div className="bg-primary/10 p-3 rounded-full mt-1">
@@ -262,7 +264,7 @@ const StoriesSection = () => {
         <section className="bg-white py-16 sm:py-24">
             <div className="container mx-auto px-4">
                 <h2 className="text-3xl font-bold text-primary text-center mb-12">How we helped real people get the best deal</h2>
-                <div className="grid md:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     {stories.map(s => (
                         <div key={s.name} className="bg-gray-50 p-6 rounded-lg shadow-md border">
                             <p className="text-gray-600 mb-4">&quot;{s.story}&quot;</p>
@@ -271,7 +273,7 @@ const StoriesSection = () => {
                     ))}
                 </div>
                  <div className="text-center mt-12">
-                    <Button onClick={scrollToWizard} size="lg" variant="outline">Talk to an adviser</Button>
+                    <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Talk to an adviser</Button>
                 </div>
             </div>
         </section>
@@ -291,8 +293,8 @@ const WhatYouGetSection = () => {
         <section className="bg-gray-50 py-16 sm:py-24">
              <div className="container mx-auto px-4">
                  <h2 className="text-3xl font-bold text-primary text-center mb-8">What you get</h2>
-                 <div className="max-w-2xl mx-auto">
-                    <ul className="space-y-4">
+                 <div className="max-w-7xl mx-auto">
+                    <ul className="space-y-4 max-w-2xl mx-auto">
                         {benefits.map(b => (
                             <li key={b} className="flex items-start gap-3">
                                 <Check className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
@@ -313,7 +315,7 @@ const FinalCTASection = () => {
     const { scrollToWizard } = useForm();
     return (
         <section className="bg-primary text-white py-16 sm:py-24">
-            <div className="container mx-auto px-4 text-center">
+            <div className="container mx-auto px-4 text-center max-w-7xl">
                 <h2 className="text-3xl font-bold mb-2">Ready when you are</h2>
                 <p className="text-lg text-primary-foreground/80 mb-8">Start now. You’ll be done before the kettle boils.</p>
                 <div className="flex justify-center gap-4 flex-wrap">
@@ -340,7 +342,7 @@ const FaqSection = () => {
         <section className="bg-gray-50 py-16 sm:py-24">
             <div className="container mx-auto px-4">
                 <h2 className="text-3xl font-bold text-primary text-center mb-8">Life insurance FAQs (NZ)</h2>
-                 <Accordion type="single" collapsible className="w-full">
+                 <Accordion type="single" collapsible className="w-full max-w-7xl mx-auto">
                     {faqs.map(faq => (
                         <AccordionItem value={faq.q} key={faq.q}>
                             <AccordionTrigger>{faq.q}</AccordionTrigger>
@@ -358,7 +360,7 @@ const FaqSection = () => {
 const ComplianceSection = () => {
     return (
         <section className="bg-gray-100 py-8">
-            <div className="container mx-auto px-4 text-center text-xs text-gray-500">
+            <div className="container mx-auto px-4 text-center text-xs text-gray-500 max-w-7xl">
                 <h3 className="font-bold mb-2">Compliance</h3>
                 <p>This page provides <strong>general information only</strong> and does not take into account your objectives, financial situation, or needs. Consider seeking <strong>advice from a licensed financial adviser</strong> and reading the relevant policy documents before making decisions. Quotes are <strong>indicative</strong> and subject to underwriting and eligibility.</p>
             </div>
@@ -392,6 +394,8 @@ export default function LifePage() {
       </main>
   );
 }
+
+    
 
     
 
