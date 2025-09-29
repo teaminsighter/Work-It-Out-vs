@@ -177,7 +177,7 @@ const MythBustingSection = () => {
     return (
         <section className="bg-white py-16 sm:py-24">
             <div className="container mx-auto px-4 max-w-4xl">
-                <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Busting Common Life Insurance Myths</h2>
+                <h2 className="text-3xl font-bold text-primary text-center mb-12">Busting Common Life Insurance Myths</h2>
                 <div className="grid md:grid-cols-3 gap-8">
                     {myths.map((item, index) => (
                         <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow">
