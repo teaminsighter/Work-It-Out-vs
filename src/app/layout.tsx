@@ -16,11 +16,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+function RootLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith('/admin');
 
@@ -28,7 +24,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-       <head>
+      <head>
         <title>QuoteFlow Insurance</title>
         <meta name="description" content="Get your insurance quote in minutes." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -54,16 +50,26 @@ export default function RootLayout({
   );
 }
 
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <AuthProvider>
+      <RootLayoutContent>{children}</RootLayoutContent>
+    </AuthProvider>
+  );
+}
+
 
 const SiteLayout = ({ children }: { children: React.ReactNode }) => (
-  <AuthProvider>
-    <FormProvider>
-      <Header />
-      <div id="wizard-ref-parent">
-        {children}
-      </div>
-      <Toaster />
-      <Footer />
-    </FormProvider>
-  </AuthProvider>
+  <FormProvider>
+    <Header />
+    <div id="wizard-ref-parent">
+      {children}
+    </div>
+    <Toaster />
+    <Footer />
+  </FormProvider>
 );

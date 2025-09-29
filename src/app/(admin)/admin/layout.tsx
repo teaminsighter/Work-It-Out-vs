@@ -37,7 +37,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import { adminNavItems, NavItem } from '@/lib/admin-nav';
-import { useAuth, AuthProvider } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { FormProvider } from '@/contexts/FormContext';
 import { logout } from '@/lib/firebase/auth';
 import { cn } from '@/lib/utils';
@@ -196,10 +196,8 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthProvider>
-      <FormProvider>
-        <AdminLayoutContent>{children}</AdminLayoutContent>
-      </FormProvider>
-    </AuthProvider>
+    <FormProvider>
+      <AdminLayoutContent>{children}</AdminLayoutContent>
+    </FormProvider>
   );
 }
