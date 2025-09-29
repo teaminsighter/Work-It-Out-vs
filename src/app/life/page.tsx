@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { useForm } from '@/contexts/FormContext';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { Check, Users, FileText, ThumbsUp, Star, XCircle, Lightbulb, TrendingUp } from 'lucide-react';
+import { Check, Users, FileText, ThumbsUp, Star, XCircle, Lightbulb, TrendingUp, DollarSign, ListChecks } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Insurers from '@/components/Insurers';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -61,28 +61,45 @@ const LifePageHero = () => {
 
 const WhyCompareSection = () => {
   const { scrollToWizard } = useForm();
+  const points = [
+      {
+          icon: DollarSign,
+          title: "Same cover, different price.",
+          description: "Providers rate age, health, and smoker status differently. A quick comparison can shave dollars off your monthly premium."
+      },
+      {
+          icon: ListChecks,
+          title: "Features matter.",
+          description: "Two “$500k life insurance” quotes can behave very differently — think level vs stepped premiums, built-in benefits, and claim definitions."
+      },
+      {
+          icon: TrendingUp,
+          title: "Your life changes.",
+          description: "Mortgage, kids, new job — your cover should flex with you, not trap you."
+      }
+  ];
+
   return (
     <section className="bg-white py-16 sm:py-24">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <h2 className="text-3xl font-bold text-gray-900 text-center mb-4">Why compare life insurance quotes before you decide</h2>
-        <p className="text-lg text-gray-600 text-center mb-12">
+      <div className="container mx-auto px-4 max-w-5xl">
+        <h2 className="text-3xl font-bold text-primary text-center mb-4">Why compare life insurance quotes before you decide</h2>
+        <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
           Most Kiwis grab the first number they see. But prices and features vary — sometimes by a lot. When you compare term life insurance in NZ, you’ll notice:
         </p>
-        <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div className="p-6">
-                <h3 className="font-bold text-xl mb-2">Same cover, different price.</h3>
-                <p>Providers rate age, health, and smoker status differently. A quick comparison can shave dollars off your monthly premium.</p>
-            </div>
-            <div className="p-6">
-                <h3 className="font-bold text-xl mb-2">Features matter.</h3>
-                <p>Two “$500k life insurance” quotes can behave very differently — think <strong>level vs stepped premiums</strong>, built-in benefits, and claim definitions.</p>
-            </div>
-            <div className="p-6">
-                <h3 className="font-bold text-xl mb-2">Your life changes.</h3>
-                <p>Mortgage, kids, new job — your cover should flex with you, not trap you.</p>
-            </div>
+        <div className="grid md:grid-cols-3 gap-8">
+            {points.map((point, index) => (
+                <div key={index} className="group p-6 text-center rounded-lg border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all duration-300">
+                    <div className="flex justify-center mb-4">
+                        <div className="bg-primary/10 p-3 rounded-full group-hover:bg-primary/20 transition-colors">
+                            <point.icon className="h-7 w-7 text-primary" />
+                        </div>
+                    </div>
+                    <h3 className="font-bold text-xl text-gray-900 mb-2">{point.title}</h3>
+                    <p className="text-gray-600">{point.description}</p>
+                </div>
+            ))}
         </div>
-        <div className="text-center mt-8">
+        <div className="text-center mt-12">
             <Button onClick={scrollToWizard} size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white">Start my personalised comparison</Button>
         </div>
       </div>
