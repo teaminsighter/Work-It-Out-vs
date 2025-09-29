@@ -234,7 +234,7 @@ export default function ContactForm({ question }: ContactFormProps) {
             />
           )}
           
-          <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
+          <Button type="submit" className="w-full bg-brand-purple hover:bg-brand-purple/90 text-white">
             Continue
           </Button>
         </form>
