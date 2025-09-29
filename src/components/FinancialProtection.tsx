@@ -58,7 +58,7 @@ const FinancialProtection = () => {
                 <span>Expert guidance every step of the way.</span>
               </li>
             </ul>
-            <Button size="lg" onClick={scrollToWizard}>Compare Quotes</Button>
+            <Button size="lg" onClick={scrollToWizard} className="bg-brand-purple hover:bg-brand-purple/90 text-white">Compare Quotes</Button>
           </motion.div>
         </div>
       </div>

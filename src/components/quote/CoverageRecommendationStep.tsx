@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from 'react';
@@ -90,7 +91,7 @@ export default function CoverageRecommendationStep({ question }: CoverageRecomme
           <p className="text-muted-foreground">{recommendation.reasoning}</p>
         </CardContent>
       </Card>
-      <Button onClick={onContinue} size="lg" className="mt-8 bg-accent hover:bg-accent/90 text-accent-foreground">
+      <Button onClick={onContinue} size="lg" className="mt-8 bg-brand-purple hover:bg-brand-purple/90 text-white">
         Accept & Continue
       </Button>
     </motion.div>

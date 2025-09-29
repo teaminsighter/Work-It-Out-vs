@@ -26,7 +26,7 @@ const HeroC = () => {
             <p className="text-lg md:text-xl text-white mb-8 max-w-lg text-shadow">
               Best Insurance helps you to get the best insurance quotes fast and easily.
             </p>
-            <Button size="lg" className="bg-teal-500 hover:bg-teal-600 text-white rounded-full" onClick={scrollToWizard}>
+            <Button size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white rounded-full" onClick={scrollToWizard}>
               Get Started
             </Button>
           </motion.div>

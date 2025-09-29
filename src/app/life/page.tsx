@@ -82,7 +82,7 @@ const WhyCompareSection = () => {
             </div>
         </div>
         <div className="text-center mt-8">
-            <Button onClick={scrollToWizard} size="lg">Start my personalised comparison</Button>
+            <Button onClick={scrollToWizard} size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white">Start my personalised comparison</Button>
         </div>
       </div>
     </section>
@@ -130,7 +130,7 @@ const SmartDealSection = () => {
                 </div>
                  <p className="text-xs text-gray-500 text-center mt-4 max-w-2xl mx-auto">*Figures are illustrative; your premium depends on age, health, smoker status, occupation, and underwriting.</p>
                 <div className="text-center mt-8">
-                    <Button onClick={scrollToWizard} size="lg">Show me smarter options</Button>
+                    <Button onClick={scrollToWizard} size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white">Show me smarter options</Button>
                 </div>
             </div>
         </section>
@@ -180,7 +180,7 @@ const HowItWorksSection = () => {
                     ))}
                 </div>
                 <div className="text-center mt-12">
-                    <Button onClick={scrollToWizard} size="lg">Get my life insurance options</Button>
+                    <Button onClick={scrollToWizard} size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white">Get my life insurance options</Button>
                 </div>
             </div>
         </section>
@@ -238,7 +238,7 @@ const WhatYouGetSection = () => {
                     </ul>
                  </div>
                 <div className="text-center mt-12">
-                    <Button onClick={scrollToWizard} size="lg">Get my life insurance options</Button>
+                    <Button onClick={scrollToWizard} size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white">Get my life insurance options</Button>
                 </div>
             </div>
         </section>
@@ -327,5 +327,3 @@ export default function LifePage() {
       </main>
   );
 }
-
-    

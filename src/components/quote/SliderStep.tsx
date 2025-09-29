@@ -55,7 +55,7 @@ export default function SliderStep({ question }: SliderStepProps) {
             />
             <div className="relative mt-2 flex items-center">{points}</div>
         </div>
-        <Button onClick={onContinue} className="w-full">
+        <Button onClick={onContinue} className="w-full bg-brand-purple text-white hover:bg-brand-purple/90">
           Continue
         </Button>
       </div>
