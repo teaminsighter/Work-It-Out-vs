@@ -3,23 +3,28 @@
 
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DollarSign, Users, CreditCard, Activity, Loader2 } from "lucide-react";
-import { collection, getDocs } from 'firebase/firestore';
+import { DollarSign, Users, CreditCard, Activity, Loader2, AlertCircle } from "lucide-react";
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase/config';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 function Dashboard() {
   const [userCount, setUserCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserCount = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const usersCollectionRef = collection(db, 'users');
         const querySnapshot = await getDocs(usersCollectionRef);
         setUserCount(querySnapshot.size);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error fetching user count:", error);
-        setUserCount(0); // Set to 0 on error
+        setError("Failed to fetch user data. Please ensure Firestore is set up correctly and necessary indexes are deployed.");
+        setUserCount(0);
       } finally {
         setLoading(false);
       }
@@ -31,6 +36,15 @@ function Dashboard() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Dashboard Overview</h1>
+
+      {error && (
+        <Alert variant="destructive" className="mb-4">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Firestore Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
