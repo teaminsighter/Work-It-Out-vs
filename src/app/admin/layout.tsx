@@ -14,10 +14,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  SidebarInset,
 } from '@/components/ui/sidebar';
 import {
   DropdownMenu,
@@ -42,15 +38,8 @@ import {
 import { adminNavItems, NavItem } from '@/lib/admin-nav';
 import { useAuth, AuthProvider } from '@/contexts/AuthContext';
 import { FormProvider } from '@/contexts/FormContext';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 import { logout } from '@/lib/firebase/auth';
+import { cn } from '@/lib/utils';
 
 function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const { user, isAuthenticated, loading } = useAuth();
@@ -62,52 +51,8 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
     router.push('/auth/login');
   };
 
-  const renderNavItems = (items: NavItem[]) => {
-    return items.map((item) => {
-      const isActive = pathname.startsWith(item.href);
-      if (item.subitems) {
-        return (
-          <SidebarMenuItem key={item.label}>
-            <SidebarMenuButton isActive={isActive} icon={item.icon}>
-              {item.label}
-            </SidebarMenuButton>
-            <SidebarMenuSub>
-              {item.subitems.map((subitem) => {
-                const isSubActive = pathname === subitem.href;
-                return (
-                  <SidebarMenuSubItem key={subitem.label}>
-                    <SidebarMenuSubButton
-                      href={subitem.href}
-                      asChild
-                      isActive={isSubActive}
-                    >
-                      <Link href={subitem.href}>{subitem.label}</Link>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                );
-              })}
-            </SidebarMenuSub>
-          </SidebarMenuItem>
-        );
-      } else {
-        return (
-          <SidebarMenuItem key={item.label}>
-            <SidebarMenuButton
-              href={item.href}
-              asChild
-              isActive={isActive}
-              icon={item.icon}
-            >
-              <Link href={item.href}>{item.label}</Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        );
-      }
-    });
-  };
+  const activeTopLevelItem = adminNavItems.find(item => pathname.startsWith(item.href));
 
-  const breadcrumbItems = pathname.split('/').filter(Boolean);
-  
   return (
     <SidebarProvider>
       <Sidebar>
@@ -118,7 +63,23 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
           </div>
         </SidebarHeader>
         <SidebarContent>
-          <SidebarMenu>{renderNavItems(adminNavItems)}</SidebarMenu>
+          <SidebarMenu>
+            {adminNavItems.map((item) => {
+              const isActive = pathname.startsWith(item.href);
+              return (
+                <SidebarMenuItem key={item.label}>
+                  <SidebarMenuButton
+                    href={item.href}
+                    asChild
+                    isActive={isActive}
+                    icon={item.icon}
+                  >
+                    <Link href={item.href}>{item.label}</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
+          </SidebarMenu>
         </SidebarContent>
         <SidebarFooter>
           <div className="flex items-center gap-2">
@@ -143,42 +104,8 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:px-6">
-          <div className="flex items-center gap-4">
-            <SidebarTrigger className="sm:hidden" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="/admin">Admin</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                {breadcrumbItems.slice(1).map((item, index) => (
-                  <React.Fragment key={item}>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                      {index === breadcrumbItems.length - 2 ? (
-                        <BreadcrumbPage className="capitalize">
-                          {item.replace(/-/g, ' ')}
-                        </BreadcrumbPage>
-                      ) : (
-                        <BreadcrumbLink asChild>
-                          <Link
-                            href={`/${breadcrumbItems
-                              .slice(0, index + 2)
-                              .join('/')}`}
-                            className="capitalize"
-                          >
-                            {item.replace(/-/g, ' ')}
-                          </Link>
-                        </BreadcrumbLink>
-                      )}
-                    </BreadcrumbItem>
-                  </React.Fragment>
-                ))}
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
+        <header className="flex h-14 items-center justify-end gap-4 border-b bg-background px-4 sm:px-6">
+           <SidebarTrigger className="sm:hidden" />
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon" className="relative">
               <Search className="h-5 w-5" />
@@ -223,7 +150,38 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
             </DropdownMenu>
           </div>
         </header>
-        <main className="flex-1 p-4 sm:p-6">{children}</main>
+
+        <div className="flex-1 flex flex-col">
+          {activeTopLevelItem && activeTopLevelItem.subitems && (
+            <div className="border-b">
+              <div className="px-4 sm:px-6">
+                <h1 className="text-2xl font-bold py-4">{activeTopLevelItem.label}</h1>
+                <nav className="flex space-x-4">
+                  {activeTopLevelItem.subitems.map((subItem) => {
+                    const isActive = pathname === subItem.href;
+                    return (
+                      <Link key={subItem.label} href={subItem.href}>
+                        <Button
+                          variant="ghost"
+                          className={cn(
+                            "h-auto p-0 pb-2 rounded-none border-b-2",
+                            isActive ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground",
+                            "hover:bg-transparent"
+                          )}
+                        >
+                          <subItem.icon className="mr-2 h-4 w-4" />
+                          {subItem.label}
+                        </Button>
+                      </Link>
+                    )
+                  })}
+                </nav>
+              </div>
+            </div>
+          )}
+          <main className="flex-1 p-4 sm:p-6">{children}</main>
+        </div>
+
       </SidebarInset>
     </SidebarProvider>
   );
