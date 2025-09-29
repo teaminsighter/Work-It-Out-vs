@@ -8,6 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { Check, Users, FileText, ThumbsUp, Star } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import Insurers from '@/components/Insurers';
 
 const QuoteWizardLife = dynamic(() => import('@/components/quote/QuoteWizardLife'), {
   loading: () => <div className="w-full max-w-2xl mx-auto p-6 sm:p-10 mt-6"><Skeleton className="h-[400px] w-full" /></div>,
@@ -314,6 +315,7 @@ export default function LifePage() {
         <div ref={quoteWizardRef}>
             <LifePageHero />
         </div>
+        <Insurers />
         <WhyCompareSection />
         <SmartDealSection />
         <HowItWorksSection />
