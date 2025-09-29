@@ -19,25 +19,27 @@ export const metadata: Metadata = {
   description: 'Get your insurance quote in minutes.',
 };
 
-const SiteLayout = ({ children }: { children: React.ReactNode }) => (
-  <FormProvider>
-    <Header />
-    <div id="wizard-ref-parent">
-      {children}
-    </div>
-    <Toaster />
-    <Footer />
-  </FormProvider>
-);
-
 function AppContent({ children }: { children: React.ReactNode }) {
   'use client';
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith('/admin');
 
-  const LayoutComponent = isAdminPage ? React.Fragment : SiteLayout;
+  const SiteLayout = ({ children }: { children: React.ReactNode }) => (
+    <FormProvider>
+      <Header />
+      <div id="wizard-ref-parent">
+        {children}
+      </div>
+      <Toaster />
+      <Footer />
+    </FormProvider>
+  );
 
-  return <LayoutComponent>{children}</LayoutComponent>;
+  if (isAdminPage) {
+    return <>{children}</>;
+  }
+
+  return <SiteLayout>{children}</SiteLayout>;
 }
 
 export default function RootLayout({
