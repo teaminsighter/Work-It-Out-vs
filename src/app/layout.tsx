@@ -1,4 +1,6 @@
 
+'use client';
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -7,41 +9,11 @@ import { cn } from '@/lib/utils';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { FormProvider } from '@/contexts/FormContext';
-import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/components/theme-provider';
 import React from 'react';
 import { usePathname } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
-
-export const metadata: Metadata = {
-  title: 'QuoteFlow Insurance',
-  description: 'Get your insurance quote in minutes.',
-};
-
-function AppContent({ children }: { children: React.ReactNode }) {
-  'use client';
-
-  const pathname = usePathname();
-  const isAdminPage = pathname.startsWith('/admin');
-
-  const SiteLayout = ({ children }: { children: React.ReactNode }) => (
-    <FormProvider>
-      <Header />
-      <div id="wizard-ref-parent">
-        {children}
-      </div>
-      <Toaster />
-      <Footer />
-    </FormProvider>
-  );
-
-  if (isAdminPage) {
-    return <>{children}</>;
-  }
-
-  return <SiteLayout>{children}</SiteLayout>;
-}
 
 export default function RootLayout({
   children,
@@ -51,6 +23,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+         <title>QuoteFlow Insurance</title>
+        <meta name="description" content="Get your insurance quote in minutes." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -65,9 +39,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-            <AuthProvider>
-              <AppContent>{children}</AppContent>
-            </AuthProvider>
+          <FormProvider>
+            <Header />
+            <div id="wizard-ref-parent">
+              {children}
+            </div>
+            <Footer />
+            <Toaster />
+          </FormProvider>
         </ThemeProvider>
       </body>
     </html>

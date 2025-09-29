@@ -6,45 +6,6 @@ admin.initializeApp();
 
 const db = admin.firestore();
 
-/**
- * A Firebase Function that triggers when a new user is created in Firebase Authentication.
- * It creates a corresponding user document in the 'users' collection in Firestore.
- * The first user to be created is assigned the 'super_admin' role.
- */
-export const createUserDocument = functions.auth.user().onCreate(async (user) => {
-  const { uid, email, displayName, photoURL } = user;
-
-  const usersCollectionRef = db.collection('users');
-  const newUserRef = usersCollectionRef.doc(uid);
-
-  try {
-    const existingUsers = await usersCollectionRef.limit(1).get();
-    let role = 'viewer'; // Default role
-    if (existingUsers.empty) {
-      role = 'super_admin';
-    }
-
-    await newUserRef.set({
-      user_id: uid,
-      email: email,
-      created_at: admin.firestore.FieldValue.serverTimestamp(),
-      last_login: null,
-      role: role,
-      permissions: [], // Default empty permissions
-      account_status: 'active',
-      profile: {
-        name: displayName || '',
-        company: '',
-        phone: '',
-        avatar_url: photoURL || '',
-      },
-    });
-    console.log(`Successfully created user document for UID: ${uid} with role: ${role}`);
-  } catch (error) {
-    console.error(`Error creating user document for UID: ${uid}`, error);
-  }
-});
-
 
 /**
  * Process and aggregate dataLayer events as they are created in Firestore.
