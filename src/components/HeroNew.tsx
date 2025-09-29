@@ -32,7 +32,7 @@ const HeroNew = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg">
               COMPARE NZ'S BEST INSURANCE DEALS IN 60 SECONDS
             </h1>
-            <p className="text-lg md:text-xl text-gray-200 mb-8">
+            <p className="text-lg md:text-xl text-gray-200 mb-8 text-shadow">
               Get quick comparisons from leading NZ insurers and receive expert advice to find the perfect cover for you.
             </p>
             <ul className="space-y-3">

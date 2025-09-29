@@ -31,7 +31,7 @@ const LifePageHero = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg">
               Compare Life Insurance Quotes
             </h1>
-            <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-xl">
+            <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-xl text-shadow">
               See fair, tailored options (not just the cheapest). Protect your family with cover that fits your life and budget.
             </p>
             <ul className="space-y-3">
