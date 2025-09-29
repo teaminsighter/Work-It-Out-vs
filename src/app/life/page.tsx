@@ -229,7 +229,7 @@ const HowItWorksSection = () => {
     return (
         <section className="bg-gray-50 py-16 sm:py-24">
             <div className="container mx-auto px-4 max-w-4xl">
-                <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">How our NZ life insurance comparison works</h2>
+                <h2 className="text-3xl font-bold text-primary text-center mb-12">How our NZ life insurance comparison works</h2>
                 <div className="grid md:grid-cols-2 gap-x-8 gap-y-12">
                     {steps.map(step => (
                          <div key={step.title} className="flex items-start gap-4">
@@ -261,7 +261,7 @@ const StoriesSection = () => {
     return (
         <section className="bg-white py-16 sm:py-24">
             <div className="container mx-auto px-4 max-w-4xl">
-                <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">How we helped real people get the best deal</h2>
+                <h2 className="text-3xl font-bold text-primary text-center mb-12">How we helped real people get the best deal</h2>
                 <div className="grid md:grid-cols-3 gap-8">
                     {stories.map(s => (
                         <div key={s.name} className="bg-gray-50 p-6 rounded-lg shadow-md border">
@@ -290,7 +290,7 @@ const WhatYouGetSection = () => {
     return (
         <section className="bg-gray-50 py-16 sm:py-24">
              <div className="container mx-auto px-4 max-w-4xl">
-                 <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">What you get</h2>
+                 <h2 className="text-3xl font-bold text-primary text-center mb-8">What you get</h2>
                  <div className="max-w-2xl mx-auto">
                     <ul className="space-y-4">
                         {benefits.map(b => (
@@ -339,7 +339,7 @@ const FaqSection = () => {
     return (
         <section className="bg-gray-50 py-16 sm:py-24">
             <div className="container mx-auto px-4 max-w-3xl">
-                <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">Life insurance FAQs (NZ)</h2>
+                <h2 className="text-3xl font-bold text-primary text-center mb-8">Life insurance FAQs (NZ)</h2>
                  <Accordion type="single" collapsible className="w-full">
                     {faqs.map(faq => (
                         <AccordionItem value={faq.q} key={faq.q}>
@@ -392,5 +392,7 @@ export default function LifePage() {
       </main>
   );
 }
+
+    
 
     
