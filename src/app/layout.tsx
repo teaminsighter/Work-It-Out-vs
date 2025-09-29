@@ -10,7 +10,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { FormProvider } from '@/contexts/FormContext';
 import { AuthProvider } from '@/contexts/AuthContext';
-import { useRef } from 'react';
+import { usePathname } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -19,6 +19,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const isAdminPage = pathname.startsWith('/admin');
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -35,12 +37,12 @@ export default function RootLayout({
       <body className={cn('font-sans antialiased', inter.variable)} suppressHydrationWarning>
         <AuthProvider>
           <FormProvider>
-            <Header />
+            {!isAdminPage && <Header />}
             <div id="wizard-ref-parent">
               {children}
             </div>
             <Toaster />
-            <Footer />
+            {!isAdminPage && <Footer />}
           </FormProvider>
         </AuthProvider>
       </body>

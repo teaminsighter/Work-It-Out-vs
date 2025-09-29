@@ -40,7 +40,8 @@ import {
   Loader2,
 } from 'lucide-react';
 import { adminNavItems, NavItem } from '@/lib/admin-nav';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth, AuthProvider } from '@/contexts/AuthContext';
+import { FormProvider } from '@/contexts/FormContext';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -51,7 +52,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { logout } from '@/lib/firebase/auth';
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const { user, isAuthenticated, loading } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
@@ -225,5 +226,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <main className="flex-1 p-4 sm:p-6">{children}</main>
       </SidebarInset>
     </SidebarProvider>
+  );
+}
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <AuthProvider>
+      <FormProvider>
+        <AdminLayoutContent>{children}</AdminLayoutContent>
+      </FormProvider>
+    </AuthProvider>
   );
 }
