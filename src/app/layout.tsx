@@ -22,6 +22,8 @@ export default function RootLayout({
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith('/admin');
 
+  const LayoutComponent = isAdminPage ? React.Fragment : SiteLayout;
+
   return (
     <html lang="en" suppressHydrationWarning>
        <head>
@@ -35,17 +37,24 @@ export default function RootLayout({
         />
       </head>
       <body className={cn('font-sans antialiased', inter.variable)} suppressHydrationWarning>
-        <AuthProvider>
-          <FormProvider>
-            {!isAdminPage && <Header />}
-            <div id="wizard-ref-parent">
-              {children}
-            </div>
-            <Toaster />
-            {!isAdminPage && <Footer />}
-          </FormProvider>
-        </AuthProvider>
+        <LayoutComponent>
+          {children}
+        </LayoutComponent>
       </body>
     </html>
   );
 }
+
+
+const SiteLayout = ({ children }: { children: React.ReactNode }) => (
+  <AuthProvider>
+    <FormProvider>
+      <Header />
+      <div id="wizard-ref-parent">
+        {children}
+      </div>
+      <Toaster />
+      <Footer />
+    </FormProvider>
+  </AuthProvider>
+);
