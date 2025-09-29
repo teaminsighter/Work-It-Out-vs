@@ -25,7 +25,7 @@ const LifePageHero = () => {
         style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/Lanind%20Page%201%2Ffamily.jpeg?alt=media&token=424b8995-e4f0-4cf9-b257-623ca0287635')" }}
         data-ai-hint="happy family"
       ></div>
-      <div className="absolute inset-0 animated-gradient"></div>
+      <div className="absolute inset-0 bg-primary/70"></div>
       <div className="container mx-auto px-4 relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-white">
@@ -100,7 +100,7 @@ const WhyCompareSection = () => {
             ))}
         </div>
         <div className="text-center mt-12">
-            <Button onClick={scrollToWizard} size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white">Start my personalised comparison</Button>
+            <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Start my personalised comparison</Button>
         </div>
       </div>
     </section>
@@ -148,7 +148,7 @@ const SmartDealSection = () => {
                 </div>
                  <p className="text-xs text-gray-500 text-center mt-4 max-w-2xl mx-auto">*Figures are illustrative; your premium depends on age, health, smoker status, occupation, and underwriting.</p>
                 <div className="text-center mt-8">
-                    <Button onClick={scrollToWizard} size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white">Show me smarter options</Button>
+                    <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Show me smarter options</Button>
                 </div>
             </div>
         </section>
@@ -244,7 +244,7 @@ const HowItWorksSection = () => {
                     ))}
                 </div>
                 <div className="text-center mt-12">
-                    <Button onClick={scrollToWizard} size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white">Get my life insurance options</Button>
+                    <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Get my life insurance options</Button>
                 </div>
             </div>
         </section>
@@ -302,7 +302,7 @@ const WhatYouGetSection = () => {
                     </ul>
                  </div>
                 <div className="text-center mt-12">
-                    <Button onClick={scrollToWizard} size="lg" className="bg-brand-purple hover:bg-brand-purple/90 text-white">Get my life insurance options</Button>
+                    <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Get my life insurance options</Button>
                 </div>
             </div>
         </section>
@@ -392,3 +392,5 @@ export default function LifePage() {
       </main>
   );
 }
+
+    
