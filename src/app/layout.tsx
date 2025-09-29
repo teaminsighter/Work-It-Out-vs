@@ -10,7 +10,6 @@ import { FormProvider } from '@/contexts/FormContext';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/components/theme-provider';
 import React from 'react';
-import { usePathname } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -21,6 +20,7 @@ export const metadata: Metadata = {
 
 function AppContent({ children }: { children: React.ReactNode }) {
   'use client';
+  const { usePathname } = require('next/navigation');
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith('/admin');
 
