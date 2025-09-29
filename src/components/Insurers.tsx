@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const logos = [
   { src: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/health-logo1.webp?alt=media&token=8b1a5f1a-7253-47a7-a2c3-a3ecc27bedbb', alt: 'Insurance Company 1', hint: 'company logo' },
-  { src: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/health-logo2.webp?alt=media&token=73bd1e36-30d0-4f89-b9e3-43a69252b91c', alt: 'Insurance Company 2', hint: 'company logo' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/logoaston.png?alt=media&token=07154690-b875-4881-9d9f-0add58ce7f21', alt: 'Insurance Company 2', hint: 'company logo' },
   { src: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/health-logo3.webp?alt=media&token=2925601e-e5b0-4638-b92c-d647fe62e841', alt: 'Insurance Company 3', hint: 'company logo' },
   { src: 'https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/health-logo4.webp?alt=media&token=2f16c66a-ddf7-4b79-b9fc-3299d1181023', alt: 'Insurance Company 4', hint: 'company logo' },
 ];
