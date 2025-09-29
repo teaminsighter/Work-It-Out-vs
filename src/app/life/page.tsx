@@ -6,9 +6,10 @@ import dynamic from 'next/dynamic';
 import { useForm } from '@/contexts/FormContext';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { Check, Users, FileText, ThumbsUp, Star } from 'lucide-react';
+import { Check, Users, FileText, ThumbsUp, Star, XCircle, Lightbulb, TrendingUp } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Insurers from '@/components/Insurers';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 const QuoteWizardLife = dynamic(() => import('@/components/quote/QuoteWizardLife'), {
   loading: () => <div className="w-full max-w-2xl mx-auto p-6 sm:p-10 mt-6"><Skeleton className="h-[400px] w-full" /></div>,
@@ -137,6 +138,52 @@ const SmartDealSection = () => {
     );
 };
 
+const MythBustingSection = () => {
+    const myths = [
+        {
+            myth: "Life insurance is too expensive.",
+            truth: "Basic cover can start from as little as a cup of coffee a week. We find options that fit your budget.",
+            icon: XCircle
+        },
+        {
+            myth: "I'm young and healthy, I don't need it.",
+            truth: "The younger you are, the cheaper it is to lock in low premiums for life. It's about protecting your future, and your future family.",
+            icon: XCircle
+        },
+        {
+            myth: "It's too complicated to set up.",
+            truth: "That's what we're here for. We handle the comparisons and paperwork, so you don't have to.",
+            icon: XCircle
+        }
+    ];
+
+    return (
+        <section className="bg-white py-16 sm:py-24">
+            <div className="container mx-auto px-4 max-w-4xl">
+                <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Busting Common Life Insurance Myths</h2>
+                <div className="grid md:grid-cols-3 gap-8">
+                    {myths.map((item, index) => (
+                        <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow">
+                            <CardHeader>
+                                <div className="flex items-center gap-3">
+                                    <item.icon className="h-6 w-6 text-destructive" />
+                                    <CardTitle className="text-lg">{item.myth}</CardTitle>
+                                </div>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex items-start gap-3">
+                                    <Lightbulb className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                                    <p className="text-gray-600">{item.truth}</p>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
 const HowItWorksSection = () => {
     const { scrollToWizard } = useForm();
     const steps = [
@@ -163,7 +210,7 @@ const HowItWorksSection = () => {
     ];
 
     return (
-        <section className="bg-white py-16 sm:py-24">
+        <section className="bg-gray-50 py-16 sm:py-24">
             <div className="container mx-auto px-4 max-w-4xl">
                 <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">How our NZ life insurance comparison works</h2>
                 <div className="grid md:grid-cols-2 gap-x-8 gap-y-12">
@@ -195,12 +242,12 @@ const StoriesSection = () => {
         { name: "Rajan (45, ex-smoker)", story: "Rates looked high. After updating smoker status and comparing across our panel, he cut his premium without reducing cover." },
     ];
     return (
-        <section className="bg-gray-50 py-16 sm:py-24">
+        <section className="bg-white py-16 sm:py-24">
             <div className="container mx-auto px-4 max-w-4xl">
                 <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">How we helped real people get the best deal</h2>
                 <div className="grid md:grid-cols-3 gap-8">
                     {stories.map(s => (
-                        <div key={s.name} className="bg-white p-6 rounded-lg shadow-md border">
+                        <div key={s.name} className="bg-gray-50 p-6 rounded-lg shadow-md border">
                             <p className="text-gray-600 mb-4">&quot;{s.story}&quot;</p>
                             <p className="font-bold text-right">- {s.name}</p>
                         </div>
@@ -224,8 +271,8 @@ const WhatYouGetSection = () => {
         "No obligation. Your pace, your call."
     ];
     return (
-        <section className="bg-white py-16 sm:py-24">
-            <div className="container mx-auto px-4 max-w-4xl">
+        <section className="bg-gray-50 py-16 sm:py-24">
+             <div className="container mx-auto px-4 max-w-4xl">
                  <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">What you get</h2>
                  <div className="max-w-2xl mx-auto">
                     <ul className="space-y-4">
@@ -264,7 +311,7 @@ const FinalCTASection = () => {
 const FaqSection = () => {
     const faqs = [
         { q: "What happens after I submit my details?", a: "We’ll review your information, compare plans from four leading NZ insurers, and a dedicated adviser will contact you with tailored options. There are no instant on-page results on the thank-you screen." },
-        { q: "Is the cheapest life insurance always best?", a: "Not necessarily. Cheaper policies can have narrow coverage or premiums that rise every year. Many people get better value by checking **level vs stepped** and looking at built-in benefits." },
+        { q: "Is the cheapest life insurance always best?", a: "Not necessarily. Cheaper policies can have narrow coverage or premiums that rise every year. Many people get better value by checking <strong>level vs stepped</strong> and looking at built-in benefits." },
         { q: "How do level vs stepped premiums work in NZ?", a: "Stepped is cheaper upfront but increases annually. Level starts higher but can be cheaper overall if you’ll keep cover long-term." },
         { q: "How much life insurance do I need?", a: "Many Kiwis cover the mortgage, funeral costs, and several years of family living expenses. Your adviser will show ranges and you can adjust." },
         { q: "Do I need a medical exam?", a: "It depends on age, cover amount, and health. Some applications are straight-through; others may need medical information." },
@@ -318,6 +365,7 @@ export default function LifePage() {
         <Insurers />
         <WhyCompareSection />
         <SmartDealSection />
+        <MythBustingSection />
         <HowItWorksSection />
         <StoriesSection />
         <WhatYouGetSection />
