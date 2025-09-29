@@ -81,7 +81,7 @@ const WhyCompareSection = () => {
 
   return (
     <section className="bg-white py-16 sm:py-24">
-      <div className="container mx-auto px-4 max-w-5xl">
+      <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-primary text-center mb-4">Why compare life insurance quotes before you decide</h2>
         <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
           Most Kiwis grab the first number they see. But prices and features vary — sometimes by a lot. When you compare term life insurance in NZ, you’ll notice:
@@ -111,7 +111,7 @@ const SmartDealSection = () => {
     const { scrollToWizard } = useForm();
     return (
         <section className="bg-gray-50 py-16 sm:py-24">
-            <div className="container mx-auto px-4 max-w-4xl">
+            <div className="container mx-auto px-4">
                 <div className="text-center">
                     <h2 className="text-3xl font-bold text-primary mb-4">Why the cheapest life insurance isn’t always the best deal</h2>
                     <p className="text-lg text-gray-600 mb-8">The lowest sticker price can cost more later. Watch for:</p>
@@ -176,7 +176,7 @@ const MythBustingSection = () => {
 
     return (
         <section className="bg-white py-16 sm:py-24">
-            <div className="container mx-auto px-4 max-w-4xl">
+            <div className="container mx-auto px-4">
                 <h2 className="text-3xl font-bold text-primary text-center mb-12">Busting Common Life Insurance Myths</h2>
                 <div className="grid md:grid-cols-3 gap-8">
                     {myths.map((item, index) => (
@@ -228,7 +228,7 @@ const HowItWorksSection = () => {
 
     return (
         <section className="bg-gray-50 py-16 sm:py-24">
-            <div className="container mx-auto px-4 max-w-4xl">
+            <div className="container mx-auto px-4">
                 <h2 className="text-3xl font-bold text-primary text-center mb-12">How our NZ life insurance comparison works</h2>
                 <div className="grid md:grid-cols-2 gap-x-8 gap-y-12">
                     {steps.map(step => (
@@ -260,7 +260,7 @@ const StoriesSection = () => {
     ];
     return (
         <section className="bg-white py-16 sm:py-24">
-            <div className="container mx-auto px-4 max-w-4xl">
+            <div className="container mx-auto px-4">
                 <h2 className="text-3xl font-bold text-primary text-center mb-12">How we helped real people get the best deal</h2>
                 <div className="grid md:grid-cols-3 gap-8">
                     {stories.map(s => (
@@ -289,7 +289,7 @@ const WhatYouGetSection = () => {
     ];
     return (
         <section className="bg-gray-50 py-16 sm:py-24">
-             <div className="container mx-auto px-4 max-w-4xl">
+             <div className="container mx-auto px-4">
                  <h2 className="text-3xl font-bold text-primary text-center mb-8">What you get</h2>
                  <div className="max-w-2xl mx-auto">
                     <ul className="space-y-4">
@@ -338,7 +338,7 @@ const FaqSection = () => {
 
     return (
         <section className="bg-gray-50 py-16 sm:py-24">
-            <div className="container mx-auto px-4 max-w-3xl">
+            <div className="container mx-auto px-4">
                 <h2 className="text-3xl font-bold text-primary text-center mb-8">Life insurance FAQs (NZ)</h2>
                  <Accordion type="single" collapsible className="w-full">
                     {faqs.map(faq => (
@@ -358,7 +358,7 @@ const FaqSection = () => {
 const ComplianceSection = () => {
     return (
         <section className="bg-gray-100 py-8">
-            <div className="container mx-auto px-4 text-center text-xs text-gray-500 max-w-4xl">
+            <div className="container mx-auto px-4 text-center text-xs text-gray-500">
                 <h3 className="font-bold mb-2">Compliance</h3>
                 <p>This page provides <strong>general information only</strong> and does not take into account your objectives, financial situation, or needs. Consider seeking <strong>advice from a licensed financial adviser</strong> and reading the relevant policy documents before making decisions. Quotes are <strong>indicative</strong> and subject to underwriting and eligibility.</p>
             </div>
@@ -392,6 +392,8 @@ export default function LifePage() {
       </main>
   );
 }
+
+    
 
     
 
