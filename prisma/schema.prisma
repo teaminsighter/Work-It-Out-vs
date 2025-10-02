@@ -1,0 +1,988 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  firstName     String    @map("first_name")
+  lastName      String    @map("last_name")
+  username      String?   @unique
+  avatar        String?
+  phoneNumber   String?   @map("phone_number")
+  department    String?
+  jobTitle      String?   @map("job_title")
+  bio           String?
+  timezone      String?   @default("UTC")
+  language      String?   @default("en")
+  role          Role      @default(VIEWER)
+  isActive      Boolean   @default(true) @map("is_active")
+  emailVerified Boolean   @default(false) @map("email_verified")
+  lastLoginAt   DateTime? @map("last_login_at")
+  lastActiveAt  DateTime? @map("last_active_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  createdBy     String?   @map("created_by")
+  
+  // Relations
+  permissions   UserPermission[]
+  activities    UserActivity[]
+  sessions      UserSession[]
+  createdUsers  User[] @relation("UserCreatedBy")
+  creator       User?  @relation("UserCreatedBy", fields: [createdBy], references: [id])
+
+  @@map("users")
+}
+
+model Lead {
+  id                String            @id @default(cuid())
+  firstName         String            @map("first_name")
+  lastName          String            @map("last_name")
+  email             String
+  phone             String?
+  contactPreference ContactPreference @default(EMAIL) @map("contact_preference")
+  bestTimeToCall    String?           @map("best_time_to_call")
+  status            LeadStatus        @default(NEW)
+  source            String            @default("website")
+  score             Int               @default(0)
+  tags              String?
+  notes             String?
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+  
+  // Enhanced Tracking Fields
+  dateCreated         DateTime? @map("date_created")
+  dateModified        DateTime? @map("date_modified")
+  
+  // UTM Parameters
+  utmCampaign         String? @map("utm_campaign")
+  utmSource           String? @map("utm_source")
+  utmMedium           String? @map("utm_medium")
+  utmContent          String? @map("utm_content")
+  utmKeyword          String? @map("utm_keyword")
+  utmPlacement        String? @map("utm_placement")
+  
+  // URL Tracking IDs
+  gclid               String? @map("gclid")
+  fbclid              String? @map("fbclid")
+  
+  // User/Device Information
+  visitorUserId       String? @unique @map("visitor_user_id")
+  ipAddress           String? @map("ip_address")
+  device              String? @map("device")
+  displayAspectRatio  String? @map("display_aspect_ratio")
+  defaultLocation     String? @map("default_location")
+  
+  // Form Tracking
+  formId              String? @map("form_id")
+  formClass           String? @map("form_class")
+  formName            String? @map("form_name")
+  
+  // A/B Test Tracking
+  abTestId            String? @map("ab_test_id")
+  abVariant           ABVariant? @map("ab_variant")
+  
+  // Visit Tracking
+  firstVisitUrl       String? @map("first_visit_url")
+  lastVisitUrl        String? @map("last_visit_url")
+  
+  // Relations
+  systemDetails     SystemDetails?
+  abTest            ABTest? @relation(fields: [abTestId], references: [id])
+  abTestAssignment  ABTestAssignment?
+
+  @@map("leads")
+}
+
+model SystemDetails {
+  id            String   @id @default(cuid())
+  leadId        String   @unique @map("lead_id")
+  systemSize    Float    @map("system_size")
+  estimatedCost Float    @map("estimated_cost")
+  annualSavings Float    @map("annual_savings")
+  paybackPeriod Float    @map("payback_period")
+  panelCount    Int      @map("panel_count")
+  roofArea      Float    @map("roof_area")
+  monthlyBill   Float    @map("monthly_bill")
+  usageKwh      Float    @map("usage_kwh")
+  address       String
+  propertyType  String   @map("property_type")
+  roofType      String   @map("roof_type")
+  createdAt     DateTime @default(now()) @map("created_at")
+  lead          Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@map("system_details")
+}
+
+model PricingTier {
+  id                 String   @id @default(cuid())
+  name               String
+  minKw              Float    @default(3.0) @map("min_kw")
+  maxKw              Float?   @map("max_kw")
+  pricePerWatt       Float    @map("price_per_watt")
+  installationCost   Float    @default(2500.0) @map("installation_cost")
+  inverterCost       Float    @default(1500.0) @map("inverter_cost")
+  batteryCostPerKwh  Float?   @map("battery_cost_per_kwh")
+  maintenanceYearly  Float    @default(200.0) @map("maintenance_yearly")
+  warrantyYears      Int      @default(10) @map("warranty_years")
+  efficiencyRating   Float    @default(0.85) @map("efficiency_rating")
+  isActive           Boolean  @default(true) @map("is_active")
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@map("pricing_tiers")
+}
+
+model RegionalPricing {
+  id                String   @id @default(cuid())
+  region            String   @unique
+  electricityRate   Float    @map("electricity_rate")
+  feedInTariff      Float    @map("feed_in_tariff")
+  installationRebate Float   @map("installation_rebate")
+  salesTax          Float    @map("sales_tax")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@map("regional_pricing")
+}
+
+model SolarCalculatorSettings {
+  id                    String   @id @default(cuid())
+  defaultSystemSize     Float    @map("default_system_size")
+  averageDailyUsage     Float    @map("average_daily_usage")
+  roofEfficiencyFactor  Float    @map("roof_efficiency_factor")
+  degradationRate       Float    @map("degradation_rate")
+  financingApr          Float    @map("financing_apr")
+  loanTermYears         Int      @map("loan_term_years")
+  inflationRate         Float    @map("inflation_rate")
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+
+  @@map("solar_calculator_settings")
+}
+
+model LandingPage {
+  id             String          @id @default(cuid())
+  name           String
+  slug           String          @unique
+  template       String
+  status         PageStatus      @default(DRAFT)
+  content        String
+  seoTitle       String?         @map("seo_title")
+  seoDescription String?         @map("seo_description")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("landing_pages")
+}
+
+// Old ABTest models removed - replaced with enhanced versions below
+
+enum Role {
+  SUPER_ADMIN @map("super_admin")
+  ADMIN       @map("admin")
+  EDITOR      @map("editor")
+  MEMBER      @map("member")
+  VIEWER      @map("viewer")
+}
+
+enum ContactPreference {
+  PHONE @map("phone")
+  EMAIL @map("email")
+  BOTH  @map("both")
+}
+
+enum LeadStatus {
+  NEW            @map("new")
+  CONTACTED      @map("contacted")
+  QUALIFIED      @map("qualified")
+  PROPOSAL_SENT  @map("proposal_sent")
+  CONVERTED      @map("converted")
+  NOT_INTERESTED @map("not_interested")
+}
+
+enum PageStatus {
+  DRAFT     @map("draft")
+  PUBLISHED @map("published")
+  ARCHIVED  @map("archived")
+}
+
+enum TestStatus {
+  DRAFT     @map("draft")
+  RUNNING   @map("running")
+  PAUSED    @map("paused")
+  COMPLETED @map("completed")
+}
+
+model VisitorTracking {
+  id          String   @id @default(cuid())
+  userId      String?  @map("user_id") // Unique visitor ID for tracking across sessions
+  ipAddress   String   @map("ip_address")
+  country     String?
+  city        String?
+  region      String?
+  userAgent   String?  @map("user_agent")
+  page        String
+  referrer    String?
+  sessionId   String?  @map("session_id")
+  deviceType  String?  @map("device_type")
+  browser     String?
+  os          String?
+  isBot       Boolean  @default(false) @map("is_bot")
+  timestamp   DateTime @default(now())
+  leadId      String?  @map("lead_id")
+  timeOnPage  Int?     @map("time_on_page") // in seconds
+  scrollDepth Float?   @map("scroll_depth") // percentage
+  exitPage    Boolean  @default(false) @map("exit_page")
+
+  @@index([userId])
+  @@index([ipAddress])
+  @@index([sessionId])
+  @@index([timestamp])
+  @@map("visitor_tracking")
+}
+
+// New model for detailed user sessions
+model UserSession {
+  id              String   @id @default(cuid())
+  userId          String   @map("user_id")
+  sessionId       String   @unique @map("session_id")
+  startTime       DateTime @map("start_time")
+  endTime         DateTime? @map("end_time")
+  duration        Int?     // in seconds
+  pageViews       Int      @default(0) @map("page_views")
+  deviceType      String?  @map("device_type")
+  browser         String?
+  os              String?
+  country         String?
+  city            String?
+  referrer        String?
+  utmSource       String?  @map("utm_source")
+  utmMedium       String?  @map("utm_medium")
+  utmCampaign     String?  @map("utm_campaign")
+  leadGenerated   Boolean  @default(false) @map("lead_generated")
+  conversionValue Float?   @map("conversion_value")
+  exitReason      String?  @map("exit_reason")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([sessionId])
+  @@index([startTime])
+  @@map("user_sessions")
+}
+
+// Track specific user interactions
+model UserInteraction {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  sessionId    String   @map("session_id")
+  eventType    String   @map("event_type") // click, form_start, form_step, form_complete, etc.
+  eventData    String   @map("event_data") // detailed event information
+  page         String
+  elementId    String?  @map("element_id")
+  elementText  String?  @map("element_text")
+  timestamp    DateTime @default(now())
+  
+  @@index([userId])
+  @@index([sessionId])
+  @@index([eventType])
+  @@index([timestamp])
+  @@map("user_interactions")
+}
+
+// Comprehensive user activity tracking for admin actions
+model UserActivity {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  action      String   // login, logout, create_user, update_permissions, view_page, etc.
+  category    String   // authentication, user_management, analytics, system, etc.
+  target      String?  // what was acted upon (user_id, page_name, etc.)
+  targetType  String?  @map("target_type") // user, page, setting, etc.
+  description String   // human readable description
+  metadata    String?  // additional context data
+  ipAddress   String?  @map("ip_address")
+  userAgent   String?  @map("user_agent")
+  success     Boolean  @default(true)
+  errorMessage String? @map("error_message")
+  duration    Int?     // action duration in milliseconds
+  timestamp   DateTime @default(now())
+  
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([action])
+  @@index([category])
+  @@index([timestamp])
+  @@index([success])
+  @@map("user_activities")
+}
+
+// Track form progress and answers
+model FormAnalytics {
+  id              String   @id @default(cuid())
+  userId          String   @map("user_id")
+  sessionId       String   @map("session_id")
+  formType        String   @map("form_type") // main, life, health, income
+  stepNumber      Int      @map("step_number")
+  stepName        String   @map("step_name")
+  questionId      String   @map("question_id")
+  questionText    String   @map("question_text")
+  answerValue     String?  @map("answer_value")
+  answerText      String?  @map("answer_text")
+  timeOnStep      Int?     @map("time_on_step") // seconds
+  isCompleted     Boolean  @default(false) @map("is_completed")
+  isDropOff       Boolean  @default(false) @map("is_drop_off")
+  timestamp       DateTime @default(now())
+  
+  @@index([userId])
+  @@index([sessionId])
+  @@index([formType])
+  @@index([stepNumber])
+  @@map("form_analytics")
+}
+
+// Permission system for granular tab access control
+model UserPermission {
+  id           String @id @default(cuid())
+  userId       String @map("user_id")
+  categoryId   String @map("category_id")   // analytics, lead-management, etc.
+  tabId        String @map("tab_id")        // overview, forms, leads, etc.
+  canView      Boolean @default(false) @map("can_view")
+  canEdit      Boolean @default(false) @map("can_edit")
+  canDelete    Boolean @default(false) @map("can_delete")
+  canExport    Boolean @default(false) @map("can_export")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  grantedBy    String @map("granted_by")    // User ID who granted this permission
+  
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, categoryId, tabId])
+  @@index([userId])
+  @@index([categoryId])
+  @@index([tabId])
+  @@map("user_permissions")
+}
+
+// Predefined permission templates for different roles
+model PermissionTemplate {
+  id           String @id @default(cuid())
+  name         String
+  description  String?
+  role         Role
+  categoryId   String @map("category_id")
+  tabId        String @map("tab_id")
+  canView      Boolean @default(false) @map("can_view")
+  canEdit      Boolean @default(false) @map("can_edit")
+  canDelete    Boolean @default(false) @map("can_delete")
+  canExport    Boolean @default(false) @map("can_export")
+  isDefault    Boolean @default(false) @map("is_default")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  
+  @@unique([role, categoryId, tabId])
+  @@index([role])
+  @@index([categoryId])
+  @@map("permission_templates")
+}
+
+// Tracking Setup Models
+model DataLayerEvent {
+  id               String   @id @default(cuid())
+  eventName        String   @unique @map("event_name")
+  description      String
+  parameters       String   @default("{}")
+  triggerCondition String   @map("trigger_condition")
+  status           EventStatus @default(ACTIVE)
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  fires EventFire[]
+  
+  @@map("data_layer_events")
+}
+
+model EventFire {
+  id         String   @id @default(cuid())
+  eventId    String   @map("event_id")
+  userId     String   @map("user_id")
+  sessionId  String   @map("session_id")
+  parameters String   @default("{}")
+  testMode   Boolean  @default(false) @map("test_mode")
+  timestamp  DateTime @default(now())
+  
+  // Relations
+  event DataLayerEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  
+  @@index([eventId])
+  @@index([timestamp])
+  @@index([userId, sessionId])
+  @@map("event_fires")
+}
+
+model GTMContainer {
+  id            String   @id @default(cuid())
+  containerId   String   @unique @map("container_id")
+  accountId     String   @map("account_id")
+  name          String
+  status        GTMStatus @default(ACTIVE)
+  version       Int      @default(1)
+  lastPublished DateTime? @map("last_published")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  tags      GTMTag[]
+  triggers  GTMTrigger[]
+  variables GTMVariable[]
+  
+  @@map("gtm_containers")
+}
+
+model GTMTag {
+  id            String   @id @default(cuid())
+  containerId   String   @map("container_id")
+  name          String
+  type          String
+  status        GTMTagStatus @default(ACTIVE)
+  triggers      String   @default("[]")
+  configuration String   @default("{}")
+  firingCount   Int      @default(0) @map("firing_count")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  container GTMContainer @relation(fields: [containerId], references: [id], onDelete: Cascade)
+  
+  @@index([containerId])
+  @@map("gtm_tags")
+}
+
+model GTMTrigger {
+  id            String   @id @default(cuid())
+  containerId   String   @map("container_id")
+  name          String
+  type          String
+  configuration String   @default("{}")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  container GTMContainer @relation(fields: [containerId], references: [id], onDelete: Cascade)
+  
+  @@index([containerId])
+  @@map("gtm_triggers")
+}
+
+model GTMVariable {
+  id            String   @id @default(cuid())
+  containerId   String   @map("container_id")
+  name          String
+  type          String
+  configuration String   @default("{}")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  container GTMContainer @relation(fields: [containerId], references: [id], onDelete: Cascade)
+  
+  @@index([containerId])
+  @@map("gtm_variables")
+}
+
+model PlatformIntegration {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  category    PlatformCategory
+  platformId  String   @map("platform_id")
+  status      PlatformStatus @default(DISCONNECTED)
+  credentials String   @default("{}")
+  endpoint    String?
+  webhookUrl  String?  @map("webhook_url")
+  features    String   @default("[]")
+  lastSync    DateTime? @map("last_sync")
+  dataPoints  Int      @default(0) @map("data_points")
+  apiVersion  String?  @map("api_version")
+  icon        String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  events PlatformEvent[]
+  
+  @@map("platform_integrations")
+}
+
+model PlatformEvent {
+  id           String   @id @default(cuid())
+  platformId   String   @map("platform_id")
+  eventName    String   @map("event_name")
+  eventData    String   @default("{}") @map("event_data")
+  status       EventProcessStatus @default(PENDING)
+  responseTime Int?     @map("response_time")
+  errorMessage String?  @map("error_message")
+  timestamp    DateTime @default(now())
+  
+  // Relations
+  platform PlatformIntegration @relation(fields: [platformId], references: [id], onDelete: Cascade)
+  
+  @@index([platformId])
+  @@index([timestamp])
+  @@map("platform_events")
+}
+
+model ConversionEndpoint {
+  id              String   @id @default(cuid())
+  name            String
+  platform        String
+  url             String
+  method          HTTPMethod @default(POST)
+  authentication AuthType
+  credentials     String   @default("{}")
+  events          String   @default("[]")
+  status          EndpointStatus @default(ACTIVE)
+  lastUsed        DateTime? @map("last_used")
+  avgResponseTime Int?     @map("avg_response_time")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  conversions ConversionEvent[]
+  
+  @@map("conversion_endpoints")
+}
+
+model ConversionEvent {
+  id           String   @id @default(cuid())
+  endpointId   String   @map("endpoint_id")
+  eventName    String   @map("event_name")
+  eventData    String   @default("{}") @map("event_data")
+  value        Float?
+  currency     String   @default("EUR")
+  userId       String   @map("user_id")
+  status       EventProcessStatus @default(PENDING)
+  responseTime Int?     @map("response_time")
+  errorMessage String?  @map("error_message")
+  testMode     Boolean  @default(false) @map("test_mode")
+  timestamp    DateTime @default(now())
+  
+  // Relations
+  endpoint ConversionEndpoint @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+  
+  @@index([endpointId])
+  @@index([timestamp])
+  @@index([status])
+  @@map("conversion_events")
+}
+
+model APIConfiguration {
+  id                String   @id @default(cuid())
+  platform          String
+  clientId          String?  @map("client_id")
+  clientSecret      String?  @map("client_secret") // Encrypted
+  accessToken       String?  @map("access_token") // Encrypted
+  refreshToken      String?  @map("refresh_token") // Encrypted
+  webhookSecret     String?  @map("webhook_secret") // Encrypted
+  developerToken    String?  @map("developer_token") // For Google Ads
+  oauthClientId     String?  @map("oauth_client_id") // For OAuth apps
+  accountName       String?  @map("account_name") // Account display name
+  additionalSettings String  @default("{}") @map("additional_settings")
+  testMode          Boolean  @default(false) @map("test_mode")
+  isActive          Boolean  @default(true) @map("is_active")
+  lastUsed          DateTime? @map("last_used")
+  expiresAt         DateTime? @map("expires_at")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  
+  @@unique([platform, clientId])
+  @@map("api_configurations")
+}
+
+// Tracking Setup Enums
+enum EventStatus {
+  ACTIVE
+  INACTIVE
+  TESTING
+}
+
+enum GTMStatus {
+  ACTIVE
+  INACTIVE
+  DRAFT
+}
+
+enum GTMTagStatus {
+  ACTIVE
+  PAUSED
+}
+
+enum PlatformCategory {
+  ANALYTICS
+  MARKETING
+  CRM
+  COMMUNICATION
+  AUTOMATION
+}
+
+enum PlatformStatus {
+  CONNECTED
+  DISCONNECTED
+  ERROR
+  PENDING
+}
+
+enum EventProcessStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+enum HTTPMethod {
+  GET
+  POST
+  PUT
+  DELETE
+}
+
+enum AuthType {
+  API_KEY
+  OAUTH
+  WEBHOOK
+}
+
+enum EndpointStatus {
+  ACTIVE
+  INACTIVE
+  ERROR
+}
+
+// A/B Testing Enums
+enum ABTestStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+}
+
+enum AssignmentType {
+  FIFTY_FIFTY      // 50-50 random split
+  ALTERNATING      // A-B-A-B sequential pattern
+  CUSTOM_SPLIT     // Custom percentage split
+}
+
+enum URLMatchType {
+  EXACT            // Exact URL match
+  PATTERN          // Pattern matching with wildcards
+  REGEX            // Regular expression matching
+}
+
+enum ABVariant {
+  A
+  B
+}
+
+model AIConversation {
+  id             Int      @id @default(autoincrement())
+  conversationId String   @map("conversation_id")
+  query          String
+  response       String
+  data           Json?
+  chartType      String?  @map("chart_type")
+  timestamp      DateTime @default(now())
+  
+  @@map("ai_conversations")
+}
+
+model AIReport {
+  id              Int       @id @default(autoincrement())
+  name            String
+  description     String?
+  type            String    // 'weekly', 'monthly', 'quarterly', 'custom'
+  frequency       String?
+  recipients      Json      // Array of email addresses
+  status          String    @default("draft") // 'active', 'paused', 'draft'
+  lastGenerated   DateTime? @map("last_generated")
+  nextScheduled   DateTime? @map("next_scheduled")
+  metrics         Json      // Array of metrics to include
+  format          String    @default("pdf") // 'pdf', 'html', 'excel'
+  aiInsights      Boolean   @default(false) @map("ai_insights")
+  deliveryCount   Int       @default(0) @map("delivery_count")
+  template        Json?     // Report template configuration
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  
+  @@map("ai_reports")
+}
+
+model AIRecommendation {
+  id                String    @id @default(cuid())
+  title             String
+  description       String
+  category          String    // 'optimization', 'marketing', 'conversion', 'cost-reduction', 'growth'
+  priority          String    // 'high', 'medium', 'low'
+  impact            String    // 'high', 'medium', 'low'
+  effort            String    // 'low', 'medium', 'high'
+  confidence        Float
+  estimatedValue    Float     @map("estimated_value")
+  timeframe         String
+  status            String    @default("new") // 'new', 'in-progress', 'completed', 'dismissed'
+  generatedAt       DateTime  @default(now()) @map("generated_at")
+  implementedAt     DateTime? @map("implemented_at")
+  insights          Json      // Array of insights
+  metrics           Json      // Array of relevant metrics
+  aiReasoning       String    @map("ai_reasoning")
+  
+  @@map("ai_recommendations")
+}
+
+model AIAlert {
+  id                String    @id @default(cuid())
+  title             String
+  description       String
+  severity          String    // 'critical', 'warning', 'info'
+  category          String    // 'conversion', 'traffic', 'revenue', 'performance', 'security', 'system'
+  metric            String
+  currentValue      Float     @map("current_value")
+  threshold         Float
+  previousValue     Float     @map("previous_value")
+  change            Float
+  changePercent     Float     @map("change_percent")
+  triggeredAt       DateTime  @default(now()) @map("triggered_at")
+  status            String    @default("active") // 'active', 'acknowledged', 'resolved', 'suppressed'
+  isRead            Boolean   @default(false) @map("is_read")
+  recommendedAction String    @map("recommended_action")
+  affectedPages     Json      @map("affected_pages") // Array of affected pages
+  estimatedImpact   String    @map("estimated_impact")
+  resolvedAt        DateTime? @map("resolved_at")
+  
+  @@map("ai_alerts")
+}
+
+model AIAlertRule {
+  id               Int       @id @default(autoincrement())
+  name             String
+  metric           String
+  condition        String    // 'greater_than', 'less_than', 'percent_change', 'anomaly'
+  threshold        Float
+  timeframe        String
+  enabled          Boolean   @default(true)
+  severity         String    // 'critical', 'warning', 'info'
+  notifications    Boolean   @default(false)
+  emailRecipients  Json      @map("email_recipients") // Array of email addresses
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+  
+  @@map("ai_alert_rules")
+}
+
+model Webhook {
+  id            String   @id @default(cuid())
+  name          String
+  url           String
+  method        HTTPMethod @default(POST)
+  events        String   @default("[\"lead.created\"]") // JSON string of event types
+  headers       String   @default("{}") // JSON string of headers
+  isActive      Boolean  @default(true) @map("is_active")
+  successCount  Int      @default(0) @map("success_count")
+  failureCount  Int      @default(0) @map("failure_count")
+  lastTriggered DateTime? @map("last_triggered")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  logs WebhookLog[]
+  
+  @@map("webhooks")
+}
+
+model WebhookLog {
+  id           String   @id @default(cuid())
+  webhookId    String   @map("webhook_id")
+  event        String
+  status       String   // 'success' or 'failure'
+  statusCode   Int?     @map("status_code")
+  responseTime Int      @map("response_time") // in milliseconds
+  payload      String   // JSON string
+  response     String?
+  error        String?
+  createdAt    DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  webhook Webhook @relation(fields: [webhookId], references: [id], onDelete: Cascade)
+  
+  @@index([webhookId])
+  @@index([createdAt])
+  @@index([status])
+  @@map("webhook_logs")
+}
+
+model SystemSettings {
+  id                   String   @id @default(cuid())
+  // Company Information
+  companyName          String   @map("company_name")
+  companyEmail         String   @map("company_email")
+  companyPhone         String   @map("company_phone")
+  companyAddress       String   @map("company_address")
+  companyWebsite       String   @map("company_website")
+  companyLogo          String   @map("company_logo")
+  
+  // Admin Panel Customization
+  adminPanelName       String   @map("admin_panel_name")
+  primaryColor         String   @map("primary_color")
+  secondaryColor       String   @map("secondary_color")
+  navbarColor          String   @map("navbar_color")
+  buttonColor          String   @map("button_color")
+  
+  // Localization
+  language             String
+  timezone             String
+  dateFormat           String   @map("date_format")
+  timeFormat           String   @map("time_format")
+  currency             String
+  numberFormat         String   @map("number_format")
+  
+  // Appearance
+  theme                String
+  logoPosition         String   @map("logo_position")
+  sidebarCollapsed     Boolean  @map("sidebar_collapsed")
+  compactMode          Boolean  @map("compact_mode")
+  
+  // System Preferences
+  autoSave             Boolean  @map("auto_save")
+  autoBackup           Boolean  @map("auto_backup")
+  sessionTimeout       Int      @map("session_timeout")
+  maxLoginAttempts     Int      @map("max_login_attempts")
+  passwordExpiry       Int      @map("password_expiry")
+  
+  // Notifications
+  emailNotifications   Boolean  @map("email_notifications")
+  pushNotifications    Boolean  @map("push_notifications")
+  smsNotifications     Boolean  @map("sms_notifications")
+  notificationSound    Boolean  @map("notification_sound")
+  
+  // Privacy & Security
+  twoFactorRequired    Boolean  @map("two_factor_required")
+  passwordComplexity   String   @map("password_complexity")
+  dataRetention        Int      @map("data_retention")
+  activityLogging      Boolean  @map("activity_logging")
+  ipWhitelist          String   @default("[]") @map("ip_whitelist") // JSON string
+  
+  // Performance
+  cacheEnabled         Boolean  @map("cache_enabled")
+  compressionEnabled   Boolean  @map("compression_enabled")
+  cdnEnabled           Boolean  @map("cdn_enabled")
+  maxFileSize          Int      @map("max_file_size")
+  
+  // Regional Settings
+  country              String
+  region               String
+  city                 String
+  postalCode           String   @map("postal_code")
+  
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+  
+  @@map("system_settings")
+}
+
+// A/B Testing System Models
+model ABTest {
+  id                  String @id @default(cuid())
+  name                String
+  description         String?
+  url                 String
+  urlMatchType        URLMatchType @default(EXACT) @map("url_match_type")
+  status              ABTestStatus @default(DRAFT)
+  
+  // Assignment Configuration
+  assignmentType      AssignmentType @default(FIFTY_FIFTY) @map("assignment_type")
+  customSplitA        Int @default(50) @map("custom_split_a")
+  customSplitB        Int @default(50) @map("custom_split_b")
+  
+  // Landing Page Content
+  landingPageA        Json @map("landing_page_a")  // Full HTML content
+  landingPageB        Json @map("landing_page_b")  // Full HTML content
+  
+  // Performance Metrics
+  visitsA             Int @default(0) @map("visits_a")
+  visitsB             Int @default(0) @map("visits_b")
+  conversionsA        Int @default(0) @map("conversions_a")
+  conversionsB        Int @default(0) @map("conversions_b")
+  conversionRateA     Float @default(0) @map("conversion_rate_a")
+  conversionRateB     Float @default(0) @map("conversion_rate_b")
+  
+  // Statistical Analysis
+  statisticalSignificance Boolean @default(false) @map("statistical_significance")
+  confidenceLevel     Float @default(95) @map("confidence_level")
+  winnerVariant       ABVariant? @map("winner_variant")
+  
+  // Test Duration
+  startDate           DateTime? @map("start_date")
+  endDate             DateTime? @map("end_date")
+  
+  // Metadata
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+  createdBy           String @map("created_by")
+  
+  // Relations
+  assignments         ABTestAssignment[]
+  leads               Lead[]
+  
+  @@map("ab_tests")
+}
+
+model ABTestAssignment {
+  id                  String @id @default(cuid())
+  testId              String @map("test_id")
+  visitorUserId       String @unique @map("visitor_user_id")
+  variant             ABVariant
+  assignedAt          DateTime @default(now()) @map("assigned_at")
+  converted           Boolean @default(false)
+  conversionAt        DateTime? @map("conversion_at")
+  conversionValue     Float? @map("conversion_value")
+  ipAddress           String? @map("ip_address")
+  userAgent           String? @map("user_agent")
+  
+  // Relations
+  test                ABTest @relation(fields: [testId], references: [id], onDelete: Cascade)
+  lead                Lead? @relation(fields: [visitorUserId], references: [visitorUserId])
+  
+  @@unique([testId, visitorUserId])
+  @@map("ab_test_assignments")
+}
+
+model ABTestTemplate {
+  id                  String @id @default(cuid())
+  name                String
+  description         String?
+  category            String @default("General")
+  
+  // Content
+  htmlContent         String @map("html_content")
+  cssContent          String? @map("css_content")
+  jsContent           String? @map("js_content")
+  variables           Json? // Dynamic variables for customization
+  
+  // Usage Statistics
+  usageCount          Int @default(0) @map("usage_count")
+  isPublic            Boolean @default(true) @map("is_public")
+  
+  // Metadata
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+  createdBy           String @map("created_by")
+  
+  @@map("ab_test_templates")
+}

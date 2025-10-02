@@ -26,7 +26,7 @@ const Header = () => {
             <Link href="/" className="flex items-center gap-2">
               <Image 
                 src="https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/transparent_wit_horizontal-01.png?alt=media&token=d3b9cf1a-70aa-4010-a136-8eba88acb8d5"
-                alt="QuoteFlow Logo"
+                alt="Work It Out Logo"
                 width={150}
                 height={40}
                 className="w-36"
@@ -46,7 +46,7 @@ const Header = () => {
             </nav>
 
             <div className="hidden md:flex items-center gap-4">
-              <Button onClick={scrollToWizard} className="bg-brand-purple hover:bg-brand-purple/90 text-white">Compare Now</Button>
+              <Button onClick={scrollToWizard} className="bg-brand-purple hover:bg-brand-purple/90 text-white">Work It Out</Button>
             </div>
 
             <div className="md:hidden">
@@ -74,7 +74,7 @@ const Header = () => {
                   </Link>
                 ))}
                 <div className="border-t my-2"></div>
-                <Button className="w-full mt-2" onClick={() => { scrollToWizard(); setIsOpen(false); }}>Compare Now</Button>
+                <Button className="w-full mt-2" onClick={() => { scrollToWizard(); setIsOpen(false); }}>Work It Out</Button>
             </div>
           </div>
         </div>

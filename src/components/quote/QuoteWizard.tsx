@@ -7,26 +7,21 @@ import { ALL_LOCATION_QUESTIONS } from '@/lib/questions-location';
 import QuestionStep from './QuestionStep';
 import ResultsPage from './ResultsPage';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, RotateCcw } from 'lucide-react';
+import { ChevronLeft, RotateCcw, Sun } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import ContactForm from './ContactForm';
 import SelectForm from './SelectForm';
 import { usePathname } from 'next/navigation';
 import MultiSelectStep from './MultiSelectStep';
-import { ShieldCheck } from 'lucide-react';
 
 const ALL_WIZARD_QUESTIONS = {...ALL_QUESTIONS, ...ALL_LOCATION_QUESTIONS};
 
 export default function QuoteWizard() {
   const { currentStepId, goBack, stepHistory } = useForm();
   const pathname = usePathname();
-  const isHealthPage = pathname === '/health';
-  const isLifePage = pathname === '/life';
-  const isIncomePage = pathname === '/income';
-
+  
   const currentQuestion = ALL_WIZARD_QUESTIONS[currentStepId];
-  const isSpecialPage = isHealthPage || isLifePage || isIncomePage;
-  const isFirstStep = stepHistory.length <= (isSpecialPage ? 0 : 1);
+  const isFirstStep = stepHistory.length <= 1;
 
   const renderStep = () => {
     if (currentStepId === 'results') {
@@ -48,8 +43,8 @@ export default function QuoteWizard() {
   };
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
-      <div className="relative rounded-xl border bg-card/90 text-card-foreground p-6 shadow-2xl backdrop-blur-sm sm:p-10 mt-6">
+    <div className="relative w-full max-w-xl mx-auto scale-75">
+      <div className="relative rounded-xl border bg-card/90 text-card-foreground p-4 shadow-2xl backdrop-blur-sm sm:p-6 mt-4">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStepId}

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useForm } from '@/contexts/FormContext';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const QuoteWizardHealth = dynamic(() => import('@/components/quote/QuoteWizardHealth'), {
+const QuoteWizardHealthNew = dynamic(() => import('@/components/quote/QuoteWizardHealthNew'), {
   loading: () => <div className="w-full max-w-2xl mx-auto p-6 sm:p-10 mt-6"><Skeleton className="h-[400px] w-full" /></div>,
   ssr: false,
 });
@@ -51,7 +51,7 @@ const HeroHealth = () => {
             </ul>
           </div>
           <div ref={quoteWizardRef}>
-            <QuoteWizardHealth />
+            <QuoteWizardHealthNew />
           </div>
         </div>
       </div>

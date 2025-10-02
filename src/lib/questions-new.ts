@@ -47,7 +47,7 @@ export const TOTAL_STEPS_ESTIMATE = 9;
 export const ALL_QUESTIONS: Questions = {
   'start': {
     id: 'start',
-    question: "Welcome to QuoteFlow",
+    question: "Welcome to Work It Out",
     Icon: ShieldCheck,
     nextStepId: 'insurance-type',
   },

@@ -25,7 +25,10 @@ interface ContactFormProps {
 
 const createSchema = (fields: string[] = []) => {
     const shape: { [key: string]: z.ZodType<any, any> } = {};
-    if (fields.includes('name')) shape.name = z.string().min(2, 'Name must be at least 2 characters.');
+    if (fields.includes('name')) {
+        shape.firstName = z.string().min(2, 'First name must be at least 2 characters.');
+        shape.lastName = z.string().min(2, 'Last name must be at least 2 characters.');
+    }
     if (fields.includes('email')) shape.email = z.string().email('Invalid email address.');
     if (fields.includes('phone')) shape.phone = z.string().min(10, 'Phone number seems too short.');
     if (fields.includes('postcode')) shape.postcode = z.string().min(4, 'Postcode must be at least 4 digits.').max(4, 'Postcode must be at most 4 digits.');
@@ -47,7 +50,12 @@ export default function ContactForm({ question }: ContactFormProps) {
   const form = useReactHookForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: fields.reduce((acc, field) => {
-        acc[field as keyof FormValues] = formData[field] || '';
+        if (field === 'name') {
+            acc['firstName' as keyof FormValues] = formData.firstName || '';
+            acc['lastName' as keyof FormValues] = formData.lastName || '';
+        } else {
+            acc[field as keyof FormValues] = formData[field] || '';
+        }
         return acc;
     }, {} as FormValues)
   });
@@ -65,19 +73,34 @@ export default function ContactForm({ question }: ContactFormProps) {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 w-full max-w-sm space-y-6 text-left">
           {fields.includes('name') && (
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Full Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="John Doe" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <>
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="John" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Doe" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </>
           )}
           {fields.includes('email') && (
              <FormField
@@ -234,7 +257,7 @@ export default function ContactForm({ question }: ContactFormProps) {
             />
           )}
           
-          <Button type="submit" className="w-full bg-brand-purple hover:bg-brand-purple/90 text-white">
+          <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
             Continue
           </Button>
         </form>

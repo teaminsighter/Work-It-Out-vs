@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useRef } from 'react';
@@ -70,7 +69,7 @@ const WhyCompareSection = () => {
       {
           icon: ListChecks,
           title: "Features matter.",
-          description: "Two “$500k life insurance” quotes can behave very differently — think level vs stepped premiums, built-in benefits, and claim definitions."
+          description: "Two '$500k life insurance' quotes can behave very differently — think level vs stepped premiums, built-in benefits, and claim definitions."
       },
       {
           icon: TrendingUp,
@@ -84,7 +83,7 @@ const WhyCompareSection = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-primary text-center mb-4">Why compare life insurance quotes before you decide</h2>
         <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
-          Most Kiwis grab the first number they see. But prices and features vary — sometimes by a lot. When you compare term life insurance in NZ, you’ll notice:
+          Most Kiwis grab the first number they see. But prices and features vary — sometimes by a lot. When you compare term life insurance in NZ, you'll notice:
         </p>
         <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {points.map((point, index) => (
@@ -113,14 +112,14 @@ const SmartDealSection = () => {
         <section className="bg-gray-50 py-16 sm:py-24">
             <div className="container mx-auto px-4">
                 <div className="text-center">
-                    <h2 className="text-3xl font-bold text-primary mb-4">Why the cheapest life insurance isn’t always the best deal</h2>
+                    <h2 className="text-3xl font-bold text-primary mb-4">Why the cheapest life insurance isn't always the best deal</h2>
                     <p className="text-lg text-gray-600 mb-8 max-w-7xl mx-auto">The lowest sticker price can cost more later. Watch for:</p>
                 </div>
                 <div className="max-w-7xl mx-auto">
                     <ul className="space-y-4 mb-8 max-w-2xl mx-auto">
                         <li className="flex items-start gap-3">
                             <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
-                            <div><strong>Stepped vs level premiums.</strong> Stepped looks cheaper now but rises each year. <strong>Level premiums</strong> start higher but can be <strong>cheaper overall</strong> if you’ll hold cover long-term.</div>
+                            <div><strong>Stepped vs level premiums.</strong> Stepped looks cheaper now but rises each year. <strong>Level premiums</strong> start higher but can be <strong>cheaper overall</strong> if you'll hold cover long-term.</div>
                         </li>
                         <li className="flex items-start gap-3">
                             <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
@@ -128,7 +127,7 @@ const SmartDealSection = () => {
                         </li>
                         <li className="flex items-start gap-3">
                             <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
-                            <div><strong>Claim definitions.</strong> The fine print decides what gets paid — this is where “cheap” sometimes bites.</div>
+                            <div><strong>Claim definitions.</strong> The fine print decides what gets paid — this is where "cheap" sometimes bites.</div>
                         </li>
                     </ul>
                     <div className="bg-white border-l-4 border-primary p-6 rounded-r-lg shadow-md max-w-2xl mx-auto">
@@ -145,7 +144,7 @@ const SmartDealSection = () => {
                                 <p className="text-2xl font-bold text-primary mt-1">$36/month</p>
                             </div>
                         </div>
-                        <p className="text-sm text-center mt-4 text-gray-600"><strong>Why it’s better:</strong> For a small step-up now, you can save over the years <strong>and</strong> avoid annual price creep — ideal while you raise kids or pay off the mortgage.</p>
+                        <p className="text-sm text-center mt-4 text-gray-600"><strong>Why it's better:</strong> For a small step-up now, you can save over the years <strong>and</strong> avoid annual price creep — ideal while you raise kids or pay off the mortgage.</p>
                     </div>
                     <p className="text-xs text-gray-500 text-center mt-4 max-w-2xl mx-auto">*Figures are illustrative; your premium depends on age, health, smoker status, occupation, and underwriting.</p>
                     <div className="text-center mt-8">
@@ -219,7 +218,7 @@ const HowItWorksSection = () => {
         {
             icon: ThumbsUp,
             title: "3. Your dedicated adviser gets in touch.",
-            description: "We’ll contact you with your curated plan options, explain trade-offs (e.g., level vs stepped), and answer questions in plain English."
+            description: "We'll contact you with your curated plan options, explain trade-offs (e.g., level vs stepped), and answer questions in plain English."
         },
         {
             icon: Check,
@@ -256,7 +255,7 @@ const HowItWorksSection = () => {
 const StoriesSection = () => {
     const { scrollToWizard } = useForm();
     const stories = [
-        { name: "Jess (30, non-smoker)", story: "Started with the cheapest term life quote. Our adviser recommended level premiums for a few dollars more per month — now she’s set for the next decade without annual shocks." },
+        { name: "Jess (30, non-smoker)", story: "Started with the cheapest term life quote. Our adviser recommended level premiums for a few dollars more per month — now she's set for the next decade without annual shocks." },
         { name: "Kauri & Maia (young family)", story: "Their bank policy felt okay. We sourced similar-priced options from our four top insurers with clearer benefits and a premium-waiver add-on. Same budget, stronger safety net." },
         { name: "Rajan (45, ex-smoker)", story: "Rates looked high. After updating smoker status and comparing across our panel, he cut his premium without reducing cover." },
     ];
@@ -285,7 +284,7 @@ const WhatYouGetSection = () => {
     const benefits = [
         "A curated shortlist of life insurance options from four leading NZ insurers",
         "Clear explanations of level vs stepped premiums and key definitions",
-        "Best-value highlights (not just “cheapest”) based on your goals",
+        "Best-value highlights (not just 'cheapest') based on your goals",
         "Human help from a dedicated, licensed NZ adviser — at no extra cost",
         "No obligation. Your pace, your call."
     ];
@@ -317,7 +316,7 @@ const FinalCTASection = () => {
         <section className="bg-primary text-white py-16 sm:py-24">
             <div className="container mx-auto px-4 text-center max-w-7xl">
                 <h2 className="text-3xl font-bold mb-2">Ready when you are</h2>
-                <p className="text-lg text-primary-foreground/80 mb-8">Start now. You’ll be done before the kettle boils.</p>
+                <p className="text-lg text-primary-foreground/80 mb-8">Start now. You'll be done before the kettle boils.</p>
                 <div className="flex justify-center gap-4 flex-wrap">
                     <Button onClick={scrollToWizard} size="lg" variant="secondary">Get my life insurance options</Button>
                     <Button onClick={scrollToWizard} size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white hover:text-primary">Talk to an adviser</Button>
@@ -329,13 +328,13 @@ const FinalCTASection = () => {
 
 const FaqSection = () => {
     const faqs = [
-        { q: "What happens after I submit my details?", a: "We’ll review your information, compare plans from four leading NZ insurers, and a dedicated adviser will contact you with tailored options. There are no instant on-page results on the thank-you screen." },
+        { q: "What happens after I submit my details?", a: "We'll review your information, compare plans from four leading NZ insurers, and a dedicated adviser will contact you with tailored options. There are no instant on-page results on the thank-you screen." },
         { q: "Is the cheapest life insurance always best?", a: "Not necessarily. Cheaper policies can have narrow coverage or premiums that rise every year. Many people get better value by checking <strong>level vs stepped</strong> and looking at built-in benefits." },
-        { q: "How do level vs stepped premiums work in NZ?", a: "Stepped is cheaper upfront but increases annually. Level starts higher but can be cheaper overall if you’ll keep cover long-term." },
+        { q: "How do level vs stepped premiums work in NZ?", a: "Stepped is cheaper upfront but increases annually. Level starts higher but can be cheaper overall if you'll keep cover long-term." },
         { q: "How much life insurance do I need?", a: "Many Kiwis cover the mortgage, funeral costs, and several years of family living expenses. Your adviser will show ranges and you can adjust." },
         { q: "Do I need a medical exam?", a: "It depends on age, cover amount, and health. Some applications are straight-through; others may need medical information." },
-        { q: "Can I switch providers later?", a: "Yes. Just make sure you don’t cancel your existing cover until the new policy is in force." },
-        { q: "Do non-smoker rates make a difference?", a: "Yes. Non-smoker rates are typically lower. If you’ve quit, tell us — it can reduce your premium after qualifying periods." },
+        { q: "Can I switch providers later?", a: "Yes. Just make sure you don't cancel your existing cover until the new policy is in force." },
+        { q: "Do non-smoker rates make a difference?", a: "Yes. Non-smoker rates are typically lower. If you've quit, tell us — it can reduce your premium after qualifying periods." },
     ];
 
     return (
@@ -394,11 +393,3 @@ export default function LifePage() {
       </main>
   );
 }
-
-    
-
-    
-
-    
-
-    

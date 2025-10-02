@@ -1,57 +1,226 @@
 
 "use client";
 
-import { useForm } from '@/contexts/FormContext';
-import { ALL_QUESTIONS } from '@/lib/questions-income';
-import { ALL_LOCATION_QUESTIONS } from '@/lib/questions-location';
-import QuestionStep from './QuestionStep';
-import ResultsPage from './ResultsPage';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, RotateCcw } from 'lucide-react';
+import { ChevronLeft, ChevronRight, DollarSign, User, Phone, Mail } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import ContactForm from './ContactForm';
-import SelectForm from './SelectForm';
-import { usePathname } from 'next/navigation';
-import MultiSelectStep from './MultiSelectStep';
 
-const ALL_WIZARD_QUESTIONS = {...ALL_QUESTIONS, ...ALL_LOCATION_QUESTIONS};
+interface FormData {
+  occupation?: string;
+  currentIncome?: string;
+  coveragePercentage?: string;
+  age?: string;
+  healthStatus?: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+}
+
+const steps = [
+  {
+    id: 'occupation',
+    title: 'What is your occupation?',
+    type: 'select',
+    options: [
+      { value: 'professional', label: 'Professional (office worker, manager)' },
+      { value: 'tradesperson', label: 'Tradesperson (electrician, plumber)' },
+      { value: 'healthcare', label: 'Healthcare worker' },
+      { value: 'teacher', label: 'Teacher/Educator' },
+      { value: 'other', label: 'Other' },
+    ]
+  },
+  {
+    id: 'current-income',
+    title: 'What is your annual income?',
+    type: 'select',
+    options: [
+      { value: 'under-50k', label: 'Under $50,000' },
+      { value: '50k-75k', label: '$50,000 - $75,000' },
+      { value: '75k-100k', label: '$75,000 - $100,000' },
+      { value: '100k-150k', label: '$100,000 - $150,000' },
+      { value: 'over-150k', label: 'Over $150,000' },
+    ]
+  },
+  {
+    id: 'coverage-percentage',
+    title: 'What percentage of your income would you like covered?',
+    type: 'select',
+    options: [
+      { value: '60', label: '60% of income' },
+      { value: '70', label: '70% of income' },
+      { value: '80', label: '80% of income' },
+      { value: '85', label: '85% of income (maximum)' },
+    ]
+  },
+  {
+    id: 'age',
+    title: 'How old are you?',
+    type: 'input',
+    inputType: 'number',
+    placeholder: 'Enter your age'
+  },
+  {
+    id: 'health-status',
+    title: 'How would you describe your current health?',
+    type: 'select',
+    options: [
+      { value: 'excellent', label: 'Excellent - no health issues' },
+      { value: 'good', label: 'Good - minor issues' },
+      { value: 'fair', label: 'Fair - some ongoing conditions' },
+      { value: 'poor', label: 'Poor - significant health issues' },
+    ]
+  },
+  {
+    id: 'contact',
+    title: 'Get Your Income Protection Quote',
+    type: 'contact',
+  }
+];
 
 export default function QuoteWizardIncome() {
-  const { currentStepId, goBack, stepHistory } = useForm();
-  const pathname = usePathname();
-  const isHealthPage = pathname === '/health';
-  const isLifePage = pathname === '/life';
-  const isIncomePage = pathname === '/income';
+  const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState<FormData>({});
 
-  const currentQuestion = ALL_WIZARD_QUESTIONS[currentStepId];
-  const isSpecialPage = isHealthPage || isLifePage || isIncomePage;
-  const isFirstStep = stepHistory.length <= (isSpecialPage ? 0 : 1);
+  const handleNext = () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      // Handle form submission
+      console.log('Income protection quote submitted:', formData);
+      alert('Income protection quote request submitted! We will contact you soon with your personalized income protection options.');
+    }
+  };
+
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const canProceed = () => {
+    const step = steps[currentStep];
+    const value = formData[step.id as keyof FormData];
+    
+    if (step.type === 'contact') {
+      return formData.name && formData.email && formData.phone;
+    }
+    
+    return value && value.trim() !== '';
+  };
 
   const renderStep = () => {
-    if (currentStepId === 'results') {
-      return <ResultsPage />;
+    const step = steps[currentStep];
+    
+    if (step.type === 'select' && step.options) {
+      return (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">{step.title}</h2>
+          <div className="grid gap-3">
+            {step.options.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => handleInputChange(step.id, option.value)}
+                className={`p-4 text-left border rounded-lg transition-all hover:border-green-500 ${
+                  formData[step.id as keyof FormData] === option.value
+                    ? 'border-green-500 bg-green-50'
+                    : 'border-gray-200'
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <DollarSign className="h-5 w-5 text-green-600" />
+                  <span className="font-medium">{option.label}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
     }
-    if (currentQuestion) {
-      if (currentQuestion.multiSelect) {
-        return <MultiSelectStep question={currentQuestion} />;
-      }
-      if (currentQuestion.fields && currentQuestion.fields.length > 0) {
-        return <ContactForm question={currentQuestion} />;
-      }
-      if (currentQuestion.field && currentQuestion.field === 'location') {
-        return <SelectForm question={currentQuestion} />;
-      }
-      return <QuestionStep key={currentStepId} question={currentQuestion} />;
+
+    if (step.type === 'input') {
+      return (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">{step.title}</h2>
+          <input
+            type={step.inputType || 'text'}
+            placeholder={step.placeholder}
+            value={formData[step.id as keyof FormData] || ''}
+            onChange={(e) => handleInputChange(step.id, e.target.value)}
+            className="w-full p-4 border border-gray-200 rounded-lg focus:outline-none focus:border-green-500"
+          />
+        </div>
+      );
     }
-    return <div>Question not found.</div>;
+
+    if (step.type === 'contact') {
+      return (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">{step.title}</h2>
+          <p className="text-gray-600 mb-6">We'll send you personalized income protection options to secure your financial future.</p>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg">
+              <User className="h-5 w-5 text-green-600" />
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={formData.name || ''}
+                onChange={(e) => handleInputChange('name', e.target.value)}
+                className="flex-1 outline-none"
+              />
+            </div>
+            <div className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg">
+              <Mail className="h-5 w-5 text-green-600" />
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={formData.email || ''}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                className="flex-1 outline-none"
+              />
+            </div>
+            <div className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg">
+              <Phone className="h-5 w-5 text-green-600" />
+              <input
+                type="tel"
+                placeholder="Phone Number"
+                value={formData.phone || ''}
+                onChange={(e) => handleInputChange('phone', e.target.value)}
+                className="flex-1 outline-none"
+              />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return null;
   };
 
   return (
     <div className="relative w-full max-w-2xl mx-auto">
-      <div className="relative rounded-xl border bg-card/90 text-card-foreground p-6 shadow-2xl backdrop-blur-sm sm:p-10 mt-6">
+      <div className="relative rounded-xl border bg-white text-gray-900 p-6 shadow-2xl sm:p-10 mt-6">
+        {/* Progress Bar */}
+        <div className="mb-8">
+          <div className="flex justify-between text-sm text-gray-500 mb-2">
+            <span>Step {currentStep + 1} of {steps.length}</span>
+            <span>{Math.round(((currentStep + 1) / steps.length) * 100)}%</span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div 
+              className="bg-green-600 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+            />
+          </div>
+        </div>
+
         <AnimatePresence mode="wait">
           <motion.div
-            key={currentStepId}
+            key={currentStep}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
@@ -61,24 +230,30 @@ export default function QuoteWizardIncome() {
           </motion.div>
         </AnimatePresence>
 
-        {!isFirstStep && currentStepId !== 'results' && (
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={goBack}
-            className="absolute -left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/70 hover:bg-white sm:-left-14"
-            aria-label="Go back"
-          >
-            <ChevronLeft className="h-6 w-6 text-gray-700" />
-          </Button>
-        )}
-        {currentStepId === 'results' && (
-          <div className="mt-6 flex justify-center">
-            <Button onClick={() => window.location.reload()}>
-              <RotateCcw className="mr-2 h-4 w-4" /> Start Over
+        {/* Navigation */}
+        <div className="flex justify-between mt-8">
+          {currentStep > 0 ? (
+            <Button
+              variant="outline"
+              onClick={handleBack}
+              className="flex items-center space-x-2"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              <span>Back</span>
             </Button>
-          </div>
-        )}
+          ) : (
+            <div />
+          )}
+
+          <Button
+            onClick={handleNext}
+            disabled={!canProceed()}
+            className="flex items-center space-x-2 bg-green-600 hover:bg-green-700"
+          >
+            <span>{currentStep === steps.length - 1 ? 'Get My Quote' : 'Next'}</span>
+            {currentStep < steps.length - 1 && <ChevronRight className="h-4 w-4" />}
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -27,15 +27,15 @@ const Hero = () => {
       ></div>
       <div className="absolute inset-0 z-10 animated-gradient"></div>
       <div className="container mx-auto px-4 relative z-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start min-h-[400px]">
+          <div className="text-white mt-0 md:mt-4 flex flex-col justify-start h-full pr-4 md:pr-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg text-left">
               Compare Insurance Quotes
             </h1>
-            <p className="text-lg md:text-xl text-white mb-8 text-shadow">
+            <p className="text-lg md:text-xl text-white mb-8 text-shadow text-center">
               Get quick comparisons from leading NZ insurers and receive expert advice to find the perfect cover for you.
             </p>
-            <ul className="space-y-3">
+            <ul className="space-y-3 flex flex-col items-center">
                <li className="flex items-center text-lg gap-3">
                 <ShieldCheck className="h-6 w-6 text-white" />
                 <span>We compare 50+ NZ insurers</span>

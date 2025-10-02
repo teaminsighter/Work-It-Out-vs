@@ -8,12 +8,40 @@ import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import VisitorTracking from '@/components/VisitorTracking';
 import { FormProvider } from '@/contexts/FormContext';
+import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/components/theme-provider';
 import React from 'react';
 import { usePathname } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
+
+function ConditionalLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isAdminRoute = pathname?.startsWith('/admin');
+
+  if (isAdminRoute) {
+    return (
+      <>
+        {children}
+        <Toaster />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Header />
+      <div id="wizard-ref-parent">
+        {children}
+      </div>
+      <Footer />
+      <VisitorTracking />
+      <Toaster />
+    </>
+  );
+}
 
 export default function RootLayout({
   children,
@@ -23,8 +51,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-         <title>QuoteFlow Insurance</title>
-        <meta name="description" content="Get your insurance quote in minutes." />
+         <title>Work It Out</title>
+        <meta name="description" content="Work it out - your ultimate solution platform." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -35,18 +63,15 @@ export default function RootLayout({
       <body className={cn('min-h-screen bg-background font-sans antialiased', inter.variable)} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
-          <FormProvider>
-            <Header />
-            <div id="wizard-ref-parent">
-              {children}
-            </div>
-            <Footer />
-            <Toaster />
-          </FormProvider>
+          <AuthProvider>
+            <FormProvider>
+              <ConditionalLayout>{children}</ConditionalLayout>
+            </FormProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

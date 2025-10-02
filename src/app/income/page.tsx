@@ -4,21 +4,369 @@
 import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { useForm } from '@/contexts/FormContext';
-import HeroIncome from '@/components/income/HeroIncome';
-import Insurers from '@/components/Insurers';
-import FinancialProtection from '@/components/FinancialProtection';
-import Services from '@/components/Services';
-import Benefits from '@/components/Benefits';
-import HowItWorks from '@/components/HowItWorks';
-import Testimonials from '@/components/Testimonials';
-import CTA from '@/components/CTA';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
+import { Check, Users, FileText, ThumbsUp, XCircle, Lightbulb, TrendingUp, DollarSign, ListChecks } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import Insurers from '@/components/Insurers';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
-const QuoteWizardIncome = dynamic(() => import('@/components/quote/QuoteWizardIncome'), {
+const QuoteWizardLife = dynamic(() => import('@/components/quote/QuoteWizardLife'), {
   loading: () => <div className="w-full max-w-2xl mx-auto p-6 sm:p-10 mt-6"><Skeleton className="h-[400px] w-full" /></div>,
   ssr: false,
 });
 
+const IncomePageHero = () => {
+  const { quoteWizardRef } = useForm();
+  return (
+    <section className="relative w-full pt-40 pb-16 md:pt-48 md:pb-24 lg:pt-56 lg:pb-32">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-fixed"
+        style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/Lanind%20Page%201%2Ffamily.jpeg?alt=media&token=424b8995-e4f0-4cf9-b257-623ca0287635')" }}
+        data-ai-hint="happy family"
+      ></div>
+      <div className="absolute inset-0 bg-primary/70"></div>
+      <div className="container mx-auto px-4 relative z-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="text-white">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg">
+              Compare Income Protection Quotes
+            </h1>
+            <p className="text-lg md:text-xl text-white mb-8 max-w-xl text-shadow">
+              Protect your income and lifestyle with tailored coverage. Compare plans from leading NZ providers and secure your financial future.
+            </p>
+            <ul className="space-y-3">
+               <li className="flex items-center text-lg gap-3">
+                <Check className="h-6 w-6 text-green-400" />
+                <span>Quotes sourced from four leading NZ insurers</span>
+              </li>
+               <li className="flex items-center text-lg gap-3">
+                <Check className="h-6 w-6 text-green-400" />
+                <span>No pushy sales. No obligation.</span>
+              </li>
+               <li className="flex items-center text-lg gap-3">
+                <Check className="h-6 w-6 text-green-400" />
+                <span>Takes about 2–3 minutes</span>
+              </li>
+            </ul>
+          </div>
+          <div ref={quoteWizardRef}>
+            <QuoteWizardLife />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const WhyCompareSection = () => {
+  const { scrollToWizard } = useForm();
+  const points = [
+      {
+          icon: DollarSign,
+          title: "Same cover, different price.",
+          description: "Providers rate occupation, health, and age differently. A quick comparison can shave dollars off your monthly premium."
+      },
+      {
+          icon: ListChecks,
+          title: "Benefit periods matter.",
+          description: "Two 'income protection' quotes can behave very differently — think short-term vs long-term benefits, waiting periods, and claim definitions."
+      },
+      {
+          icon: TrendingUp,
+          title: "Your career changes.",
+          description: "New job, salary increase, lifestyle change — your cover should adapt with you, not hold you back."
+      }
+  ];
+
+  return (
+    <section className="bg-white py-16 sm:py-24">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-primary text-center mb-4">Why compare income protection quotes before you decide</h2>
+        <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+          Most Kiwis grab the first number they see. But prices and features vary — sometimes by a lot. When you compare income protection in NZ, you'll notice:
+        </p>
+        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {points.map((point, index) => (
+                <div key={index} className="group p-6 text-center rounded-lg border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all duration-300">
+                    <div className="flex justify-center mb-4">
+                        <div className="bg-primary/10 p-3 rounded-full group-hover:bg-primary/20 transition-colors">
+                            <point.icon className="h-7 w-7 text-primary" />
+                        </div>
+                    </div>
+                    <h3 className="font-bold text-xl text-gray-900 mb-2">{point.title}</h3>
+                    <p className="text-gray-600">{point.description}</p>
+                </div>
+            ))}
+        </div>
+        <div className="text-center mt-12">
+            <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Start my personalised comparison</Button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SmartDealSection = () => {
+    const { scrollToWizard } = useForm();
+    return (
+        <section className="bg-gray-50 py-16 sm:py-24">
+            <div className="container mx-auto px-4">
+                <div className="text-center">
+                    <h2 className="text-3xl font-bold text-primary mb-4">Why the cheapest income protection isn't always the best deal</h2>
+                    <p className="text-lg text-gray-600 mb-8 max-w-7xl mx-auto">The lowest sticker price can cost more later. Watch for:</p>
+                </div>
+                <div className="max-w-7xl mx-auto">
+                    <ul className="space-y-4 mb-8 max-w-2xl mx-auto">
+                        <li className="flex items-start gap-3">
+                            <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
+                            <div><strong>Benefit periods.</strong> Cheap policies might only cover 2 years. <strong>Long-term protection</strong> until age 65 costs more but provides true security.</div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
+                            <div><strong>Waiting periods.</strong> Cheap policies often have longer waits before benefits start — sometimes 90+ days vs 30 days.</div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                            <Check className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
+                            <div><strong>Own occupation vs any occupation.</strong> The fine print decides when you qualify for payments — this is where "cheap" sometimes bites.</div>
+                        </li>
+                    </ul>
+                    <div className="bg-white border-l-4 border-primary p-6 rounded-r-lg shadow-md max-w-2xl mx-auto">
+                        <h4 className="font-bold text-lg mb-2">Example (illustrative):</h4>
+                        <div className="grid grid-cols-2 gap-4 text-center">
+                            <div>
+                                <p className="font-semibold text-gray-700">Cheapest option:</p>
+                                <p className="text-sm text-gray-500">$3000/month (2 year benefit)</p>
+                                <p className="text-2xl font-bold text-primary mt-1">$45/month</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-gray-700">Smarter alternative:</p>
+                                <p className="text-sm text-gray-500">$3000/month (<strong>to age 65</strong>)</p>
+                                <p className="text-2xl font-bold text-primary mt-1">$65/month</p>
+                            </div>
+                        </div>
+                        <p className="text-sm text-center mt-4 text-gray-600"><strong>Why it's better:</strong> For $20 more monthly, you get protection until retirement age — ideal while you have dependents or a mortgage.</p>
+                    </div>
+                    <p className="text-xs text-gray-500 text-center mt-4 max-w-2xl mx-auto">*Figures are illustrative; your premium depends on age, health, occupation, and underwriting.</p>
+                    <div className="text-center mt-8">
+                        <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Show me smarter options</Button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const MythBustingSection = () => {
+    const myths = [
+        {
+            myth: "Income protection is too expensive.",
+            truth: "Basic cover can start from around 1-2% of your income. We find options that fit your budget without compromising essential features.",
+            icon: XCircle
+        },
+        {
+            myth: "I've got sick leave at work, I don't need it.",
+            truth: "Most sick leave lasts only a few weeks or months. Income protection can cover you for years if needed, especially for serious illness or injury.",
+            icon: XCircle
+        },
+        {
+            myth: "It's too complicated to set up.",
+            truth: "That's what we're here for. We handle the comparisons and paperwork, so you don't have to navigate the complexity alone.",
+            icon: XCircle
+        }
+    ];
+
+    return (
+        <section className="bg-white py-16 sm:py-24">
+            <div className="container mx-auto px-4">
+                <h2 className="text-3xl font-bold text-primary text-center mb-12">Busting Common Income Protection Myths</h2>
+                <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                    {myths.map((item, index) => (
+                        <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow">
+                            <CardHeader>
+                                <div className="flex items-center gap-3">
+                                    <item.icon className="h-6 w-6 text-destructive" />
+                                    <CardTitle className="text-lg">{item.myth}</CardTitle>
+                                </div>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex items-start gap-3">
+                                    <Lightbulb className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                                    <p className="text-gray-600">{item.truth}</p>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const HowItWorksSection = () => {
+    const { scrollToWizard } = useForm();
+    const steps = [
+        {
+            icon: FileText,
+            title: "1. Tell us about your income needs (60 seconds).",
+            description: "Occupation, income level, basic health, existing coverage."
+        },
+        {
+            icon: Users,
+            title: "2. We do the comparing for you.",
+            description: "Our team reviews your details against four leading NZ insurers and builds a shortlist tailored to your needs and budget."
+        },
+        {
+            icon: ThumbsUp,
+            title: "3. Your dedicated adviser gets in touch.",
+            description: "We'll contact you with your curated plan options, explain benefit periods and waiting times, and answer questions in plain English."
+        },
+        {
+            icon: Check,
+            title: "4. You choose and apply with confidence.",
+            description: "We streamline the paperwork and keep you updated through underwriting."
+        }
+    ];
+
+    return (
+        <section className="bg-gray-50 py-16 sm:py-24">
+            <div className="container mx-auto px-4">
+                <h2 className="text-3xl font-bold text-primary text-center mb-12">How our NZ income protection comparison works</h2>
+                <div className="grid md:grid-cols-2 gap-x-8 gap-y-12 max-w-7xl mx-auto">
+                    {steps.map(step => (
+                         <div key={step.title} className="flex items-start gap-4">
+                            <div className="bg-primary/10 p-3 rounded-full mt-1">
+                                <step.icon className="h-6 w-6 text-primary" />
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-lg mb-1">{step.title}</h3>
+                                <p className="text-gray-600">{step.description}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className="text-center mt-12">
+                    <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Get my income protection options</Button>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const StoriesSection = () => {
+    const { scrollToWizard } = useForm();
+    const stories = [
+        { name: "Mark (35, IT specialist)", story: "After a back injury, couldn't sit at his desk for months. Income protection covered 75% of his salary until he could return to work gradually." },
+        { name: "Sarah (28, teacher)", story: "Diagnosed with anxiety that prevented her from working. Her policy included partial benefits, helping her transition back to teaching part-time." },
+        { name: "Dave (42, tradie)", story: "Shoulder injury ended his carpentry career. Own-occupation cover meant he received benefits even though he could do office work." },
+    ];
+    return (
+        <section className="bg-white py-16 sm:py-24">
+            <div className="container mx-auto px-4">
+                <h2 className="text-3xl font-bold text-primary text-center mb-12">How we helped real people protect their income</h2>
+                <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                    {stories.map(s => (
+                        <div key={s.name} className="bg-gray-50 p-6 rounded-lg shadow-md border">
+                            <p className="text-gray-600 mb-4">&quot;{s.story}&quot;</p>
+                            <p className="font-bold text-right">- {s.name}</p>
+                        </div>
+                    ))}
+                </div>
+                 <div className="text-center mt-12">
+                    <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Talk to an adviser</Button>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const WhatYouGetSection = () => {
+    const { scrollToWizard } = useForm();
+    const benefits = [
+        "A curated shortlist of income protection options from four leading NZ insurers",
+        "Clear explanations of benefit periods, waiting times, and coverage definitions",
+        "Best-value highlights (not just 'cheapest') based on your occupation and goals",
+        "Human help from a dedicated, licensed NZ adviser — at no extra cost",
+        "No obligation. Your pace, your call."
+    ];
+    return (
+        <section className="bg-gray-50 py-16 sm:py-24">
+             <div className="container mx-auto px-4">
+                 <h2 className="text-3xl font-bold text-primary text-center mb-8">What you get</h2>
+                 <div className="max-w-7xl mx-auto">
+                    <ul className="space-y-4 max-w-2xl mx-auto">
+                        {benefits.map(b => (
+                            <li key={b} className="flex items-start gap-3">
+                                <Check className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
+                                <span>{b}</span>
+                            </li>
+                        ))}
+                    </ul>
+                 </div>
+                <div className="text-center mt-12">
+                    <Button onClick={scrollToWizard} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Get my income protection options</Button>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const FinalCTASection = () => {
+    const { scrollToWizard } = useForm();
+    return (
+        <section className="bg-primary text-white py-16 sm:py-24">
+            <div className="container mx-auto px-4 text-center max-w-7xl">
+                <h2 className="text-3xl font-bold mb-2">Ready when you are</h2>
+                <p className="text-lg text-primary-foreground/80 mb-8">Start now. You'll be done before the kettle boils.</p>
+                <div className="flex justify-center gap-4 flex-wrap">
+                    <Button onClick={scrollToWizard} size="lg" variant="secondary">Get my income protection options</Button>
+                    <Button onClick={scrollToWizard} size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white hover:text-primary">Talk to an adviser</Button>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const FaqSection = () => {
+    const faqs = [
+        { q: "What happens after I submit my details?", a: "We'll review your information, compare plans from four leading NZ insurers, and a dedicated adviser will contact you with tailored options. There are no instant on-page results on the thank-you screen." },
+        { q: "How much of my income can I protect?", a: "Typically up to 75% of your pre-tax income, though this varies by insurer and your specific circumstances." },
+        { q: "What's the difference between own occupation and any occupation cover?", a: "Own occupation pays if you can't do your specific job. Any occupation only pays if you can't do any job you're suited for by training or experience." },
+        { q: "How long do waiting periods last?", a: "Usually 30, 60, or 90 days. Shorter waiting periods cost more but mean benefits start sooner." },
+        { q: "Can I get cover if I have a pre-existing condition?", a: "It depends on the condition and insurer. Some conditions may be excluded or result in higher premiums." },
+        { q: "What if I change jobs?", a: "Most policies are portable. If you move to a higher-risk occupation, you may need to pay more or get a new policy." },
+        { q: "Do I need a medical exam?", a: "It depends on your age, income level, and health. Some applications are straight-through; others may need medical information." },
+    ];
+
+    return (
+        <section className="bg-gray-50 py-16 sm:py-24">
+            <div className="container mx-auto px-4">
+                <h2 className="text-3xl font-bold text-primary text-center mb-8">Income protection FAQs (NZ)</h2>
+                 <Accordion type="single" collapsible className="w-full max-w-7xl mx-auto">
+                    {faqs.map(faq => (
+                        <AccordionItem value={faq.q} key={faq.q}>
+                            <AccordionTrigger>{faq.q}</AccordionTrigger>
+                            <AccordionContent>
+                                <p dangerouslySetInnerHTML={{ __html: faq.a }}></p>
+                            </AccordionContent>
+                        </AccordionItem>
+                    ))}
+                 </Accordion>
+            </div>
+        </section>
+    );
+};
+
+const ComplianceSection = () => {
+    return (
+        <section className="bg-gray-100 py-8">
+            <div className="container mx-auto px-4 text-center text-xs text-gray-500 max-w-7xl">
+                <h3 className="font-bold mb-2">Compliance</h3>
+                <p>This page provides <strong>general information only</strong> and does not take into account your objectives, financial situation, or needs. Consider seeking <strong>advice from a licensed financial adviser</strong> and reading the relevant policy documents before making decisions. Quotes are <strong>indicative</strong> and subject to underwriting and eligibility.</p>
+            </div>
+        </section>
+    );
+}
 
 export default function IncomePage() {
   const { setQuoteWizardRef } = useForm();
@@ -31,15 +379,18 @@ export default function IncomePage() {
   return (
       <main className="w-full text-foreground bg-white">
         <div ref={quoteWizardRef}>
-          <HeroIncome />
+            <IncomePageHero />
         </div>
         <Insurers />
-        <FinancialProtection />
-        <Services />
-        <Benefits />
-        <HowItWorks />
-        <Testimonials />
-        <CTA />
+        <WhyCompareSection />
+        <SmartDealSection />
+        <MythBustingSection />
+        <HowItWorksSection />
+        <StoriesSection />
+        <WhatYouGetSection />
+        <FinalCTASection />
+        <FaqSection />
+        <ComplianceSection />
       </main>
   );
 }

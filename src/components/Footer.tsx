@@ -11,14 +11,14 @@ const Footer = () => {
             <Link href="/" className="flex items-center gap-2 mb-4">
                <Image 
                 src="https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/transparent_wit_horizontal-01.png?alt=media&token=d3b9cf1a-70aa-4010-a136-8eba88acb8d5"
-                alt="QuoteFlow Logo"
+                alt="Work It Out Logo"
                 width={150}
                 height={40}
                 className="w-36"
               />
             </Link>
             <p className="text-gray-300 text-sm">
-              Helping Kiwis find the best insurance deals from top providers across New Zealand. Compare and save with confidence.
+              Your ultimate solution platform. Work it out with confidence and get things done efficiently.
             </p>
           </div>
 
@@ -48,7 +48,7 @@ const Footer = () => {
                 </li>
                 <li className="flex items-center gap-2 text-gray-300">
                     <Mail className="h-4 w-4" />
-                    <span>hello@quoteflow.co.nz</span>
+                    <span>hello@workitout.co.nz</span>
                 </li>
             </ul>
           </div>
@@ -56,7 +56,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left">
-            <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} QuoteFlow. All rights reserved.</p>
+            <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} Work It Out. All rights reserved.</p>
             <div className="flex space-x-4 mt-4 sm:mt-0">
                 <a href="#" className="text-gray-400 hover:text-white"><Facebook className="h-5 w-5" /></a>
                 <a href="#" className="text-gray-400 hover:text-white"><Twitter className="h-5 w-5" /></a>
