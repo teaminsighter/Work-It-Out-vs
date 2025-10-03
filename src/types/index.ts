@@ -15,6 +15,7 @@ export interface Option {
 
 export interface Question {
   id: string;
+  title?: string;
   question: string;
   description?: string;
   Icon: LucideIcon;

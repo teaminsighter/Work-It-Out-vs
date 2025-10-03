@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from '@/contexts/FormContext';
-import { ALL_QUESTIONS } from '@/lib/questions-life';
+import { ALL_QUESTIONS } from '@/lib/questions-health';
 import { ALL_LOCATION_QUESTIONS } from '@/lib/questions-location';
 import QuestionStep from './QuestionStep';
 import ResultsPage from './ResultsPage';

@@ -54,12 +54,18 @@ export const TOTAL_STEPS_ESTIMATE = 10;
 export const ALL_QUESTIONS: Questions = {
   'start': {
     id: 'start',
-    question: "Welcome to Work It Out",
+    question: "Let's tailor your quotes",
+    description: "Answer a few quick questions for personalised NZ life insurance prices.",
     Icon: ShieldCheck,
-    nextStepId: 'insurance-type',
+    nextStepId: 'welcome-specialty',
+    options: [
+      { value: 'go', label: 'Get Started' },
+    ],
   },
   'welcome-specialty': {
     id: 'welcome-specialty',
+    title: "Let's tailor your quotes",
+    description: "Answer a few quick questions for personalised NZ life insurance prices.",
     question: 'Do you currently have any {{insuranceType}} insurance?',
     Icon: ShieldQuestion,
     nextStepId: 'cover-amount', 

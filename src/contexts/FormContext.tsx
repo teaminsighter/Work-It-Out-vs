@@ -7,7 +7,6 @@ import type { FormData, Question } from '@/types';
 import { ALL_QUESTIONS as ALL_MAIN_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_MAIN } from '@/lib/questions';
 import { ALL_QUESTIONS as ALL_LIFE_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_LIFE } from '@/lib/questions-life';
 import { ALL_QUESTIONS as ALL_HEALTH_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_HEALTH } from '@/lib/questions-health';
-import { ALL_QUESTIONS as ALL_INCOME_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_INCOME } from '@/lib/questions-income';
 
 import { useToast } from "@/hooks/use-toast";
 
@@ -30,7 +29,7 @@ const FormContext = createContext<FormContextType | undefined>(undefined);
 const getQuestionSet = (pathname: string) => {
     if (pathname === '/life') return { questions: ALL_LIFE_QUESTIONS, totalSteps: TOTAL_STEPS_LIFE };
     if (pathname === '/health') return { questions: ALL_HEALTH_QUESTIONS, totalSteps: TOTAL_STEPS_HEALTH };
-    if (pathname === '/income') return { questions: ALL_INCOME_QUESTIONS, totalSteps: TOTAL_STEPS_INCOME };
+    if (pathname === '/income') return { questions: ALL_LIFE_QUESTIONS, totalSteps: TOTAL_STEPS_LIFE };
     return { questions: ALL_MAIN_QUESTIONS, totalSteps: TOTAL_STEPS_MAIN };
 }
 

@@ -25,7 +25,7 @@ const containerVariants = {
 
 export default function QuestionStep({ question }: QuestionStepProps) {
   const { handleAnswer, formData } = useForm();
-  const { id, Icon, question: questionText, description, options } = question;
+  const { id, Icon, title, question: questionText, description, options } = question;
 
   const onOptionSelect = (value: string, nextStepId?: string) => {
     handleAnswer(id, value, nextStepId);
@@ -39,8 +39,10 @@ export default function QuestionStep({ question }: QuestionStepProps) {
 
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
-      <h2 className="text-lg font-semibold sm:text-xl font-headline capitalize">{processedQuestion}</h2>
-      {description && <p className="mt-2 text-muted-foreground text-sm">{description}</p>}
+      {title && <h1 className="text-2xl font-bold sm:text-3xl font-headline mb-2">{title}</h1>}
+      {title && description && <p className="text-muted-foreground text-sm mb-8">{description}</p>}
+      <h2 className="text-base font-semibold sm:text-lg font-headline capitalize">{processedQuestion}</h2>
+      {!title && description && <p className="mt-2 text-muted-foreground text-sm">{description}</p>}
       
       <motion.div 
         className={cn(

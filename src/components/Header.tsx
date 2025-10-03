@@ -14,7 +14,6 @@ const Header = () => {
   const { scrollToWizard } = useForm();
 
   const navLinks = [
-    { href: '/about', label: 'About' },
     { href: '/faq', label: 'FAQ' },
   ];
 
@@ -33,20 +32,14 @@ const Header = () => {
               />
             </Link>
 
-            <nav className="hidden md:flex items-center gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-gray-700 hover:text-primary transition-colors font-medium"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-
             <div className="hidden md:flex items-center gap-4">
-              <Button onClick={scrollToWizard} className="bg-brand-purple hover:bg-brand-purple/90 text-white">Work It Out</Button>
+              <Link
+                href="/faq"
+                className="text-gray-700 hover:text-primary transition-colors font-medium"
+              >
+                FAQ
+              </Link>
+              <Button onClick={scrollToWizard} className="bg-brand-purple hover:bg-brand-purple/90 text-white">Compare now</Button>
             </div>
 
             <div className="md:hidden">
@@ -74,7 +67,7 @@ const Header = () => {
                   </Link>
                 ))}
                 <div className="border-t my-2"></div>
-                <Button className="w-full mt-2" onClick={() => { scrollToWizard(); setIsOpen(false); }}>Work It Out</Button>
+                <Button className="w-full mt-2" onClick={() => { scrollToWizard(); setIsOpen(false); }}>Compare now</Button>
             </div>
           </div>
         </div>
