@@ -39,7 +39,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
 
   return (
     <div className="flex flex-col items-center text-center text-gray-800">
-      {title && <h1 className="text-2xl font-bold sm:text-3xl font-headline mb-2">{title}</h1>}
+      {title && <h1 className="text-2xl font-bold sm:text-3xl font-headline mb-2 text-purple-600/90">{title}</h1>}
       {title && description && <p className="text-muted-foreground text-sm mb-8">{description}</p>}
       <h2 className="text-base font-semibold sm:text-lg font-headline capitalize">{processedQuestion}</h2>
       {!title && description && <p className="mt-2 text-muted-foreground text-sm">{description}</p>}
@@ -81,7 +81,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
       {isWelcomeSpecialty && (
         <div className="mt-4 flex items-center text-xs text-muted-foreground">
           <ShieldCheck className="mr-1 h-3 w-3 text-green-500" />
-          <span>Secure, and Free</span>
+          <span>100% Secure, and Free</span>
         </div>
       )}
     </div>

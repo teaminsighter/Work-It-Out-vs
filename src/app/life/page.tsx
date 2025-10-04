@@ -181,44 +181,35 @@ const WhyCompareSection = () => {
             <div className="flex-1 flex items-center">
               <div className="container mx-auto px-4">
                 <div className="grid lg:grid-cols-2 gap-16 max-w-7xl mx-auto items-center">
-                  {/* Left Side - All Titles Visible */}
-                  <div className="space-y-8">
-                    {sections.map((section, index) => {
-                      const IconComponent = section.icon;
-                      return (
-                      <motion.div
-                        key={index}
-                        className="flex items-center gap-6 cursor-pointer"
-                        animate={{
-                          opacity: activeSection === index ? 1 : 0.4
-                        }}
+                  {/* Left Side - Single Title that Changes */}
+                  <div className="flex items-center justify-center h-full">
+                    <motion.div
+                      className="flex items-center gap-6"
+                      key={`active-section-${activeSection}`}
+                      initial={{ opacity: 0, x: -50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <motion.div 
+                        className="p-4 rounded-2xl bg-purple-600"
+                        initial={{ scale: 0.8 }}
+                        animate={{ scale: 1 }}
                         transition={{ duration: 0.3 }}
-                        onClick={() => setActiveSection(index)}
                       >
-                        <motion.div 
-                          className={`p-4 rounded-2xl transition-all duration-300`}
-                          animate={{
-                            backgroundColor: activeSection === index ? '#9333ea' : '#e5e7eb',
-                            scale: activeSection === index ? 1.05 : 1
-                          }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <IconComponent 
-                            className={`h-8 w-8 transition-colors duration-300 ${
-                              activeSection === index ? 'text-white' : 'text-gray-500'
-                            }`}
-                          />
-                        </motion.div>
-                        <h3 
-                          className={`text-3xl md:text-4xl lg:text-5xl font-bold transition-all duration-300 ${
-                            activeSection === index ? 'text-purple-600' : 'text-gray-300'
-                          }`}
-                        >
-                          {section.title}
-                        </h3>
+                        {(() => {
+                          const IconComponent = sections[activeSection].icon;
+                          return <IconComponent className="h-8 w-8 text-white" />;
+                        })()}
                       </motion.div>
-                      );
-                    })}
+                      <motion.h3 
+                        className="text-3xl md:text-4xl lg:text-5xl font-bold text-purple-600"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1 }}
+                      >
+                        {sections[activeSection].title}
+                      </motion.h3>
+                    </motion.div>
                   </div>
 
                   {/* Right Side - Static Box with Text Transitions */}
