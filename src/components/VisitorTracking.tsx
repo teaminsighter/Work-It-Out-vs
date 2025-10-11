@@ -42,18 +42,19 @@ const VisitorTracking = () => {
   const trackInteraction = (eventType: string, eventData: any) => {
     interactionCount.current++;
     
-    fetch('/api/track-interaction', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        userId: getUserId(),
-        sessionId: getSessionId(),
-        eventType,
-        eventData,
-        page: pathname,
-        timestamp: new Date().toISOString()
-      })
-    }).catch(() => {}); // Silent fail
+    // Temporarily disabled for performance
+    // fetch('/api/track-interaction', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //     userId: getUserId(),
+    //     sessionId: getSessionId(),
+    //     eventType,
+    //     eventData,
+    //     page: pathname,
+    //     timestamp: new Date().toISOString()
+    //   })
+    // }).catch(() => {}); // Silent fail
   };
 
   useEffect(() => {
@@ -73,21 +74,22 @@ const VisitorTracking = () => {
         const utmMedium = urlParams.get('utm_medium');
         const utmCampaign = urlParams.get('utm_campaign');
 
-        await fetch('/api/track-visit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            userId,
-            sessionId,
-            page: pathname,
-            referrer,
-            userAgent,
-            utmSource,
-            utmMedium,
-            utmCampaign,
-            timestamp: new Date().toISOString()
-          })
-        });
+        // Temporarily disabled for performance
+        // await fetch('/api/track-visit', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     userId,
+        //     sessionId,
+        //     page: pathname,
+        //     referrer,
+        //     userAgent,
+        //     utmSource,
+        //     utmMedium,
+        //     utmCampaign,
+        //     timestamp: new Date().toISOString()
+        //   })
+        // });
 
         // Track page view interaction
         trackInteraction('page_view', {
@@ -157,7 +159,7 @@ const VisitorTracking = () => {
           exitPage: true
         });
         
-        navigator.sendBeacon('/api/track-exit', exitData);
+        // navigator.sendBeacon('/api/track-exit', exitData);
       }
     };
   }, [pathname]);

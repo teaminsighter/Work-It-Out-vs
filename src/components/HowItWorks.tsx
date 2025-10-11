@@ -1,8 +1,8 @@
 
 'use client';
 
-import { useState, useRef } from 'react';
-import { Search, Calculator, Handshake, ArrowRight, Sparkles } from 'lucide-react';
+import React, { useRef } from 'react';
+import { Rocket } from 'lucide-react';
 import { Button } from './ui/button';
 import { motion, useInView } from 'framer-motion';
 import { useForm } from '@/contexts/FormContext';

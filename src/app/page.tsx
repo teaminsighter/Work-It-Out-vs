@@ -21,10 +21,21 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 const QuoteWizardNew = dynamic(() => import('@/components/quote/QuoteWizardNew'), {
   loading: () => (
     <div className="w-full max-w-2xl mx-auto p-6 sm:p-10 mt-6">
-      <div className="animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] h-[400px] w-full rounded-xl" />
+      <div className="bg-card/90 backdrop-blur-sm rounded-xl border p-8 shadow-2xl">
+        <div className="animate-pulse space-y-6">
+          <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+          <div className="space-y-3">
+            <div className="h-12 bg-gray-200 rounded"></div>
+            <div className="h-12 bg-gray-200 rounded"></div>
+            <div className="h-12 bg-gray-200 rounded"></div>
+          </div>
+          <div className="h-10 bg-purple-200 rounded w-32"></div>
+        </div>
+      </div>
     </div>
   ),
-  ssr: true,
+  ssr: false,
 });
 
 const MainPageHero = () => {
@@ -32,7 +43,7 @@ const MainPageHero = () => {
   return (
     <section className="relative w-full pt-40 pb-16 md:pt-48 md:pb-24 lg:pt-56 lg:pb-32">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-fixed"
+        className="absolute inset-0 bg-cover bg-center bg-scroll md:bg-fixed"
         style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/Lanind%20Page%201%2Ffamily.jpeg?alt=media&token=424b8995-e4f0-4cf9-b257-623ca0287635')" }}
         data-ai-hint="mainy family"
       ></div>
@@ -41,7 +52,7 @@ const MainPageHero = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-white">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg">
-              Compare Main Insurance Quotes
+              Compare Insurance Quotes
             </h1>
             <p className="text-lg md:text-xl text-white mb-8 max-w-xl text-shadow">
               Find the right main cover for you and your family. Compare plans from leading NZ providers and get expert guidance.
@@ -833,32 +844,20 @@ const HowItWorksSection = () => {
     
     const steps = [
         {
-            icon: Stethoscope,
             title: "1. Tell us about your main needs (2 minutes).",
-            description: "Age, family size, current main status, coverage preferences - GP visits, specialists, or comprehensive care.",
-            gradient: "from-purple-500 to-pink-500",
-            bgGradient: "from-purple-50 to-pink-50"
+            description: "Age, family size, current main status, coverage preferences - GP visits, specialists, or comprehensive care."
         },
         {
-            icon: UserCheck,
             title: "2. We compare the market for you.",
-            description: "Our team reviews your details against 15+ main insurers and builds a shortlist tailored to your main needs and budget.",
-            gradient: "from-purple-600 to-indigo-500",
-            bgGradient: "from-purple-50 to-indigo-50"
+            description: "Our team reviews your details against 15+ main insurers and builds a shortlist tailored to your main needs and budget."
         },
         {
-            icon: Phone,
             title: "3. Your dedicated adviser gets in touch.",
-            description: "We'll contact you with your curated main insurance options, explain waiting periods, and answer questions in plain English.",
-            gradient: "from-purple-700 to-blue-500",
-            bgGradient: "from-purple-50 to-blue-50"
+            description: "We'll contact you with your curated main insurance options, explain waiting periods, and answer questions in plain English."
         },
         {
-            icon: FileCheck,
             title: "4. You choose and apply with confidence.",
-            description: "We streamline the paperwork and keep you updated through underwriting and policy setup.",
-            gradient: "from-purple-600 to-violet-500",
-            bgGradient: "from-purple-50 to-violet-50"
+            description: "We streamline the paperwork and keep you updated through underwriting and policy setup."
         }
     ];
 
@@ -919,93 +918,155 @@ const HowItWorksSection = () => {
                     </p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                    {steps.map((step, index) => (
-                        <motion.div
-                            key={step.title}
-                            initial={{ opacity: 0, y: 50 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                            transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                            className="group relative"
-                        >
+                {/* 2x2 Grid with Stylish Arrows */}
+                <div className="relative max-w-5xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+                        {steps.map((step, index) => (
                             <motion.div
-                                className={`relative bg-gradient-to-br ${step.bgGradient} rounded-2xl p-8 h-full cursor-pointer border border-purple-100`}
-                                whileHover={{ 
-                                    y: -10,
-                                    boxShadow: "0 25px 50px rgba(139, 69, 224, 0.15)"
-                                }}
-                                transition={{ duration: 0.3 }}
+                                key={step.title}
+                                initial={{ opacity: 0, y: 50 }}
+                                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                                transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
+                                className="group relative"
                             >
-                                {/* Step number badge */}
-                                <div className="flex items-center gap-4 mb-6">
-                                    <motion.div
-                                        className={`p-4 rounded-xl bg-gradient-to-r ${step.gradient} text-white shadow-lg`}
-                                        whileHover={{ 
-                                            scale: 1.1,
-                                            rotate: 5
-                                        }}
-                                        transition={{ duration: 0.3 }}
-                                    >
-                                        {(() => {
-                                            const StepIcon = step.icon;
-                                            return <StepIcon className="h-6 w-6" />;
-                                        })()}
-                                    </motion.div>
-                                    <div className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-bold">
-                                        STEP {index + 1}
-                                    </div>
-                                </div>
-
-                                {/* Content */}
-                                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                                    {step.title}
-                                </h3>
-                                <p className="text-gray-700 leading-relaxed">
-                                    {step.description}
-                                </p>
-
-                                {/* Decorative elements */}
                                 <motion.div
-                                    className="absolute top-4 right-4 w-2 h-2 bg-purple-300 rounded-full"
-                                    animate={{
-                                        scale: [1, 1.5, 1],
-                                        opacity: [0.5, 1, 0.5]
+                                    className="relative bg-white rounded-2xl p-8 h-full cursor-pointer border-2 border-purple-100 shadow-lg"
+                                    whileHover={{ 
+                                        y: -10,
+                                        boxShadow: "0 25px 50px rgba(139, 69, 224, 0.15)",
+                                        borderColor: "#9333ea"
                                     }}
-                                    transition={{
-                                        duration: 2,
-                                        repeat: Infinity,
-                                        delay: index * 0.3
-                                    }}
-                                />
-                                <motion.div
-                                    className="absolute bottom-6 right-6 w-1 h-1 bg-purple-400 rounded-full"
-                                    animate={{
-                                        scale: [1, 2, 1],
-                                        opacity: [0.3, 0.8, 0.3]
-                                    }}
-                                    transition={{
-                                        duration: 3,
-                                        repeat: Infinity,
-                                        delay: index * 0.5
-                                    }}
-                                />
-                            </motion.div>
-
-                            {/* Connection line for desktop */}
-                            {index < steps.length - 1 && index % 2 === 0 && (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-                                    transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                                    className="hidden md:block absolute -bottom-4 left-1/2 transform -translate-x-1/2 z-20"
+                                    transition={{ duration: 0.3 }}
                                 >
-                                    <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-2 rounded-full shadow-lg">
-                                        <ArrowUpDown className="h-4 w-4 rotate-90" />
+                                    {/* Large Step Number Badge */}
+                                    <div className="text-center mb-6">
+                                        <motion.div
+                                            className="inline-flex items-center justify-center w-20 h-20 bg-purple-600 text-white rounded-2xl shadow-lg mb-4"
+                                            animate={{
+                                                scale: [1, 1.05, 1],
+                                                boxShadow: [
+                                                    "0 10px 30px rgba(147, 51, 234, 0.3)",
+                                                    "0 15px 40px rgba(147, 51, 234, 0.4)",
+                                                    "0 10px 30px rgba(147, 51, 234, 0.3)"
+                                                ]
+                                            }}
+                                            transition={{
+                                                duration: 2,
+                                                repeat: Infinity,
+                                                delay: index * 0.5
+                                            }}
+                                        >
+                                            <span className="text-2xl font-bold">{index + 1}</span>
+                                        </motion.div>
+                                        <motion.div 
+                                            className="bg-purple-100 text-purple-700 px-6 py-2 rounded-full text-lg font-bold inline-block"
+                                            animate={{
+                                                backgroundColor: ["#f3e8ff", "#e9d5ff", "#f3e8ff"],
+                                            }}
+                                            transition={{
+                                                duration: 3,
+                                                repeat: Infinity,
+                                                delay: index * 0.3
+                                            }}
+                                        >
+                                            STEP {index + 1}
+                                        </motion.div>
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="text-center">
+                                        <h3 className="text-xl font-bold text-gray-900 mb-4">
+                                            {step.title}
+                                        </h3>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            {step.description}
+                                        </p>
                                     </div>
                                 </motion.div>
-                            )}
-                        </motion.div>
-                    ))}
+
+                                {/* Stylish Purple Arrows */}
+                                {/* Arrow from Step 1 to Step 2 (right) */}
+                                {index === 0 && (
+                                    <motion.div
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                                        transition={{ duration: 0.8, delay: 1 }}
+                                        className="hidden md:block absolute top-1/2 -right-8 lg:-right-12 z-10"
+                                    >
+                                        <motion.div
+                                            animate={{
+                                                x: [0, 10, 0],
+                                                scale: [1, 1.1, 1]
+                                            }}
+                                            transition={{
+                                                duration: 2,
+                                                repeat: Infinity,
+                                                ease: "easeInOut"
+                                            }}
+                                        >
+                                            <svg width="40" height="24" viewBox="0 0 40 24" fill="none" className="text-purple-600">
+                                                <path d="M39 12H1M39 12L29 2M39 12L29 22" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </motion.div>
+                                    </motion.div>
+                                )}
+
+                                {/* Arrow from Step 2 to Step 3 (down-left) */}
+                                {index === 1 && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -20 }}
+                                        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+                                        transition={{ duration: 0.8, delay: 1.3 }}
+                                        className="hidden md:block absolute -bottom-8 lg:-bottom-12 left-1/2 transform -translate-x-1/2 z-10"
+                                    >
+                                        <motion.div
+                                            animate={{
+                                                y: [0, 10, 0],
+                                                rotate: [0, 5, 0]
+                                            }}
+                                            transition={{
+                                                duration: 2,
+                                                repeat: Infinity,
+                                                ease: "easeInOut",
+                                                delay: 0.5
+                                            }}
+                                        >
+                                            <svg width="24" height="40" viewBox="0 0 24 40" fill="none" className="text-purple-600">
+                                                <path d="M12 39V1M12 39L2 29M12 39L22 29" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </motion.div>
+                                    </motion.div>
+                                )}
+
+                                {/* Arrow from Step 3 to Step 4 (right) */}
+                                {index === 2 && (
+                                    <motion.div
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                                        transition={{ duration: 0.8, delay: 1.6 }}
+                                        className="hidden md:block absolute top-1/2 -right-8 lg:-right-12 z-10"
+                                    >
+                                        <motion.div
+                                            animate={{
+                                                x: [0, 10, 0],
+                                                scale: [1, 1.1, 1]
+                                            }}
+                                            transition={{
+                                                duration: 2,
+                                                repeat: Infinity,
+                                                ease: "easeInOut",
+                                                delay: 1
+                                            }}
+                                        >
+                                            <svg width="40" height="24" viewBox="0 0 40 24" fill="none" className="text-purple-600">
+                                                <path d="M39 12H1M39 12L29 2M39 12L29 22" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </motion.div>
+                                    </motion.div>
+                                )}
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Bottom CTA */}

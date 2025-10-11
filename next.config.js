@@ -7,6 +7,19 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: 'https://work-it-out.ngrok-free.dev',
+          },
+        ],
+      },
+    ]
+  },
   images: {
     remotePatterns: [
       {

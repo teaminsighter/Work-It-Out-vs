@@ -21,7 +21,7 @@ const HeroLife = () => {
       className="relative w-full pt-40 pb-16 md:pt-48 md:pb-24 lg:pt-56 lg:pb-32"
     >
       <div
-        className="absolute inset-0 bg-cover bg-center bg-fixed opacity-30"
+        className="absolute inset-0 bg-cover bg-center bg-scroll md:bg-fixed opacity-30"
         style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/Lanind%20Page%201%2Ffamily.jpeg?alt=media&token=424b8995-e4f0-4cf9-b257-623ca0287635')" }}
         data-ai-hint="insurance office"
       ></div>

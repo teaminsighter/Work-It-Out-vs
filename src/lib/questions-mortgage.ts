@@ -1,4 +1,3 @@
-
 import type { Question, Questions, Option } from '@/types';
 import {
   Home,
@@ -37,17 +36,25 @@ import {
   FileDigit,
   Users,
   Cigarette,
+  HeartPulse,
   Shield,
+  Briefcase,
+  DollarSign,
+  BookUser,
+  Banknote,
+  UserCheck,
+  Users2,
+  UserSquare,
 } from 'lucide-react';
 import { ALL_LOCATION_QUESTIONS } from './questions-location';
 
-export const TOTAL_STEPS_ESTIMATE = 9;
+export const TOTAL_STEPS_ESTIMATE = 10;
 
 export const ALL_QUESTIONS: Questions = {
   'start': {
     id: 'start',
     question: "Let's tailor your quotes",
-    description: "Answer a few quick questions for personalised NZ health insurance prices.",
+    description: "Answer a few quick questions for personalised NZ mortgage insurance prices.",
     Icon: ShieldCheck,
     nextStepId: 'welcome-specialty',
     options: [
@@ -57,10 +64,10 @@ export const ALL_QUESTIONS: Questions = {
   'welcome-specialty': {
     id: 'welcome-specialty',
     title: "Let's tailor your quotes",
-    description: "Answer a few quick questions for personalised NZ health insurance prices.",
-    question: 'Do you currently have medical insurance?',
+    description: "Answer a few quick questions for personalised NZ mortgage insurance prices.",
+    question: 'Do you currently have any {{insuranceType}} insurance?',
     Icon: ShieldQuestion,
-    getNextStepId: (value: string) => value === 'yes' ? 'insurance-changes' : 'security-systems',
+    getNextStepId: (value: string) => value === 'yes' ? 'insurance-changes' : 'cover-amount',
     options: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
@@ -70,7 +77,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'insurance-changes',
     question: 'Has anything changed on your Insurance?',
     Icon: ShieldQuestion,
-    getNextStepId: (value: string) => value === 'yes' ? 'change-cover-type' : 'security-systems',
+    getNextStepId: (value: string) => value === 'yes' ? 'change-cover-type' : 'cover-amount',
     options: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
@@ -91,14 +98,66 @@ export const ALL_QUESTIONS: Questions = {
   'health-conditions': {
     id: 'health-conditions',
     question: 'What are is health conditions?',
-    Icon: Activity,
-    nextStepId: 'security-systems',
+    Icon: HeartPulse,
+    nextStepId: 'cover-amount',
     options: [
       { value: 'asthma', label: 'Asthma' },
       { value: 'depression', label: 'Depression' },
       { value: 'heart-condition', label: 'Heart Condition' },
       { value: 'none', label: 'None of these' },
     ],
+  },
+   'cover-amount': {
+    id: 'cover-amount',
+    question: 'How much mortgage cover do you want?',
+    Icon: Banknote,
+    nextStepId: 'who-to-cover',
+    type: 'slider',
+    min: 100000,
+    max: 2000000,
+    step: 50000,
+  },
+  'who-to-cover': {
+    id: 'who-to-cover',
+    question: 'Who are you looking to cover?',
+    Icon: Users,
+    options: [
+        { value: 'just-me', label: 'Just me', icon: UserCheck, nextStepId: 'age-individual' },
+        { value: 'couple', label: 'Couple', icon: Users2, nextStepId: 'age-couple' },
+        { value: 'someone-else', label: 'Someone else', icon: UserSquare, nextStepId: 'age-individual' },
+    ],
+  },
+  'age-individual': {
+    id: 'age-individual',
+    question: 'How old are you?',
+    Icon: User,
+    fields: ['age'],
+    nextStepId: 'smoker-individual',
+  },
+  'smoker-individual': {
+      id: 'smoker-individual',
+      question: 'Are you a smoker?',
+      Icon: Cigarette,
+      nextStepId: 'medical-condition',
+      options: [
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
+      ]
+  },
+  'age-couple': {
+    id: 'age-couple',
+    question: "What are your ages?",
+    Icon: Users,
+    fields: ['yourAge', 'partnerAge'],
+    nextStepId: 'smoker-couple',
+  },
+  'smoker-couple': {
+      id: 'smoker-couple',
+      question: 'Are you smokers?',
+      description: 'Please provide the smoking status for both individuals.',
+      Icon: Cigarette,
+      fields: ['yourSmokerStatus', 'partnerSmokerStatus'],
+      nextStepId: 'contact-details',
   },
   'insurance-type': {
     id: 'insurance-type',
@@ -109,7 +168,7 @@ export const ALL_QUESTIONS: Questions = {
     nextStepId: 'previous-claims',
     options: [
       { value: 'life', label: 'Life Insurance', icon: Heart },
-      { value: 'trauma', label: 'Trauma Insurance', icon: Activity },
+      { value: 'mortgage', label: 'Trauma Insurance', icon: Activity },
       { value: 'income', label: 'Income Protection', icon: FileDigit },
       { value: 'mortgage', label: 'Mortgage Protection', icon: Home },
       { value: 'health', label: 'Health Insurance', icon: Shield },
@@ -225,7 +284,7 @@ export const ALL_QUESTIONS: Questions = {
     id: 'medical-condition',
     question: 'Do you have any medical conditions?',
     Icon: Activity,
-    getNextStepId: (value: string) => value === 'yes' ? 'medical-condition-details' : 'household-income',
+    getNextStepId: (value: string) => value === 'yes' ? 'medical-condition-details' : 'contact-details',
     options: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
@@ -233,15 +292,15 @@ export const ALL_QUESTIONS: Questions = {
   },
   'medical-condition-details': {
     id: 'medical-condition-details',
-    question: 'What type of medical condition do you have?',
-    Icon: Activity,
-    nextStepId: 'household-income',
+    question: "What's your medical condition?",
+    Icon: HeartPulse,
+    nextStepId: 'contact-details',
     multiSelect: true,
     options: [
-      { value: 'diabetics', label: 'Diabetics' },
-      { value: 'heart-diseases', label: 'Heart Diseases' },
+      { value: 'diabetic', label: 'Diabetic' },
       { value: 'skin-cancer', label: 'Skin Cancer' },
       { value: 'asthma', label: 'Asthma' },
+      { value: 'heart-diseases', label: 'Heart Diseases' },
     ],
   },
   'household-income': {

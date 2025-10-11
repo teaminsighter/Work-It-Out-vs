@@ -7,6 +7,8 @@ import type { FormData, Question } from '@/types';
 import { ALL_QUESTIONS as ALL_MAIN_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_MAIN } from '@/lib/questions';
 import { ALL_QUESTIONS as ALL_LIFE_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_LIFE } from '@/lib/questions-life';
 import { ALL_QUESTIONS as ALL_HEALTH_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_HEALTH } from '@/lib/questions-health';
+import { ALL_QUESTIONS as ALL_TRAUMA_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_TRAUMA } from '@/lib/questions-trauma';
+import { ALL_QUESTIONS as ALL_MORTGAGE_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_MORTGAGE } from '@/lib/questions-mortgage';
 
 import { useToast } from "@/hooks/use-toast";
 
@@ -30,6 +32,8 @@ const getQuestionSet = (pathname: string) => {
     if (pathname === '/life') return { questions: ALL_LIFE_QUESTIONS, totalSteps: TOTAL_STEPS_LIFE };
     if (pathname === '/health') return { questions: ALL_HEALTH_QUESTIONS, totalSteps: TOTAL_STEPS_HEALTH };
     if (pathname === '/income') return { questions: ALL_LIFE_QUESTIONS, totalSteps: TOTAL_STEPS_LIFE };
+    if (pathname === '/trauma') return { questions: ALL_TRAUMA_QUESTIONS, totalSteps: TOTAL_STEPS_TRAUMA };
+    if (pathname === '/mortgage') return { questions: ALL_MORTGAGE_QUESTIONS, totalSteps: TOTAL_STEPS_MORTGAGE };
     return { questions: ALL_MAIN_QUESTIONS, totalSteps: TOTAL_STEPS_MAIN };
 }
 
@@ -41,12 +45,16 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const isHealthPage = pathname === '/health';
   const isLifePage = pathname === '/life';
   const isIncomePage = pathname === '/income';
-  const isSpecialtyPage = isHealthPage || isLifePage || isIncomePage;
+  const isTraumaPage = pathname === '/trauma';
+  const isMortgagePage = pathname === '/mortgage';
+  const isSpecialtyPage = isHealthPage || isLifePage || isIncomePage || isTraumaPage || isMortgagePage;
   
   const getInitialFormData = () => {
     if (isHealthPage) return { insuranceType: 'health' };
     if (isLifePage) return { insuranceType: 'life' };
     if (isIncomePage) return { insuranceType: 'income' };
+    if (isTraumaPage) return { insuranceType: 'trauma' };
+    if (isMortgagePage) return { insuranceType: 'mortgage' };
     return {};
   };
 

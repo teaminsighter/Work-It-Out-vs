@@ -71,9 +71,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
                 ? "p-3 aspect-square text-xs sm:text-sm w-[calc(33.33%-0.75rem)]"
                 : isWelcomeSpecialty
                 ? "aspect-auto" 
-                : "",
-              (id === 'previous-claims' || id === 'coverage-level') && option.value === 'yes' ? 'glass-green' : '',
-              (id === 'previous-claims' || id === 'coverage-level') && option.value === 'no' ? 'glass-red' : ''
+                : ""
             )}
           />
         ))}

@@ -18,7 +18,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import Insurers from '@/components/Insurers';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
-const QuoteWizardLife = dynamic(() => import('@/components/quote/QuoteWizardLife'), {
+const QuoteWizardTrauma = dynamic(() => import('@/components/quote/QuoteWizardTrauma'), {
   loading: () => (
     <div className="w-full max-w-2xl mx-auto p-6 sm:p-10 mt-6">
       <div className="animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] h-[400px] w-full rounded-xl" />
@@ -27,29 +27,29 @@ const QuoteWizardLife = dynamic(() => import('@/components/quote/QuoteWizardLife
   ssr: true,
 });
 
-const IncomePageHero = () => {
+const TraumaPageHero = () => {
   const { quoteWizardRef } = useForm();
   return (
     <section className="relative w-full pt-40 pb-16 md:pt-48 md:pb-24 lg:pt-56 lg:pb-32">
       <div
         className="absolute inset-0 bg-cover bg-center bg-scroll md:bg-fixed"
         style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/Lanind%20Page%201%2Ffamily.jpeg?alt=media&token=424b8995-e4f0-4cf9-b257-623ca0287635')" }}
-        data-ai-hint="incomey family"
+        data-ai-hint="trauma family"
       ></div>
       <div className="absolute inset-0 bg-primary/70"></div>
       <div className="container mx-auto px-4 relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="text-white">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg">
-              Compare Income Insurance Quotes
+              Compare Trauma Insurance Quotes
             </h1>
             <p className="text-lg md:text-xl text-white mb-8 max-w-xl text-shadow">
-              Find the right income cover for you and your family. Compare plans from leading NZ providers and get expert guidance.
+              Find the right trauma cover for you and your family. Compare plans from leading NZ providers and get expert guidance.
             </p>
             <ul className="space-y-3">
                <li className="flex items-center text-lg gap-3">
                 <Search className="h-6 w-6 text-green-400" />
-                <span>Compare top NZ income insurers</span>
+                <span>Compare top NZ trauma insurers</span>
               </li>
                <li className="flex items-center text-lg gap-3">
                 <Star className="h-6 w-6 text-green-400" />
@@ -62,7 +62,7 @@ const IncomePageHero = () => {
             </ul>
           </div>
           <div ref={quoteWizardRef}>
-            <QuoteWizardLife />
+            <QuoteWizardTrauma />
           </div>
         </div>
       </div>
@@ -79,13 +79,13 @@ const WhyCompareSection = () => {
   const sections = [
     {
       title: "Same cover, different price.",
-      description: "Providers rate occupation, income, and age differently. A quick comparison can shave dollars off your monthly premium.",
+      description: "Providers rate occupation, trauma, and age differently. A quick comparison can shave dollars off your monthly premium.",
       icon: Banknote,
       color: "text-purple-600"
     },
     {
       title: "Benefit periods matter.",
-      description: "Two 'income protection' quotes can behave very differently — think short-term vs long-term benefits, waiting periods, and claim definitions.",
+      description: "Two 'trauma protection' quotes can behave very differently — think short-term vs long-term benefits, waiting periods, and claim definitions.",
       icon: Heart,
       color: "text-purple-600"
     },
@@ -172,7 +172,7 @@ const WhyCompareSection = () => {
                 className="text-center"
               >
                 <h2 className="text-3xl md:text-4xl font-bold text-black">
-                  Why compare income insurance quotes before you decide
+                  Why compare trauma insurance quotes before you decide
                 </h2>
               </motion.div>
             </div>
@@ -314,22 +314,22 @@ const SmartDealSection = () => {
             id: 1,
             icon: ShieldX,
             title: "Coverage gaps",
-            description: "Basic policies might exclude key income scenarios like partial disability or specific occupations.",
-            detail: "You could miss out on benefits when you need them most"
+            description: "Basic policies might exclude certain trauma conditions or have limited coverage amounts.",
+            detail: "You could face insufficient payout for major trauma events"
         },
         {
             id: 2,
             icon: Timer,
             title: "Waiting periods",
-            description: "Cheap policies often have longer waits before you can claim - sometimes 6+ months for income protection.",
-            detail: "Your income could be at risk during the waiting period"
+            description: "Cheap policies often have longer waits before you can claim - sometimes 12+ months for pre-existing conditions.",
+            detail: "Emergency trauma treatment may not be covered immediately after signing up"
         },
         {
             id: 3,
             icon: TrendingDown,
             title: "Benefit limits",
-            description: "Low-cost plans may cap your benefit periods, leaving you with insufficient long-term protection.",
-            detail: "Benefits may only last 2-5 years instead of until retirement"
+            description: "Low-cost plans may cap your trauma benefits, leaving you exposed for major medical events.",
+            detail: "Limits as low as $50,000 - insufficient for serious trauma recovery"
         }
     ];
 
@@ -356,7 +356,7 @@ const SmartDealSection = () => {
                                 <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                                     cheapest
                                 </span>{' '}
-                                income insurance isn't always the{' '}
+                                trauma insurance isn't always the{' '}
                                 <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                                     best deal
                                 </span>
@@ -469,32 +469,32 @@ const SmartDealSection = () => {
                                             <div className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-bold mb-2 inline-block">
                                                 Cheapest Option
                                             </div>
-                                            <p className="text-xs text-gray-600 mb-2">Basic income protection only</p>
+                                            <p className="text-xs text-gray-600 mb-2">Basic trauma cover only</p>
                                             <div className="text-3xl font-bold text-red-700">
-                                                $35<span className="text-sm">/month</span>
+                                                $25<span className="text-sm">/month</span>
                                             </div>
                                         </div>
                                         
                                         <div className="space-y-3">
                                             <div className="flex items-center gap-2 text-sm">
                                                 <XCircle className="h-4 w-4 text-red-500 flex-shrink-0" />
-                                                <span className="text-gray-700">Limited occupation coverage</span>
+                                                <span className="text-gray-700">Limited conditions covered</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
                                                 <XCircle className="h-4 w-4 text-red-500 flex-shrink-0" />
-                                                <span className="text-gray-700">No partial disability benefits</span>
+                                                <span className="text-gray-700">Low benefit amounts ($50k max)</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
                                                 <XCircle className="h-4 w-4 text-red-500 flex-shrink-0" />
-                                                <span className="text-gray-700">No indexation benefits</span>
+                                                <span className="text-gray-700">No partial payments</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
                                                 <Timer className="h-4 w-4 text-red-500 flex-shrink-0" />
-                                                <span className="text-gray-700">6+ month waiting periods</span>
+                                                <span className="text-gray-700">12+ month waiting periods</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
                                                 <TrendingDown className="h-4 w-4 text-red-500 flex-shrink-0" />
-                                                <span className="text-gray-700">Limited benefit period (2-5 years)</span>
+                                                <span className="text-gray-700">Exclusions for pre-existing conditions</span>
                                             </div>
                                         </div>
                                     </div>
@@ -512,24 +512,24 @@ const SmartDealSection = () => {
                                             <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-bold mb-2 inline-block">
                                                 Smarter Alternative
                                             </div>
-                                            <p className="text-xs text-gray-600 mb-2">Comprehensive income protection</p>
+                                            <p className="text-xs text-gray-600 mb-2">Comprehensive trauma protection</p>
                                             <div className="text-3xl font-bold text-green-700">
-                                                $55<span className="text-sm">/month</span>
+                                                $45<span className="text-sm">/month</span>
                                             </div>
                                         </div>
                                         
                                         <div className="space-y-3">
                                             <div className="flex items-center gap-2 text-sm">
                                                 <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
-                                                <span className="text-gray-700">Comprehensive occupation coverage</span>
+                                                <span className="text-gray-700">Major conditions covered</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
                                                 <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
-                                                <span className="text-gray-700">Partial disability benefits included</span>
+                                                <span className="text-gray-700">Higher benefit amounts (up to $300k)</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
                                                 <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
-                                                <span className="text-gray-700">Indexation benefits</span>
+                                                <span className="text-gray-700">Partial payment options</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
                                                 <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
@@ -537,7 +537,7 @@ const SmartDealSection = () => {
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
                                                 <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
-                                                <span className="text-gray-700">Benefits until retirement</span>
+                                                <span className="text-gray-700">Better coverage for existing conditions</span>
                                             </div>
                                         </div>
                                     </div>
@@ -546,7 +546,7 @@ const SmartDealSection = () => {
                                 {/* Bottom insight */}
                                 <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 text-center border-t border-gray-200">
                                     <p className="text-sm text-gray-700 font-medium">
-                                        💡 For just $20 more monthly, get comprehensive protection until retirement
+                                        💡 For just $20 more monthly, get comprehensive trauma protection when you need it most
                                     </p>
                                 </div>
                             </div>
@@ -559,7 +559,7 @@ const SmartDealSection = () => {
                                 className="text-center p-4 bg-white/60 backdrop-blur-sm rounded-lg border border-purple-100"
                             >
                                 <p className="text-sm text-gray-600 font-medium">
-                                    💡 For $20 more monthly, secure your income until retirement
+                                    💡 For $20 more monthly, get comprehensive trauma protection when you need it most
                                 </p>
                             </motion.div>
 
@@ -616,7 +616,7 @@ const SmartDealSection = () => {
                         </div>
                     </div>
                     <p className="text-xs text-gray-400 mt-4 max-w-2xl mx-auto">
-                        *Figures are illustrative; your premium depends on age, income status, location, and chosen coverage level.
+                        *Figures are illustrative; your premium depends on age, trauma risk, location, and chosen coverage level.
                     </p>
                 </motion.div>
             </div>
@@ -632,7 +632,7 @@ const MythBustingSection = () => {
 
     const myths = [
         {
-            myth: "Income insurance is too expensive",
+            myth: "Trauma insurance is too expensive",
             truth: "Basic cover starts from $20-30/week. Many Kiwis spend more on coffee.",
             realTalk: "We find budget-friendly options that actually fit your wallet",
             icon: Banknote,
@@ -640,17 +640,17 @@ const MythBustingSection = () => {
             bgGradient: "from-red-50 to-pink-50"
         },
         {
-            myth: "I'm young and incomey, I don't need it",
-            truth: "Accidents happen at any age. Join while incomey for lifetime benefits.",
+            myth: "I'm young and healthy, I don't need it",
+            truth: "Trauma events happen at any age. Join while healthy for lifetime benefits.",
             realTalk: "No medical checks + locked-in low premiums = smart move",
             icon: Heart,
             gradient: "from-blue-500 to-cyan-500",
             bgGradient: "from-blue-50 to-cyan-50"
         },
         {
-            myth: "Public incomecare covers everything",
-            truth: "Public has long waits. Private gives you choice and speed.",
-            realTalk: "Your time is valuable. Choose when and where you get care",
+            myth: "Public healthcare covers everything",
+            truth: "Public has long waits. Private gives you choice and speed for trauma recovery.",
+            realTalk: "Your recovery time is valuable. Choose when and where you get care",
             icon: Timer,
             gradient: "from-green-500 to-emerald-500",
             bgGradient: "from-green-50 to-emerald-50"
@@ -801,7 +801,7 @@ const MythBustingSection = () => {
                     className="text-center mt-12"
                 >
                     <p className="text-lg text-gray-600 mb-6">
-                        Ready to separate facts from fiction about your income insurance options?
+                        Ready to separate facts from fiction about your trauma insurance options?
                     </p>
                     <Button onClick={scrollToWizard} className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
                         Compare now
@@ -820,22 +820,22 @@ const HowItWorksSection = () => {
     const steps = [
         {
             icon: Stethoscope,
-            title: "Tell us about your income needs (2 minutes).",
-            description: "Age, family size, current income status, coverage preferences - GP visits, specialists, or comprehensive care.",
+            title: "Tell us about your trauma needs (2 minutes).",
+            description: "Age, family size, current health status, coverage preferences - basic protection or comprehensive trauma cover.",
             gradient: "from-purple-500 to-pink-500",
             bgGradient: "from-purple-50 to-pink-50"
         },
         {
             icon: UserCheck,
             title: "We compare the market for you.",
-            description: "Our team reviews your details against 15+ income insurers and builds a shortlist tailored to your income needs and budget.",
+            description: "Our team reviews your details against 15+ trauma insurers and builds a shortlist tailored to your trauma needs and budget.",
             gradient: "from-purple-600 to-indigo-500",
             bgGradient: "from-purple-50 to-indigo-50"
         },
         {
             icon: Phone,
             title: "Your dedicated adviser gets in touch.",
-            description: "We'll contact you with your curated income insurance options, explain waiting periods, and answer questions in plain English.",
+            description: "We'll contact you with your curated trauma insurance options, explain waiting periods, and answer questions in plain English.",
             gradient: "from-purple-700 to-blue-500",
             bgGradient: "from-purple-50 to-blue-50"
         },
@@ -898,10 +898,10 @@ const HowItWorksSection = () => {
                         Simple Process
                     </motion.div>
                     <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-                        How our NZ income insurance comparison works
+                        How our NZ trauma insurance comparison works
                     </h2>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                        Get personalized income insurance recommendations in 4 simple steps
+                        Get personalized trauma insurance recommendations in 4 simple steps
                     </p>
                 </motion.div>
 
@@ -978,7 +978,8 @@ const HowItWorksSection = () => {
                                             transition={{
                                                 duration: 2,
                                                 repeat: Infinity,
-                                                ease: "easeInOut"
+                                                ease: "easeInOut",
+                                                delay: index * 0.3
                                             }}
                                         >
                                             <svg width="40" height="24" viewBox="0 0 40 24" fill="none" className="text-purple-600">
@@ -1000,7 +1001,7 @@ const HowItWorksSection = () => {
                     className="text-center mt-16"
                 >
                     <p className="text-lg text-gray-600 mb-6">
-                        Ready to find your perfect income insurance match?
+                        Ready to find your perfect trauma insurance match?
                     </p>
                     <motion.div
                         whileHover={{ scale: 1.05 }}
@@ -1037,28 +1038,28 @@ const StoriesSection = () => {
         { 
             name: "Sarah Mitchell", 
             role: "32, Teacher from Auckland",
-            story: "Needed surgery for a sports injury. Private income insurance meant I got treatment within 2 weeks instead of waiting 6 months publicly.",
-            highlight: "Treatment in 2 weeks vs 6 months wait",
+            story: "When I was diagnosed with cancer, my trauma insurance provided a lump sum that covered treatment costs and allowed me to focus on recovery without financial stress.",
+            highlight: "Lump sum payout for cancer treatment",
             rating: 5,
             avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=150&h=150&fit=crop&crop=face&auto=format",
             gradient: "from-purple-500 to-pink-500",
             bgGradient: "from-purple-50 to-pink-50"
         },
         { 
-            name: "Mike & Emma Chen", 
-            role: "Young Family from Wellington",
-            story: "Basic family cover gives us peace of mind. When our daughter needed emergency treatment, we had choice of specialist and timing.",
-            highlight: "Peace of mind for the whole family",
+            name: "Mike Chen", 
+            role: "45, Builder from Wellington",
+            story: "After my heart attack, trauma insurance gave us $100,000 immediately. It covered lost income during recovery and helped my family stay afloat financially.",
+            highlight: "Peace of mind during recovery",
             rating: 5,
             avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format",
             gradient: "from-blue-500 to-indigo-500",
             bgGradient: "from-blue-50 to-indigo-50"
         },
         { 
-            name: "David Thompson", 
-            role: "55, Self-employed from Christchurch",
-            story: "Comprehensive cover includes dental and optical. Saves me $2000+ annually on regular income expenses.",
-            highlight: "Saves $2000+ per year",
+            name: "Emma Thompson", 
+            role: "38, Self-employed from Christchurch",
+            story: "My stroke happened suddenly. Trauma insurance paid out quickly, covering rehabilitation costs and allowing me to modify my home for recovery.",
+            highlight: "Quick payout for stroke recovery",
             rating: 5,
             avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format",
             gradient: "from-green-500 to-teal-500",
@@ -1233,7 +1234,7 @@ const StoriesSection = () => {
                                                     Ready to be our next success story?
                                                 </h3>
                                                 <p className="text-gray-600 mb-6">
-                                                    Join thousands of Kiwis who found their perfect income insurance with our help.
+                                                    Join thousands of Kiwis who found their perfect trauma insurance with our help.
                                                 </p>
                                                 <motion.div
                                                     whileHover={{ scale: 1.05 }}
@@ -1290,7 +1291,7 @@ const WhatYouGetSection = () => {
     const benefits = [
         {
             title: "Curated Shortlist",
-            description: "A handpicked selection of income insurance options from top NZ insurers tailored to your needs",
+            description: "A handpicked selection of trauma insurance options from top NZ insurers tailored to your needs",
             gradient: "from-purple-500 to-pink-500",
             bgGradient: "from-purple-50 to-pink-50",
             icon: "🏆"
@@ -1304,14 +1305,14 @@ const WhatYouGetSection = () => {
         },
         {
             title: "Best Value Focus",
-            description: "We highlight the best value options based on your income priorities, not just the cheapest price",
+            description: "We highlight the best value options based on your trauma priorities, not just the cheapest price",
             gradient: "from-yellow-500 to-orange-500",
             bgGradient: "from-yellow-50 to-orange-50",
             icon: "💎"
         },
         {
             title: "Expert Guidance",
-            description: "Personal advice from licensed income insurance advisers at no extra cost to you",
+            description: "Personal advice from licensed trauma insurance advisers at no extra cost to you",
             gradient: "from-green-500 to-teal-500",
             bgGradient: "from-green-50 to-teal-50",
             icon: "👥"
@@ -1325,7 +1326,7 @@ const WhatYouGetSection = () => {
         },
         {
             title: "Free Review of Your Current Policy",
-            description: "Already have income insurance? We'll review your existing policy and identify potential savings or better coverage options",
+            description: "Already have trauma insurance? We'll review your existing policy and identify potential savings or better coverage options",
             gradient: "from-emerald-500 to-teal-500",
             bgGradient: "from-emerald-50 to-teal-50",
             icon: "🔍"
@@ -1384,7 +1385,7 @@ const WhatYouGetSection = () => {
                         What you get with us
                     </h2>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                        More than just quotes – a complete income insurance experience designed around you
+                        More than just quotes – a complete trauma insurance experience designed around you
                     </p>
                 </motion.div>
 
@@ -1521,7 +1522,7 @@ const WhatYouGetSection = () => {
                         </motion.div>
                         
                         <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                            Get personalized income insurance recommendations that actually make sense for your life and budget.
+                            Get personalized trauma insurance recommendations that actually make sense for your life and budget.
                         </p>
                         
                         <motion.div
@@ -1577,7 +1578,7 @@ const FinalCTASection = () => {
         <section className="bg-primary text-white py-16 sm:py-24">
             <div className="container mx-auto px-4 text-center max-w-7xl">
                 <h2 className="text-3xl font-bold mb-2">Ready to Work It Out?</h2>
-                <p className="text-lg text-primary-foreground/80 mb-8">Get personalized income insurance quotes and expert guidance. Start your journey to better coverage today.</p>
+                <p className="text-lg text-primary-foreground/80 mb-8">Get personalized trauma insurance quotes and expert guidance. Start your journey to better coverage today.</p>
                 <div className="flex justify-center">
                     <motion.div
                         whileHover={{ scale: 1.05 }}
@@ -1606,19 +1607,19 @@ const FinalCTASection = () => {
 
 const FaqSection = () => {
     const faqs = [
-        { q: "What happens after I submit my details?", a: "We'll review your information, compare plans from top NZ income insurers, and a dedicated adviser will contact you with tailored options. No instant quotes - we provide personalized recommendations." },
-        { q: "Is the cheapest income insurance always best?", a: "Not necessarily. The cheapest often has the most exclusions and longest waiting periods. We help you find the best value - the right coverage for your budget." },
-        { q: "What's the difference between basic and comprehensive cover?", a: "Basic covers hospital treatment. Comprehensive adds GP visits, specialists, dental, optical, and sometimes alternative therapies. We'll explain what each level includes." },
-        { q: "How long are waiting periods?", a: "Varies by condition and insurer. Accidents are usually covered immediately, pre-existing conditions may have 12+ month waits. We'll show you the differences." },
-        { q: "Can I get cover if I have income conditions?", a: "Often yes, but conditions may be excluded or have longer waiting periods. Some insurers are more flexible than others - we'll find your best options." },
-        { q: "Do I need a medical exam?", a: "Depends on your age, income, and level of cover. Many applications are based on income questionnaires. We'll explain requirements upfront." },
-        { q: "Can I cancel anytime?", a: "Most policies can be cancelled with 30 days notice. However, if you cancel and re-join later, you may face new waiting periods and income assessments." },
+        { q: "What happens after I submit my details?", a: "We'll review your information, compare plans from top NZ trauma insurers, and a dedicated adviser will contact you with tailored options. No instant quotes - we provide personalized recommendations." },
+        { q: "Is the cheapest trauma insurance always best?", a: "Not necessarily. The cheapest often has the most exclusions and lowest benefit amounts. We help you find the best value - the right coverage for your budget." },
+        { q: "What's the difference between basic and comprehensive trauma cover?", a: "Basic covers major trauma events with lower benefits. Comprehensive includes more conditions, higher benefits, and partial payment options. We'll explain what each level includes." },
+        { q: "How long are waiting periods?", a: "Varies by condition and insurer. Accidents are usually covered immediately, some conditions may have 90-day waits. We'll show you the differences." },
+        { q: "Can I get cover if I have existing health conditions?", a: "Often yes, but conditions may be excluded or have longer waiting periods. Some insurers are more flexible than others - we'll find your best options." },
+        { q: "Do I need a medical exam?", a: "Depends on your age, health, and level of cover. Many applications are based on health questionnaires. We'll explain requirements upfront." },
+        { q: "Can I cancel anytime?", a: "Most policies can be cancelled with 30 days notice. However, if you cancel and re-join later, you may face new waiting periods and health assessments." },
     ];
 
     return (
         <section className="bg-gray-50 py-16 sm:py-24">
             <div className="container mx-auto px-4">
-                <h2 className="text-3xl font-bold text-primary text-center mb-8">Income insurance FAQs (NZ)</h2>
+                <h2 className="text-3xl font-bold text-primary text-center mb-8">Trauma insurance FAQs (NZ)</h2>
                  <Accordion type="single" collapsible className="w-full max-w-7xl mx-auto">
                     {faqs.map(faq => (
                         <AccordionItem value={faq.q} key={faq.q}>
@@ -1645,7 +1646,7 @@ const ComplianceSection = () => {
     );
 }
 
-export default function IncomePage() {
+export default function TraumaPage() {
   const { setQuoteWizardRef } = useForm();
   const quoteWizardRef = useRef<HTMLDivElement>(null);
 
@@ -1656,7 +1657,7 @@ export default function IncomePage() {
   return (
       <main className="w-full text-foreground bg-white">
         <div ref={quoteWizardRef}>
-            <IncomePageHero />
+            <TraumaPageHero />
         </div>
         <Insurers />
         <WhyCompareSection />

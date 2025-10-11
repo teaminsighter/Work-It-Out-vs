@@ -68,10 +68,44 @@ export const ALL_QUESTIONS: Questions = {
     description: "Answer a few quick questions for personalised NZ life insurance prices.",
     question: 'Do you currently have any {{insuranceType}} insurance?',
     Icon: ShieldQuestion,
-    nextStepId: 'cover-amount', 
+    getNextStepId: (value: string) => value === 'yes' ? 'insurance-changes' : 'cover-amount',
     options: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
+    ],
+  },
+  'insurance-changes': {
+    id: 'insurance-changes',
+    question: 'Has anything changed on your Insurance?',
+    Icon: ShieldQuestion,
+    getNextStepId: (value: string) => value === 'yes' ? 'change-cover-type' : 'cover-amount',
+    options: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
+    ],
+  },
+  'change-cover-type': {
+    id: 'change-cover-type',
+    question: 'What are you looking to change in your cover?',
+    Icon: ShieldQuestion,
+    nextStepId: 'health-conditions',
+    options: [
+      { value: 'price', label: 'Price' },
+      { value: 'policy', label: 'Policy' },
+      { value: 'cover', label: 'Cover' },
+      { value: 'all', label: 'All of the above' },
+    ],
+  },
+  'health-conditions': {
+    id: 'health-conditions',
+    question: 'What are is health conditions?',
+    Icon: HeartPulse,
+    nextStepId: 'cover-amount',
+    options: [
+      { value: 'asthma', label: 'Asthma' },
+      { value: 'depression', label: 'Depression' },
+      { value: 'heart-condition', label: 'Heart Condition' },
+      { value: 'none', label: 'None of these' },
     ],
   },
    'cover-amount': {

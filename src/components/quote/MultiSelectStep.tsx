@@ -88,7 +88,7 @@ export default function MultiSelectStep({ question }: MultiSelectStepProps) {
       </motion.div>
 
       <Button onClick={onSubmit} size="lg" className="mt-8 w-full max-w-sm bg-accent text-accent-foreground hover:bg-accent/90">
-        Compare Quotes
+        Compare now
       </Button>
     </div>
   );

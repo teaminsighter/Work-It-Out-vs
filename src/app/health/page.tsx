@@ -10,7 +10,7 @@ import {
     // New unique icons
     Banknote, Briefcase, ShieldX, Timer, TrendingDown, 
     Stethoscope, UserCheck, Phone, FileCheck, 
-    Sparkles, Target, Award, Globe, MessageCircle, 
+    Sparkles, Target, Globe, MessageCircle, 
     Search, Calculator, Handshake, Star, Rocket
 } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
@@ -32,7 +32,7 @@ const HealthPageHero = () => {
   return (
     <section className="relative w-full pt-40 pb-16 md:pt-48 md:pb-24 lg:pt-56 lg:pb-32">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-fixed"
+        className="absolute inset-0 bg-cover bg-center bg-scroll md:bg-fixed"
         style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/Lanind%20Page%201%2Ffamily.jpeg?alt=media&token=424b8995-e4f0-4cf9-b257-623ca0287635')" }}
         data-ai-hint="healthy family"
       ></div>
@@ -307,7 +307,6 @@ const SmartDealSection = () => {
     const { scrollToWizard } = useForm();
     const sectionRef = useRef(null);
     const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-    const [hoveredCard, setHoveredCard] = useState<'cheap' | 'smart' | null>(null);
     const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
 
     const warningPoints = [
@@ -455,114 +454,101 @@ const SmartDealSection = () => {
                                 
                             </div>
 
-                            {/* Comparison Cards */}
-                            <div className="space-y-4">
-                                {/* Cheap Option Card */}
-                                <motion.div
-                                    className="relative perspective-1000"
-                                    onMouseEnter={() => setHoveredCard('cheap')}
-                                    onMouseLeave={() => setHoveredCard(null)}
-                                >
-                                    <motion.div
-                                        className="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-6 border-2 border-red-200 cursor-pointer"
-                                        whileHover={{ rotateY: 5, scale: 1.02 }}
-                                        transition={{ duration: 0.3 }}
-                                    >
-                                        <div className="text-center">
-                                            <p className="text-sm text-red-600 font-medium mb-1">Cheapest option</p>
-                                            <p className="text-xs text-gray-500 mb-2">Basic hospital cover only</p>
-                                            <motion.p 
-                                                className="text-3xl font-bold text-red-700"
-                                                animate={{ scale: hoveredCard === 'cheap' ? 1.1 : 1 }}
-                                            >
-                                                $45<span className="text-sm">/month</span>
-                                            </motion.p>
-                                        </div>
-                                        
-                                        {/* Hidden details on hover */}
-                                        <motion.div
-                                            initial={{ opacity: 0, height: 0 }}
-                                            animate={{
-                                                opacity: hoveredCard === 'cheap' ? 1 : 0,
-                                                height: hoveredCard === 'cheap' ? 'auto' : 0
-                                            }}
-                                            className="mt-4 space-y-2"
-                                        >
-                                            <div className="flex items-center gap-2 text-sm">
-                                                <XCircle className="h-4 w-4 text-red-500" />
-                                                <span className="text-gray-600">No GP visits</span>
-                                            </div>
-                                            <div className="flex items-center gap-2 text-sm">
-                                                <XCircle className="h-4 w-4 text-red-500" />
-                                                <span className="text-gray-600">No dental cover</span>
-                                            </div>
-                                        </motion.div>
-                                    </motion.div>
-                                </motion.div>
-
-                                {/* VS Badge */}
-                                <div className="text-center">
-                                    <motion.div
-                                        className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg"
-                                        animate={{ 
-                                            boxShadow: [
-                                                "0 0 20px rgba(124, 58, 237, 0.3)",
-                                                "0 0 30px rgba(124, 58, 237, 0.5)",
-                                                "0 0 20px rgba(124, 58, 237, 0.3)"
-                                            ]
-                                        }}
-                                        transition={{ duration: 2, repeat: Infinity }}
-                                    >
-                                        VS
-                                    </motion.div>
+                            {/* Side-by-Side Comparison Table */}
+                            <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+                                {/* Header */}
+                                <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-4 text-center">
+                                    <h3 className="text-xl font-bold">Policy Comparison</h3>
                                 </div>
-
-                                {/* Smart Option Card */}
-                                <motion.div
-                                    className="relative perspective-1000"
-                                    onMouseEnter={() => setHoveredCard('smart')}
-                                    onMouseLeave={() => setHoveredCard(null)}
-                                >
-                                    <motion.div
-                                        className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border-2 border-green-200 cursor-pointer"
-                                        whileHover={{ rotateY: -5, scale: 1.02 }}
-                                        transition={{ duration: 0.3 }}
-                                    >
-                                        <div className="text-center">
-                                            <p className="text-sm text-green-600 font-medium mb-1">Smarter alternative</p>
-                                            <p className="text-xs text-gray-500 mb-2">Comprehensive with GP visits</p>
-                                            <motion.p 
-                                                className="text-3xl font-bold text-green-700"
-                                                animate={{ scale: hoveredCard === 'smart' ? 1.1 : 1 }}
-                                            >
-                                                $65<span className="text-sm">/month</span>
-                                            </motion.p>
+                                
+                                {/* Comparison Grid */}
+                                <div className="grid grid-cols-2 divide-x divide-gray-200">
+                                    {/* Cheapest Option */}
+                                    <div className="p-6 bg-gradient-to-br from-red-50 to-orange-50">
+                                        <div className="text-center mb-4">
+                                            <div className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-bold mb-2 inline-block">
+                                                Cheapest Option
+                                            </div>
+                                            <p className="text-xs text-gray-600 mb-2">Basic hospital cover only</p>
+                                            <div className="text-3xl font-bold text-red-700">
+                                                $45<span className="text-sm">/month</span>
+                                            </div>
                                         </div>
                                         
-                                        {/* Hidden details on hover */}
-                                        <motion.div
-                                            initial={{ opacity: 0, height: 0 }}
-                                            animate={{
-                                                opacity: hoveredCard === 'smart' ? 1 : 0,
-                                                height: hoveredCard === 'smart' ? 'auto' : 0
-                                            }}
-                                            className="mt-4 space-y-2"
-                                        >
+                                        <div className="space-y-3">
                                             <div className="flex items-center gap-2 text-sm">
-                                                <Stethoscope className="h-4 w-4 text-green-500" />
-                                                <span className="text-gray-600">GP visits included</span>
+                                                <XCircle className="h-4 w-4 text-red-500 flex-shrink-0" />
+                                                <span className="text-gray-700">No GP visits covered</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
-                                                <Sparkles className="h-4 w-4 text-green-500" />
-                                                <span className="text-gray-600">Dental & optical</span>
+                                                <XCircle className="h-4 w-4 text-red-500 flex-shrink-0" />
+                                                <span className="text-gray-700">No dental care</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
-                                                <Award className="h-4 w-4 text-green-500" />
-                                                <span className="text-gray-600">Specialist care</span>
+                                                <XCircle className="h-4 w-4 text-red-500 flex-shrink-0" />
+                                                <span className="text-gray-700">No optical coverage</span>
                                             </div>
-                                        </motion.div>
-                                    </motion.div>
-                                </motion.div>
+                                            <div className="flex items-center gap-2 text-sm">
+                                                <Timer className="h-4 w-4 text-red-500 flex-shrink-0" />
+                                                <span className="text-gray-700">12+ month waiting periods</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-sm">
+                                                <TrendingDown className="h-4 w-4 text-red-500 flex-shrink-0" />
+                                                <span className="text-gray-700">Low annual limits</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Smarter Alternative */}
+                                    <div className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 relative">
+                                        {/* Recommended Badge */}
+                                        <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                                            <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
+                                                ⭐ RECOMMENDED
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="text-center mb-4 mt-4">
+                                            <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-bold mb-2 inline-block">
+                                                Smarter Alternative
+                                            </div>
+                                            <p className="text-xs text-gray-600 mb-2">Comprehensive with GP visits</p>
+                                            <div className="text-3xl font-bold text-green-700">
+                                                $65<span className="text-sm">/month</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="space-y-3">
+                                            <div className="flex items-center gap-2 text-sm">
+                                                <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+                                                <span className="text-gray-700">GP visits included</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-sm">
+                                                <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+                                                <span className="text-gray-700">Dental & optical covered</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-sm">
+                                                <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+                                                <span className="text-gray-700">Specialist care included</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-sm">
+                                                <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+                                                <span className="text-gray-700">Shorter waiting periods</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-sm">
+                                                <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+                                                <span className="text-gray-700">Higher annual limits</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                {/* Bottom insight */}
+                                <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 text-center border-t border-gray-200">
+                                    <p className="text-sm text-gray-700 font-medium">
+                                        💡 For just $20 more monthly, save hundreds per year on routine healthcare
+                                    </p>
+                                </div>
                             </div>
 
                             {/* Bottom explanation */}
@@ -834,28 +820,28 @@ const HowItWorksSection = () => {
     const steps = [
         {
             icon: Stethoscope,
-            title: "1. Tell us about your health needs (2 minutes).",
+            title: "Tell us about your health needs (2 minutes).",
             description: "Age, family size, current health status, coverage preferences - GP visits, specialists, or comprehensive care.",
             gradient: "from-purple-500 to-pink-500",
             bgGradient: "from-purple-50 to-pink-50"
         },
         {
             icon: UserCheck,
-            title: "2. We compare the market for you.",
+            title: "We compare the market for you.",
             description: "Our team reviews your details against 15+ health insurers and builds a shortlist tailored to your health needs and budget.",
             gradient: "from-purple-600 to-indigo-500",
             bgGradient: "from-purple-50 to-indigo-50"
         },
         {
             icon: Phone,
-            title: "3. Your dedicated adviser gets in touch.",
+            title: "Your dedicated adviser gets in touch.",
             description: "We'll contact you with your curated health insurance options, explain waiting periods, and answer questions in plain English.",
             gradient: "from-purple-700 to-blue-500",
             bgGradient: "from-purple-50 to-blue-50"
         },
         {
             icon: FileCheck,
-            title: "4. You choose and apply with confidence.",
+            title: "You choose and apply with confidence.",
             description: "We streamline the paperwork and keep you updated through underwriting and policy setup.",
             gradient: "from-purple-600 to-violet-500",
             bgGradient: "from-purple-50 to-violet-50"
@@ -919,93 +905,92 @@ const HowItWorksSection = () => {
                     </p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                    {steps.map((step, index) => (
-                        <motion.div
-                            key={step.title}
-                            initial={{ opacity: 0, y: 50 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                            transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                            className="group relative"
-                        >
-                            <motion.div
-                                className={`relative bg-gradient-to-br ${step.bgGradient} rounded-2xl p-8 h-full cursor-pointer border border-purple-100`}
-                                whileHover={{ 
-                                    y: -10,
-                                    boxShadow: "0 25px 50px rgba(139, 69, 224, 0.15)"
-                                }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                {/* Step number badge */}
-                                <div className="flex items-center gap-4 mb-6">
+                {/* Linear 1→2→3→4 Flow */}
+                <div className="relative max-w-6xl mx-auto">
+                    <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+                        {steps.map((step, index) => (
+                            <div key={step.title} className="flex items-center">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 50 }}
+                                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                                    transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
+                                    className="group relative"
+                                >
                                     <motion.div
-                                        className={`p-4 rounded-xl bg-gradient-to-r ${step.gradient} text-white shadow-lg`}
+                                        className="relative bg-white rounded-2xl p-6 cursor-pointer border-2 border-purple-100 shadow-lg w-64"
                                         whileHover={{ 
-                                            scale: 1.1,
-                                            rotate: 5
+                                            y: -5,
+                                            boxShadow: "0 15px 30px rgba(139, 69, 224, 0.15)",
+                                            borderColor: "#9333ea"
                                         }}
                                         transition={{ duration: 0.3 }}
                                     >
-                                        {(() => {
-                                            const StepIcon = step.icon;
-                                            return <StepIcon className="h-6 w-6" />;
-                                        })()}
+                                        {/* Step Number Badge */}
+                                        <div className="text-center mb-4">
+                                            <motion.div
+                                                className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 text-white rounded-xl shadow-lg mb-3"
+                                                animate={{
+                                                    scale: [1, 1.05, 1],
+                                                    boxShadow: [
+                                                        "0 8px 25px rgba(147, 51, 234, 0.3)",
+                                                        "0 12px 35px rgba(147, 51, 234, 0.4)",
+                                                        "0 8px 25px rgba(147, 51, 234, 0.3)"
+                                                    ]
+                                                }}
+                                                transition={{
+                                                    duration: 2,
+                                                    repeat: Infinity,
+                                                    delay: index * 0.5
+                                                }}
+                                            >
+                                                <span className="text-xl font-bold">{index + 1}</span>
+                                            </motion.div>
+                                            <div className="bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-bold inline-block">
+                                                STEP
+                                            </div>
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="text-center">
+                                            <h3 className="text-lg font-bold text-gray-900 mb-3">
+                                                {step.title}
+                                            </h3>
+                                            <p className="text-gray-600 text-sm leading-relaxed">
+                                                {step.description}
+                                            </p>
+                                        </div>
                                     </motion.div>
-                                    <div className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-bold">
-                                        STEP {index + 1}
-                                    </div>
-                                </div>
-
-                                {/* Content */}
-                                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                                    {step.title}
-                                </h3>
-                                <p className="text-gray-700 leading-relaxed">
-                                    {step.description}
-                                </p>
-
-                                {/* Decorative elements */}
-                                <motion.div
-                                    className="absolute top-4 right-4 w-2 h-2 bg-purple-300 rounded-full"
-                                    animate={{
-                                        scale: [1, 1.5, 1],
-                                        opacity: [0.5, 1, 0.5]
-                                    }}
-                                    transition={{
-                                        duration: 2,
-                                        repeat: Infinity,
-                                        delay: index * 0.3
-                                    }}
-                                />
-                                <motion.div
-                                    className="absolute bottom-6 right-6 w-1 h-1 bg-purple-400 rounded-full"
-                                    animate={{
-                                        scale: [1, 2, 1],
-                                        opacity: [0.3, 0.8, 0.3]
-                                    }}
-                                    transition={{
-                                        duration: 3,
-                                        repeat: Infinity,
-                                        delay: index * 0.5
-                                    }}
-                                />
-                            </motion.div>
-
-                            {/* Connection line for desktop */}
-                            {index < steps.length - 1 && index % 2 === 0 && (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-                                    transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                                    className="hidden md:block absolute -bottom-4 left-1/2 transform -translate-x-1/2 z-20"
-                                >
-                                    <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-2 rounded-full shadow-lg">
-                                        <ArrowUpDown className="h-4 w-4 rotate-90" />
-                                    </div>
                                 </motion.div>
-                            )}
-                        </motion.div>
-                    ))}
+
+                                {/* Arrow to Next Step */}
+                                {index < steps.length - 1 && (
+                                    <motion.div
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                                        transition={{ duration: 0.8, delay: 1 + index * 0.2 }}
+                                        className="hidden lg:block mx-4"
+                                    >
+                                        <motion.div
+                                            animate={{
+                                                x: [0, 8, 0],
+                                                scale: [1, 1.1, 1]
+                                            }}
+                                            transition={{
+                                                duration: 2,
+                                                repeat: Infinity,
+                                                ease: "easeInOut",
+                                                delay: index * 0.3
+                                            }}
+                                        >
+                                            <svg width="40" height="24" viewBox="0 0 40 24" fill="none" className="text-purple-600">
+                                                <path d="M39 12H1M39 12L29 2M39 12L29 22" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </motion.div>
+                                    </motion.div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Bottom CTA */}
@@ -1087,7 +1072,7 @@ const StoriesSection = () => {
             const sectionElement = sectionRef.current;
             if (!sectionElement) return;
 
-            const rect = sectionElement.getBoundingClientRect();
+            const rect = (sectionElement as HTMLElement).getBoundingClientRect();
             const windowHeight = window.innerHeight;
             
             // Check if section is in the viewport
@@ -1309,35 +1294,42 @@ const WhatYouGetSection = () => {
             description: "A handpicked selection of health insurance options from top NZ insurers tailored to your needs",
             gradient: "from-purple-500 to-pink-500",
             bgGradient: "from-purple-50 to-pink-50",
-            highlight: "15+ insurers compared"
+            icon: "🏆"
         },
         {
             title: "Crystal Clear Explanations",
             description: "No jargon. We break down coverage levels, waiting periods, and exclusions in plain English",
             gradient: "from-blue-500 to-indigo-500",
             bgGradient: "from-blue-50 to-indigo-50",
-            highlight: "Easy to understand"
+            icon: "📋"
         },
         {
             title: "Best Value Focus",
             description: "We highlight the best value options based on your health priorities, not just the cheapest price",
             gradient: "from-yellow-500 to-orange-500",
             bgGradient: "from-yellow-50 to-orange-50",
-            highlight: "Value over price"
+            icon: "💎"
         },
         {
             title: "Expert Guidance",
             description: "Personal advice from licensed health insurance advisers at no extra cost to you",
             gradient: "from-green-500 to-teal-500",
             bgGradient: "from-green-50 to-teal-50",
-            highlight: "Licensed advisers"
+            icon: "👥"
         },
         {
             title: "Zero Pressure",
             description: "No obligation, no pushy sales tactics. Go at your own pace and make the right decision for you",
             gradient: "from-indigo-500 to-purple-500",
             bgGradient: "from-indigo-50 to-purple-50",
-            highlight: "Your pace, your choice"
+            icon: "✋"
+        },
+        {
+            title: "Free Review of Your Current Policy",
+            description: "Already have health insurance? We'll review your existing policy and identify potential savings or better coverage options",
+            gradient: "from-emerald-500 to-teal-500",
+            bgGradient: "from-emerald-50 to-teal-50",
+            icon: "🔍"
         }
     ];
 
@@ -1423,7 +1415,7 @@ const WhatYouGetSection = () => {
                             onMouseLeave={() => setHoveredBenefit(null)}
                         >
                             <motion.div
-                                className={`relative bg-gradient-to-br ${benefit.bgGradient} rounded-2xl p-8 h-full cursor-pointer border border-white/50 backdrop-blur-sm`}
+                                className={`relative bg-gradient-to-br ${benefit.bgGradient} rounded-2xl p-8 min-h-[280px] h-full cursor-pointer border border-white/50 backdrop-blur-sm`}
                                 whileHover={{ 
                                     y: -10,
                                     boxShadow: "0 25px 50px rgba(139, 69, 224, 0.15)",
@@ -1432,24 +1424,18 @@ const WhatYouGetSection = () => {
                                 transition={{ duration: 0.3 }}
                             >
 
-                                {/* Content */}
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                                    {benefit.title}
-                                </h3>
-                                <p className="text-gray-700 leading-relaxed mb-4">
-                                    {benefit.description}
-                                </p>
-
-                                {/* Highlight Badge */}
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                                    transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
-                                    className={`inline-flex items-center gap-2 bg-gradient-to-r ${benefit.gradient} text-white px-3 py-2 rounded-full text-sm font-medium`}
-                                >
-                                    <Star className="h-3 w-3" />
-                                    {benefit.highlight}
-                                </motion.div>
+                                {/* Icon and Content */}
+                                <div className="flex items-start gap-4 mb-4">
+                                    <div className="text-3xl">{benefit.icon}</div>
+                                    <div>
+                                        <h3 className="text-xl font-bold text-gray-900 mb-2">
+                                            {benefit.title}
+                                        </h3>
+                                        <p className="text-gray-700 leading-relaxed">
+                                            {benefit.description}
+                                        </p>
+                                    </div>
+                                </div>
 
                                 {/* Floating decorative elements */}
                                 <motion.div
@@ -1591,11 +1577,28 @@ const FinalCTASection = () => {
     return (
         <section className="bg-primary text-white py-16 sm:py-24">
             <div className="container mx-auto px-4 text-center max-w-7xl">
-                <h2 className="text-3xl font-bold mb-2">Ready to find the right health insurance?</h2>
-                <p className="text-lg text-primary-foreground/80 mb-8">Start now. You'll be done before the kettle boils.</p>
-                <div className="flex justify-center gap-4 flex-wrap">
-                    <Button onClick={scrollToWizard} size="lg" className="bg-purple-600 hover:bg-purple-700 text-white">Compare now</Button>
-                    <Button onClick={scrollToWizard} size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white hover:text-purple-600">Compare now</Button>
+                <h2 className="text-3xl font-bold mb-2">Ready to Work It Out?</h2>
+                <p className="text-lg text-primary-foreground/80 mb-8">Get personalized insurance quotes and expert guidance. Start your journey to better coverage today.</p>
+                <div className="flex justify-center">
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <Button 
+                            onClick={scrollToWizard} 
+                            size="lg" 
+                            className="bg-white text-purple-600 hover:bg-gray-100 px-12 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                        >
+                            Compare now
+                            <motion.span
+                                className="ml-2"
+                                animate={{ x: [0, 5, 0] }}
+                                transition={{ duration: 1.5, repeat: Infinity }}
+                            >
+                                →
+                            </motion.span>
+                        </Button>
+                    </motion.div>
                 </div>
             </div>
         </section>
