@@ -1,0 +1,15 @@
+import { NextResponse } from 'next/server';
+
+export function middleware(request) {
+  console.log('🚀 SIMPLE MIDDLEWARE TEST:', request.nextUrl.pathname);
+  
+  // Add a header to test if middleware is running
+  const response = NextResponse.next();
+  response.headers.set('X-Middleware-Test', 'working');
+  
+  return response;
+}
+
+export const config = {
+  matcher: '/treat',
+};

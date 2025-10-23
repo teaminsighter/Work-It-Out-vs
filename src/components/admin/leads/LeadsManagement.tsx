@@ -117,8 +117,7 @@ const LeadsManagement = () => {
   // Filter leads based on search and filters
   const filteredLeads = leads.filter(lead => {
     const matchesSearch = searchQuery === '' || 
-      lead.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lead.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      lead.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       lead.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       lead.phone.includes(searchQuery) ||
       lead.address.toLowerCase().includes(searchQuery.toLowerCase());
@@ -182,7 +181,7 @@ const LeadsManagement = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">CRM</h1>
-          <p className="text-gray-600">Manage and track your solar installation leads</p>
+          <p className="text-gray-600">Manage and analyze your insurance leads</p>
         </div>
         <div className="flex gap-3">
           <motion.button
@@ -229,7 +228,7 @@ const LeadsManagement = () => {
                 <DollarSign className="w-5 h-5 text-orange-600" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-gray-900">€{Math.round(stats.averageDealSize / 1000)}K</div>
+                <div className="text-2xl font-bold text-gray-900">€{Math.round((stats as any).averageDealSize / 1000) || 0}K</div>
                 <div className="text-sm text-gray-600">Avg Deal Size</div>
               </div>
             </div>
@@ -241,7 +240,7 @@ const LeadsManagement = () => {
                 <TrendingUp className="w-5 h-5 text-purple-600" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-gray-900">€{Math.round(stats.totalPipelineValue / 1000)}K</div>
+                <div className="text-2xl font-bold text-gray-900">€{Math.round((stats as any).totalPipelineValue / 1000) || 0}K</div>
                 <div className="text-sm text-gray-600">Pipeline Value</div>
               </div>
             </div>
@@ -333,13 +332,13 @@ const LeadsManagement = () => {
                       <div className="flex-shrink-0 h-10 w-10">
                         <div className="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center">
                           <span className="text-sm font-medium text-orange-800">
-                            {lead.firstName[0]}{lead.lastName[0]}
+                            {lead.name ? lead.name.split(' ').map(n => n[0]).join('').slice(0, 2) : '??'}
                           </span>
                         </div>
                       </div>
                       <div className="ml-4">
                         <div className="text-sm font-medium text-gray-900">
-                          {lead.firstName} {lead.lastName}
+                          {lead.name}
                         </div>
                         <div className="text-sm text-gray-500 flex items-center gap-1">
                           <Mail className="w-3 h-3" />
@@ -354,13 +353,13 @@ const LeadsManagement = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">
-                      {lead.systemDetails.systemSize.toFixed(1)} kW System
+                      {lead.systemDetails?.systemSize ? `${lead.systemDetails.systemSize.toFixed(1)} kW System` : 'No system details'}
                     </div>
                     <div className="text-sm text-gray-500">
-                      €{lead.systemDetails.estimatedCost.toLocaleString()}
+                      €{lead.systemDetails?.estimatedCost?.toLocaleString() || '0'}
                     </div>
                     <div className="text-sm text-gray-500">
-                      {lead.installationTimeframe}
+                      {lead.utm_source || 'Unknown'}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -377,7 +376,7 @@ const LeadsManagement = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(lead.createdAt).toLocaleDateString()}
+                    {new Date(lead.created_at).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center gap-2">
@@ -447,7 +446,7 @@ const LeadsManagement = () => {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">
-                    {selectedLead.firstName} {selectedLead.lastName}
+                    {selectedLead.name}
                   </h2>
                   <div className="flex items-center gap-2 mt-1">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(selectedLead.status)}`}>
@@ -489,23 +488,23 @@ const LeadsManagement = () => {
 
                 {/* System Details */}
                 <div className="space-y-4">
-                  <h3 className="font-medium text-gray-900">System Details</h3>
+                  <h3 className="font-medium text-gray-900">Lead Details</h3>
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
-                      <div className="text-gray-500">System Size</div>
-                      <div className="font-medium">{selectedLead.systemDetails.systemSize.toFixed(1)} kW</div>
+                      <div className="text-gray-500">Quote Value</div>
+                      <div className="font-medium">€{selectedLead.quote_value?.toLocaleString() || '0'}</div>
                     </div>
                     <div>
-                      <div className="text-gray-500">Estimated Cost</div>
-                      <div className="font-medium">€{selectedLead.systemDetails.estimatedCost.toLocaleString()}</div>
+                      <div className="text-gray-500">Status</div>
+                      <div className="font-medium">{selectedLead.conversion_status || 'Unknown'}</div>
                     </div>
                     <div>
-                      <div className="text-gray-500">Annual Savings</div>
-                      <div className="font-medium">€{selectedLead.systemDetails.annualSavings.toLocaleString()}</div>
+                      <div className="text-gray-500">Total Visits</div>
+                      <div className="font-medium">{selectedLead.total_visits || 0}</div>
                     </div>
                     <div>
-                      <div className="text-gray-500">Payback Period</div>
-                      <div className="font-medium">{selectedLead.systemDetails.paybackPeriod.toFixed(1)} years</div>
+                      <div className="text-gray-500">Form Progress</div>
+                      <div className="font-medium">{selectedLead.form_steps_completed || 0}/{selectedLead.total_form_steps || 0} steps</div>
                     </div>
                   </div>
                 </div>
@@ -516,17 +515,22 @@ const LeadsManagement = () => {
                 <div>
                   <h3 className="font-medium text-gray-900 mb-2">Preferences</h3>
                   <div className="text-sm text-gray-600 space-y-1">
-                    <div>Preferred Contact: {selectedLead.preferredContact}</div>
-                    <div>Best Time to Call: {selectedLead.bestTimeToCall}</div>
-                    <div>Installation Timeframe: {selectedLead.installationTimeframe}</div>
+                    <div>Phone: {selectedLead.phone || 'Not provided'}</div>
+                    <div>Email: {selectedLead.email}</div>
+                    <div>Source: {selectedLead.utm_source || 'Unknown'}</div>
                   </div>
                 </div>
 
-                {selectedLead.additionalNotes && (
+                {selectedLead.notes && selectedLead.notes.length > 0 && (
                   <div>
-                    <h3 className="font-medium text-gray-900 mb-2">Additional Notes</h3>
-                    <div className="text-sm text-gray-600 bg-gray-50 rounded-lg p-3">
-                      {selectedLead.additionalNotes}
+                    <h3 className="font-medium text-gray-900 mb-2">Notes</h3>
+                    <div className="text-sm text-gray-600 bg-gray-50 rounded-lg p-3 space-y-2">
+                      {selectedLead.notes.map((note, index) => (
+                        <div key={index} className="border-b border-gray-200 pb-2 last:border-b-0">
+                          <div className="font-medium">{note.content}</div>
+                          <div className="text-xs text-gray-500">{new Date(note.createdAt).toLocaleDateString()}</div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}

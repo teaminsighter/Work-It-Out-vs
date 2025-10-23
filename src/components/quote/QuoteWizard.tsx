@@ -2,7 +2,11 @@
 "use client";
 
 import { useForm } from '@/contexts/FormContext';
-import { ALL_QUESTIONS } from '@/lib/questions';
+import { ALL_QUESTIONS as ALL_MAIN_QUESTIONS } from '@/lib/questions';
+import { ALL_QUESTIONS as ALL_LIFE_QUESTIONS } from '@/lib/questions-life';
+import { ALL_QUESTIONS as ALL_HEALTH_QUESTIONS } from '@/lib/questions-health';
+import { ALL_QUESTIONS as ALL_TRAUMA_QUESTIONS } from '@/lib/questions-trauma';
+import { ALL_QUESTIONS as ALL_MORTGAGE_QUESTIONS } from '@/lib/questions-mortgage';
 import { ALL_LOCATION_QUESTIONS } from '@/lib/questions-location';
 import QuestionStep from './QuestionStep';
 import ResultsPage from './ResultsPage';
@@ -13,13 +17,23 @@ import ContactForm from './ContactForm';
 import SelectForm from './SelectForm';
 import { usePathname } from 'next/navigation';
 import MultiSelectStep from './MultiSelectStep';
+import SMSVerificationStep from './SMSVerificationStep';
+import SliderStep from './SliderStep';
 
-const ALL_WIZARD_QUESTIONS = {...ALL_QUESTIONS, ...ALL_LOCATION_QUESTIONS};
+const getQuestionSet = (pathname: string) => {
+  if (pathname === '/life') return { ...ALL_LIFE_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
+  if (pathname === '/health') return { ...ALL_HEALTH_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
+  if (pathname === '/income') return { ...ALL_LIFE_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
+  if (pathname === '/trauma') return { ...ALL_TRAUMA_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
+  if (pathname === '/mortgage') return { ...ALL_MORTGAGE_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
+  return { ...ALL_MAIN_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
+};
 
 export default function QuoteWizard() {
   const { currentStepId, goBack, stepHistory } = useForm();
   const pathname = usePathname();
   
+  const ALL_WIZARD_QUESTIONS = getQuestionSet(pathname);
   const currentQuestion = ALL_WIZARD_QUESTIONS[currentStepId];
   const isFirstStep = stepHistory.length <= 1;
 
@@ -27,9 +41,15 @@ export default function QuoteWizard() {
     if (currentStepId === 'results') {
       return <ResultsPage />;
     }
+    if (currentStepId === 'sms-verification') {
+      return <SMSVerificationStep question={currentQuestion} />;
+    }
     if (currentQuestion) {
       if (currentQuestion.multiSelect) {
         return <MultiSelectStep question={currentQuestion} />;
+      }
+      if (currentQuestion.sliderField) {
+        return <SliderStep question={currentQuestion} />;
       }
       if (currentQuestion.fields && currentQuestion.fields.length > 0) {
         return <ContactForm question={currentQuestion} />;

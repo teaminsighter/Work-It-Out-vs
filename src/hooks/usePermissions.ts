@@ -39,7 +39,7 @@ export function usePermissions(userId?: string): UsePermissionsReturn {
         // Lead management tabs  
         'all-leads', 'lead-analysis', 'ab-testing', 'visitor-analysis', 'duplicates', 'reports',
         // Page builder tabs
-        'landing-pages', 'templates',
+        'landing-pages', 'forms', 'templates', 'campaigns',
         // Tracking tabs
         'datalayer', 'gtm-config', 'integrations', 'conversion-api', 'api-keys',
         // AI insights tabs

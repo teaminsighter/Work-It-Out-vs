@@ -222,7 +222,7 @@ const LeadAnalytics = () => {
     });
   };
   
-  const generateMonthlyData = (leads: Lead[]) => {
+  const generateMonthlyData = (leads: AnalyticsLead[]) => {
     const monthlyMap = new Map<string, { revenue: number; leads: number }>();
     
     leads.forEach(lead => {
@@ -235,7 +235,7 @@ const LeadAnalytics = () => {
       
       const data = monthlyMap.get(monthKey)!;
       data.leads += 1;
-      if (lead.status === 'won') {
+      if (lead.status === 'won' && lead.systemDetails) {
         data.revenue += lead.systemDetails.estimatedCost;
       }
     });
@@ -246,11 +246,11 @@ const LeadAnalytics = () => {
     })).sort((a, b) => a.month.localeCompare(b.month));
   };
   
-  const generateRegionData = (leads: Lead[]) => {
+  const generateRegionData = (leads: AnalyticsLead[]) => {
     const regionMap = new Map<string, { leads: number; revenue: number }>();
     
     leads.forEach(lead => {
-      const region = extractRegionFromAddress(lead.address);
+      const region = extractRegionFromAddress(lead.systemDetails?.address || 'Unknown');
       
       if (!regionMap.has(region)) {
         regionMap.set(region, { leads: 0, revenue: 0 });
@@ -258,7 +258,7 @@ const LeadAnalytics = () => {
       
       const data = regionMap.get(region)!;
       data.leads += 1;
-      if (lead.status === 'won') {
+      if (lead.status === 'won' && lead.systemDetails) {
         data.revenue += lead.systemDetails.estimatedCost;
       }
     });
@@ -385,21 +385,24 @@ const LeadAnalytics = () => {
     qualifiedLeads: 0
   };
   
-  const handleEditLead = (lead: Lead) => {
+  const handleEditLead = (lead: AnalyticsLead) => {
     // For now, just show an alert with lead details
-    alert(`Edit Lead: ${lead.firstName} ${lead.lastName}\nEmail: ${lead.email}\nStatus: ${lead.status}\n\nLead editing functionality would open a modal here.`);
+    alert(`Edit Lead: ${lead.name}\nEmail: ${lead.email}\nStatus: ${lead.status}\n\nLead editing functionality would open a modal here.`);
   };
 
-  const handleViewLead = (lead: Lead) => {
+  const handleViewLead = (lead: AnalyticsLead) => {
     // For now, just show an alert with lead details
-    alert(`Lead Details: ${lead.firstName} ${lead.lastName}\nEmail: ${lead.email}\nPhone: ${lead.phone}\nAddress: ${lead.address}\nStatus: ${lead.status}\nSystem Size: ${lead.systemDetails.systemSize} kW\nEstimated Cost: €${lead.systemDetails.estimatedCost.toLocaleString()}`);
+    const systemInfo = lead.systemDetails ? 
+      `\nAddress: ${lead.systemDetails.address}\nEstimated Cost: €${lead.systemDetails.estimatedCost.toLocaleString()}` : 
+      '\nNo system details available';
+    alert(`Lead Details: ${lead.name}\nEmail: ${lead.email}\nPhone: ${lead.phone || 'N/A'}\nStatus: ${lead.status}${systemInfo}`);
   };
 
   const exportData = () => {
     const csvContent = "data:text/csv;charset=utf-8," + 
-      "Name,Email,Phone,Address,Status,Priority,System Size,Estimated Cost,Created Date\n" +
+      "Name,Email,Phone,Address,Status,Score,Estimated Cost,Created Date\n" +
       filteredLeads.map(lead => 
-        `"${lead.firstName} ${lead.lastName}","${lead.email}","${lead.phone}","${lead.address}","${lead.status}","${lead.priority}","${lead.systemDetails.systemSize}","${lead.systemDetails.estimatedCost}","${new Date(lead.createdAt).toLocaleDateString()}"`
+        `"${lead.name}","${lead.email}","${lead.phone || 'N/A'}","${lead.systemDetails?.address || 'N/A'}","${lead.status}","${lead.score}","${lead.systemDetails?.estimatedCost || 0}","${new Date(lead.createdAt).toLocaleDateString()}"`
       ).join("\n");
     
     const encodedUri = encodeURI(csvContent);
@@ -700,9 +703,9 @@ const LeadAnalytics = () => {
                 <tr key={lead.id} className="border-b border-gray-100 hover:bg-gray-50">
                   <td className="py-4">
                     <div>
-                      <div className="font-medium text-gray-900">{lead.firstName} {lead.lastName}</div>
+                      <div className="font-medium text-gray-900">{lead.name}</div>
                       <div className="text-sm text-gray-600">{lead.email}</div>
-                      <div className="text-xs text-gray-500">{lead.address}</div>
+                      <div className="text-xs text-gray-500">{lead.systemDetails?.address || 'No address'}</div>
                     </div>
                   </td>
                   <td className="py-4 text-center">
@@ -716,11 +719,15 @@ const LeadAnalytics = () => {
                       <span className="text-sm text-gray-900">{lead.source}</span>
                     </div>
                   </td>
-                  <td className="py-4 text-center text-sm text-gray-900">{lead.systemDetails.systemSize} kW</td>
-                  <td className="py-4 text-center text-sm font-medium text-gray-900">€{lead.systemDetails.estimatedCost.toLocaleString()}</td>
+                  <td className="py-4 text-center text-sm text-gray-900">
+                    N/A
+                  </td>
+                  <td className="py-4 text-center text-sm font-medium text-gray-900">
+                    €{lead.systemDetails?.estimatedCost?.toLocaleString() || '0'}
+                  </td>
                   <td className="py-4 text-center">
                     <div className="flex items-center justify-center">
-                      <div className={`w-3 h-3 rounded-full ${getPriorityColor(lead.priority)}`}></div>
+                      <div className={`w-3 h-3 rounded-full ${getPriorityColor(lead.score >= 80 ? 'high' : lead.score >= 50 ? 'medium' : 'low')}`}></div>
                     </div>
                   </td>
                   <td className="py-4 text-center text-xs text-gray-600">

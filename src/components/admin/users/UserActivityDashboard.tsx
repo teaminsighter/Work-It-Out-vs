@@ -315,7 +315,7 @@ const UserActivityDashboard = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
             >
               <option value="all">All Users</option>
-              {users.map(user => (
+              {(users || []).map(user => (
                 <option key={user.id} value={user.id}>
                   {user.firstName} {user.lastName} ({user.role})
                 </option>

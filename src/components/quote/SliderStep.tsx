@@ -15,14 +15,25 @@ interface SliderStepProps {
 
 export default function SliderStep({ question }: SliderStepProps) {
   const { handleAnswer, formData } = useForm();
-  const { id, Icon, question: questionText, description, nextStepId, min = 0, max = 100, step = 1 } = question;
+  const { id, Icon, question: questionText, description, nextStepId, min = 0, max = 100, step = 1, sliderField } = question;
   
-  const initialValue = formData[id] || min;
+  // Use sliderField properties if available, otherwise fall back to question properties
+  const sliderMin = sliderField?.min ?? min;
+  const sliderMax = sliderField?.max ?? max;
+  const sliderStep = sliderField?.step ?? step;
+  const sliderDefault = sliderField?.defaultValue ?? sliderMin;
+  
+  const initialValue = formData[sliderField?.id || id] || sliderDefault;
   const [value, setValue] = useState<number>(initialValue);
 
   const onContinue = () => {
-    handleAnswer(id, value, nextStepId);
+    // Store the value using the sliderField id if available
+    const fieldId = sliderField?.id || id;
+    handleAnswer(fieldId, value, nextStepId);
   };
+  
+  // Check if this is a dependants slider (no currency)
+  const isDependantsSlider = sliderField?.id === 'numberOfDependants' || id === 'number-of-dependants';
 
   const sliderPoints = 4;
   const points = Array.from({ length: sliderPoints }, (_, i) => {
@@ -43,14 +54,18 @@ export default function SliderStep({ question }: SliderStepProps) {
 
       <div className="mt-8 w-full max-w-sm space-y-6 text-center">
         <div className="text-4xl font-bold text-primary">
-          <NumericFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+          {isDependantsSlider ? (
+            <span>{value}</span>
+          ) : (
+            <NumericFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+          )}
         </div>
         <div className="relative pt-2">
             <Slider
               defaultValue={[value]}
-              min={min}
-              max={max}
-              step={step}
+              min={sliderMin}
+              max={sliderMax}
+              step={sliderStep}
               onValueChange={(values) => setValue(values[0])}
             />
             <div className="relative mt-2 flex items-center">{points}</div>

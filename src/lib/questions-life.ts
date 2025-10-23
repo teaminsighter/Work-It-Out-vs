@@ -323,6 +323,14 @@ export const ALL_QUESTIONS: Questions = {
     description: "Please provide your contact information to receive your personalized quote.",
     Icon: Contact,
     fields: ['name', 'email', 'phone'],
+    nextStepId: 'sms-verification'
+  },
+  'sms-verification': {
+    id: 'sms-verification',
+    question: 'Verify your phone number',
+    description: "We've sent a 6-digit verification code to your phone number. Please enter it below to continue.",
+    Icon: Phone,
+    fields: ['verificationCode'],
     nextStepId: 'results'
   },
   'results': {

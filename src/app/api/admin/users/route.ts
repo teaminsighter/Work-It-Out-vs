@@ -56,7 +56,6 @@ export async function GET(request: Request) {
           _count: {
             select: {
               activities: true,
-              sessions: true,
               createdUsers: true
             }
           }

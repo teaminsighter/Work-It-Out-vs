@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import ContactForm from './ContactForm';
 import SelectForm from './SelectForm';
 import MultiSelectStep from './MultiSelectStep';
+import SMSVerificationStep from './SMSVerificationStep';
 
 export default function QuoteWizardNew() {
   const { currentStepId, goBack, stepHistory } = useForm();
@@ -21,6 +22,9 @@ export default function QuoteWizardNew() {
   const renderStep = () => {
     if (currentStepId === 'results') {
       return <ResultsPage />;
+    }
+    if (currentStepId === 'sms-verification') {
+      return <SMSVerificationStep question={currentQuestion} />;
     }
     if (currentQuestion) {
       if (currentQuestion.multiSelect) {

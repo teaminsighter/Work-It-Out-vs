@@ -32,7 +32,6 @@ model User {
   // Relations
   permissions   UserPermission[]
   activities    UserActivity[]
-  sessions      UserSession[]
   createdUsers  User[] @relation("UserCreatedBy")
   creator       User?  @relation("UserCreatedBy", fields: [createdBy], references: [id])
 
@@ -82,6 +81,38 @@ model Lead {
   formId              String? @map("form_id")
   formClass           String? @map("form_class")
   formName            String? @map("form_name")
+  formType            String? @map("form_type") // health, life, income, trauma, mortgage
+  
+  // Insurance Form Data - From Multi-step Forms
+  insuranceTypes      String? @map("insurance_types") // JSON array of selected types
+  existingPolicy      String? @map("existing_policy") // yes/no
+  whoToCover          String? @map("who_to_cover") // myself, partner, both
+  smokingStatus       String? @map("smoking_status") // yes/no
+  gender              String? @map("gender") // male/female
+  age                 Int? @map("age")
+  medicalConditions   String? @map("medical_conditions") // JSON array
+  healthChanges       String? @map("health_changes") // JSON of health condition changes
+  householdIncome     String? @map("household_income") // income range
+  coverageAmount      String? @map("coverage_amount") // desired coverage
+  coveragePercentage  String? @map("coverage_percentage") // for income protection
+  occupation          String? @map("occupation") // for income/trauma
+  propertyType        String? @map("property_type") // for home insurance
+  vehicleType         String? @map("vehicle_type") // for vehicle insurance
+  vehicleAge          String? @map("vehicle_age") // vehicle age range
+  businessType        String? @map("business_type") // for business insurance
+  location            String? @map("location") // from location questions
+  
+  // SMS Verification
+  phoneVerified       Boolean @default(false) @map("phone_verified")
+  verificationCode    String? @map("verification_code")
+  
+  // Form Completion
+  stepsCompleted      Int @default(0) @map("steps_completed")
+  totalSteps          Int? @map("total_steps")
+  completionRate      Float? @map("completion_rate") // percentage
+  timeToComplete      Int? @map("time_to_complete") // seconds
+  formStartedAt       DateTime? @map("form_started_at")
+  formCompletedAt     DateTime? @map("form_completed_at")
   
   // A/B Test Tracking
   abTestId            String? @map("ab_test_id")
@@ -92,79 +123,34 @@ model Lead {
   lastVisitUrl        String? @map("last_visit_url")
   
   // Relations
-  systemDetails     SystemDetails?
   abTest            ABTest? @relation(fields: [abTestId], references: [id])
   abTestAssignment  ABTestAssignment?
+  formSteps         FormStepData[]
 
   @@map("leads")
 }
 
-model SystemDetails {
-  id            String   @id @default(cuid())
-  leadId        String   @unique @map("lead_id")
-  systemSize    Float    @map("system_size")
-  estimatedCost Float    @map("estimated_cost")
-  annualSavings Float    @map("annual_savings")
-  paybackPeriod Float    @map("payback_period")
-  panelCount    Int      @map("panel_count")
-  roofArea      Float    @map("roof_area")
-  monthlyBill   Float    @map("monthly_bill")
-  usageKwh      Float    @map("usage_kwh")
-  address       String
-  propertyType  String   @map("property_type")
-  roofType      String   @map("roof_type")
-  createdAt     DateTime @default(now()) @map("created_at")
-  lead          Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
-
-  @@map("system_details")
+// Track individual form step responses for detailed analytics
+model FormStepData {
+  id              String   @id @default(cuid())
+  leadId          String   @map("lead_id")
+  stepId          String   @map("step_id") // question ID from questions files
+  stepNumber      Int      @map("step_number")
+  questionText    String   @map("question_text")
+  answerValue     String?  @map("answer_value") // selected value
+  answerText      String?  @map("answer_text") // display text
+  timeOnStep      Int?     @map("time_on_step") // seconds spent on this step
+  attemptCount    Int      @default(1) @map("attempt_count") // how many times user visited this step
+  timestamp       DateTime @default(now())
+  
+  // Relations
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  
+  @@index([leadId])
+  @@index([stepId])
+  @@map("form_step_data")
 }
 
-model PricingTier {
-  id                 String   @id @default(cuid())
-  name               String
-  minKw              Float    @default(3.0) @map("min_kw")
-  maxKw              Float?   @map("max_kw")
-  pricePerWatt       Float    @map("price_per_watt")
-  installationCost   Float    @default(2500.0) @map("installation_cost")
-  inverterCost       Float    @default(1500.0) @map("inverter_cost")
-  batteryCostPerKwh  Float?   @map("battery_cost_per_kwh")
-  maintenanceYearly  Float    @default(200.0) @map("maintenance_yearly")
-  warrantyYears      Int      @default(10) @map("warranty_years")
-  efficiencyRating   Float    @default(0.85) @map("efficiency_rating")
-  isActive           Boolean  @default(true) @map("is_active")
-  createdAt          DateTime @default(now()) @map("created_at")
-  updatedAt          DateTime @updatedAt @map("updated_at")
-
-  @@map("pricing_tiers")
-}
-
-model RegionalPricing {
-  id                String   @id @default(cuid())
-  region            String   @unique
-  electricityRate   Float    @map("electricity_rate")
-  feedInTariff      Float    @map("feed_in_tariff")
-  installationRebate Float   @map("installation_rebate")
-  salesTax          Float    @map("sales_tax")
-  createdAt         DateTime @default(now()) @map("created_at")
-  updatedAt         DateTime @updatedAt @map("updated_at")
-
-  @@map("regional_pricing")
-}
-
-model SolarCalculatorSettings {
-  id                    String   @id @default(cuid())
-  defaultSystemSize     Float    @map("default_system_size")
-  averageDailyUsage     Float    @map("average_daily_usage")
-  roofEfficiencyFactor  Float    @map("roof_efficiency_factor")
-  degradationRate       Float    @map("degradation_rate")
-  financingApr          Float    @map("financing_apr")
-  loanTermYears         Int      @map("loan_term_years")
-  inflationRate         Float    @map("inflation_rate")
-  createdAt             DateTime @default(now()) @map("created_at")
-  updatedAt             DateTime @updatedAt @map("updated_at")
-
-  @@map("solar_calculator_settings")
-}
 
 model LandingPage {
   id             String          @id @default(cuid())
@@ -250,7 +236,7 @@ model VisitorTracking {
 // New model for detailed user sessions
 model UserSession {
   id              String   @id @default(cuid())
-  userId          String   @map("user_id")
+  userId          String   @map("user_id") // Can be visitor ID, no foreign key constraint
   sessionId       String   @unique @map("session_id")
   startTime       DateTime @map("start_time")
   endTime         DateTime? @map("end_time")
@@ -269,9 +255,6 @@ model UserSession {
   conversionValue Float?   @map("conversion_value")
   exitReason      String?  @map("exit_reason")
 
-  // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   @@index([userId])
   @@index([sessionId])
   @@index([startTime])
@@ -284,7 +267,7 @@ model UserInteraction {
   userId       String   @map("user_id")
   sessionId    String   @map("session_id")
   eventType    String   @map("event_type") // click, form_start, form_step, form_complete, etc.
-  eventData    String   @map("event_data") // detailed event information
+  eventData    Json     @map("event_data") // detailed event information as JSON
   page         String
   elementId    String?  @map("element_id")
   elementText  String?  @map("element_text")
@@ -985,4 +968,141 @@ model ABTestTemplate {
   createdBy           String @map("created_by")
   
   @@map("ab_test_templates")
+}
+
+// Campaign Management Models for A/B Testing
+model Campaign {
+  id                  String @id @default(cuid())
+  name                String
+  description         String?
+  campaignUrl         String @unique @map("campaign_url") // e.g., "/health-special-offer"
+  status              CampaignStatus @default(DRAFT)
+  
+  // Conversion Goals
+  conversionGoal      String @default("form_submission") @map("conversion_goal")
+  
+  // Campaign Variants
+  variants            CampaignVariant[]
+  
+  // Performance Metrics
+  totalVisitors       Int @default(0) @map("total_visitors")
+  totalConversions    Int @default(0) @map("total_conversions")
+  conversionRate      Float @default(0) @map("conversion_rate")
+  
+  // Campaign Duration
+  startDate           DateTime? @map("start_date")
+  endDate             DateTime? @map("end_date")
+  
+  // Metadata
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+  createdBy           String @map("created_by")
+  
+  // Relations
+  assignments         CampaignAssignment[]
+  analytics           CampaignAnalytics[]
+  
+  @@map("campaigns")
+}
+
+model CampaignVariant {
+  id                  String @id @default(cuid())
+  campaignId          String @map("campaign_id")
+  name                String // "Control", "Variant A", "Variant B"
+  landingPageId       String @map("landing_page_id")
+  landingPageSlug     String @map("landing_page_slug") // "/health", "/life", etc.
+  trafficPercentage   Int @map("traffic_percentage") // 40, 30, 30
+  isControl           Boolean @default(false) @map("is_control")
+  
+  // Performance Metrics
+  visitors            Int @default(0)
+  conversions         Int @default(0)
+  conversionRate      Float @default(0) @map("conversion_rate")
+  
+  // Relations
+  campaign            Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  assignments         CampaignAssignment[]
+  
+  @@map("campaign_variants")
+}
+
+model CampaignAssignment {
+  id                  String @id @default(cuid())
+  campaignId          String @map("campaign_id")
+  variantId           String @map("variant_id")
+  visitorId           String @map("visitor_id") // Unique visitor identifier
+  sessionId           String? @map("session_id")
+  
+  // Assignment Details
+  assignedAt          DateTime @default(now()) @map("assigned_at")
+  assignmentMethod    String @default("random") @map("assignment_method") // "random", "cookie"
+  
+  // Conversion Tracking
+  hasConverted        Boolean @default(false) @map("has_converted")
+  convertedAt         DateTime? @map("converted_at")
+  conversionValue     Float? @map("conversion_value")
+  
+  // User Context
+  ipAddress           String? @map("ip_address")
+  userAgent           String? @map("user_agent")
+  referrer            String?
+  utmSource           String? @map("utm_source")
+  utmMedium           String? @map("utm_medium")
+  utmCampaign         String? @map("utm_campaign")
+  
+  // Relations
+  campaign            Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  variant             CampaignVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  
+  @@unique([campaignId, visitorId])
+  @@index([visitorId])
+  @@index([sessionId])
+  @@map("campaign_assignments")
+}
+
+model CampaignAnalytics {
+  id                  String @id @default(cuid())
+  campaignId          String @map("campaign_id")
+  date                DateTime @default(now())
+  
+  // Daily Metrics
+  visitors            Int @default(0)
+  conversions         Int @default(0)
+  conversionRate      Float @default(0) @map("conversion_rate")
+  
+  // Variant Performance (JSON)
+  variantData         Json @map("variant_data") // { "variant_a": { visitors: 100, conversions: 5 }, ... }
+  
+  // Traffic Sources
+  directTraffic       Int @default(0) @map("direct_traffic")
+  organicTraffic      Int @default(0) @map("organic_traffic")
+  paidTraffic         Int @default(0) @map("paid_traffic")
+  socialTraffic       Int @default(0) @map("social_traffic")
+  
+  // Relations
+  campaign            Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  
+  @@unique([campaignId, date])
+  @@map("campaign_analytics")
+}
+
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  ARCHIVED
+}
+
+model PricingTier {
+  id             String   @id @default(cuid())
+  name           String
+  pricePerWatt   Float
+  minSystemSize  Int
+  maxSystemSize  Int
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("pricing_tiers")
 }

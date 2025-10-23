@@ -255,17 +255,17 @@ const GoogleAds = () => {
         >
           {/* Performance Summary */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {metrics ? [
-              { title: 'Total Spend', value: `€${metrics.totalSpend?.toLocaleString() || '0'}`, change: metrics.changes?.spend || 'N/A', color: 'blue' },
-              { title: 'Conversions', value: `${metrics.conversions || 0}`, change: metrics.changes?.conversions || 'N/A', color: 'green' },
-              { title: 'Cost per Lead', value: `€${metrics.costPerLead?.toFixed(2) || '0.00'}`, change: metrics.changes?.costPerLead || 'N/A', color: 'purple' },
-              { title: 'ROAS', value: `${metrics.roas?.toFixed(1) || '0.0'}x`, change: metrics.changes?.roas || 'N/A', color: 'yellow' }
+            {(metrics ? [
+              { title: 'Total Spend', value: `€${metrics.totalSpend?.toLocaleString() || '0'}`, change: `${metrics.changeSpend > 0 ? '+' : ''}${metrics.changeSpend || 0}%`, color: 'blue' },
+              { title: 'Conversions', value: `${metrics.totalConversions || 0}`, change: `${metrics.changeConversions > 0 ? '+' : ''}${metrics.changeConversions || 0}%`, color: 'green' },
+              { title: 'Cost per Lead', value: `€${metrics.costPerConversion?.toFixed(2) || '0.00'}`, change: `${metrics.changeCostPerConversion > 0 ? '+' : ''}${metrics.changeCostPerConversion || 0}%`, color: 'purple' },
+              { title: 'ROAS', value: `${metrics.roas?.toFixed(1) || '0.0'}x`, change: `${metrics.changeRoas > 0 ? '+' : ''}${metrics.changeRoas || 0}%`, color: 'yellow' }
             ] : [
               { title: 'Total Spend', value: '€0', change: 'No data', color: 'blue' },
               { title: 'Conversions', value: '0', change: 'No data', color: 'green' },
               { title: 'Cost per Lead', value: '€0.00', change: 'No data', color: 'purple' },
               { title: 'ROAS', value: '0.0x', change: 'No data', color: 'yellow' }
-            ].map((metric, index) => (
+            ]).filter(metric => metric && metric.title && metric.value).map((metric, index) => (
               <motion.div
                 key={metric.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -273,14 +273,19 @@ const GoogleAds = () => {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
               >
-                <div className={`w-12 h-12 bg-${metric.color}-500 rounded-lg flex items-center justify-center mb-4`}>
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${
+                  metric.color === 'blue' ? 'bg-blue-500' :
+                  metric.color === 'green' ? 'bg-green-500' :
+                  metric.color === 'purple' ? 'bg-purple-500' :
+                  metric.color === 'yellow' ? 'bg-yellow-500' : 'bg-gray-500'
+                }`}>
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                 </div>
-                <div className="text-2xl font-bold text-gray-900 mb-2">{metric.value}</div>
-                <div className="text-sm font-medium text-gray-700 mb-1">{metric.title}</div>
-                <div className="text-xs text-gray-500">{metric.change}</div>
+                <div className="text-2xl font-bold text-gray-900 mb-2">{metric.value || '...'}</div>
+                <div className="text-sm font-medium text-gray-700 mb-1">{metric.title || 'Loading...'}</div>
+                <div className="text-xs text-gray-500">{metric.change || 'No data'}</div>
               </motion.div>
             ))}
           </div>
@@ -575,6 +580,9 @@ const GoogleAds = () => {
                           <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
+                            onClick={() => {
+                              alert(`Edit conversion action: ${conversion.name}\nType: ${conversion.type}\nValue: €${conversion.value}\nStatus: ${conversion.status}`);
+                            }}
                             className="p-1 text-blue-600 hover:text-blue-700"
                             title="Edit"
                           >
@@ -586,6 +594,9 @@ const GoogleAds = () => {
                           <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
+                            onClick={() => {
+                              alert(`Conversion Details:\n\nName: ${conversion.name}\nID: ${conversion.id}\nType: ${conversion.type}\nValue: €${conversion.value}\n30-Day Count: ${conversion.count_last_30_days} conversions\nStatus: ${conversion.status}`);
+                            }}
                             className="p-1 text-green-600 hover:text-green-700"
                             title="View Details"
                           >

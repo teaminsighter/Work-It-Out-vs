@@ -13,6 +13,8 @@ import SelectForm from './SelectForm';
 import { usePathname } from 'next/navigation';
 import MultiSelectStep from './MultiSelectStep';
 import SliderStep from './SliderStep';
+import MultipleQuestionsStep from './MultipleQuestionsStep';
+import SMSVerificationStep from './SMSVerificationStep';
 
 const ALL_WIZARD_QUESTIONS = {...ALL_QUESTIONS, ...ALL_LOCATION_QUESTIONS};
 
@@ -31,7 +33,16 @@ export default function QuoteWizardHealthNew() {
     if (currentStepId === 'results') {
       return <ResultsPage />;
     }
+    if (currentStepId === 'sms-verification') {
+      return <SMSVerificationStep question={currentQuestion} />;
+    }
     if (currentQuestion) {
+      if (currentQuestion.multipleQuestions && currentQuestion.multipleQuestions.length > 0) {
+        return <MultipleQuestionsStep question={currentQuestion} />;
+      }
+      if (currentQuestion.multipleFields && currentQuestion.multipleFields.length > 0) {
+        return <ContactForm question={currentQuestion} />;
+      }
       if (currentQuestion.type === 'slider') {
         return <SliderStep question={currentQuestion} />;
       }

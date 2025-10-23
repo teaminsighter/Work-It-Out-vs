@@ -30,12 +30,12 @@ import LandingPages from './pagebuilder/LandingPages';
 import FormsBuilder from './pagebuilder/FormsBuilder';
 import Templates from './pagebuilder/Templates';
 import ABTesting from './abTesting/ABTesting';
+import CampaignManager from './campaigns/CampaignManager';
 import GoogleAds from './integrations/GoogleAds';
 import FacebookAds from './integrations/FacebookAds';
 import GA4Integration from './integrations/GA4Integration';
 import WebhookConfiguration from './integrations/WebhookConfiguration';
 import APIConfiguration from './settings/APIConfiguration';
-import SolarPricing from './settings/SolarPricing';
 import GeneralSettings from './settings/GeneralSettings';
 import DatabaseSettings from './settings/DatabaseSettings';
 import BackupSettings from './settings/BackupSettings';
@@ -106,6 +106,12 @@ const AdminDashboardContent = ({ userId }: AdminDashboardContentProps = {}) => {
         'visitor-analysis': [capitalizeAction('view') + ' User Journey', capitalizeWords('track interactions'), capitalizeWords('form analysis'), capitalizeAction('export') + ' Visitor Data'],
         'duplicates': [capitalizeWords('find duplicates'), capitalizeWords('merge leads'), capitalizeWords('clean database')],
         'reports': [capitalizeAction('generate') + ' Report', capitalizeWords('schedule export'), capitalizeWords('custom query')]
+      },
+      'page-builder': {
+        'landing-pages': [capitalizeAction('create') + ' Page', capitalizeAction('edit') + ' Page', capitalizeAction('duplicate') + ' Page', capitalizeAction('publish') + ' Page'],
+        'forms': [capitalizeAction('create') + ' Form', capitalizeAction('edit') + ' Form', capitalizeWords('form builder'), capitalizeAction('preview') + ' Form'],
+        'templates': [capitalizeAction('browse') + ' Templates', capitalizeAction('create') + ' Template', capitalizeAction('use') + ' Template'],
+        'campaigns': [capitalizeAction('create') + ' Campaign', capitalizeAction('start') + ' Campaign', capitalizeAction('pause') + ' Campaign', capitalizeAction('view') + ' Analytics', capitalizeWords('traffic split')]
       }
     };
 
@@ -219,8 +225,8 @@ export const adminCategories: AdminCategory[] = [
       </svg>
     ),
     tabs: [
-      { id: 'all-leads', name: 'All Leads', component: LeadsManagement },
-      { id: 'lead-analysis', name: 'Lead Analysis', component: AllLeads },
+      { id: 'all-leads', name: 'All Leads', component: AllLeads },
+      { id: 'lead-analysis', name: 'Lead Analysis', component: LeadAnalytics },
       { id: 'ab-testing', name: 'A/B Testing', component: ABTesting },
       { id: 'visitor-analysis', name: 'Visitor Analysis', component: VisitorAnalysis },
       { id: 'duplicates', name: 'Duplicate Analysis', component: DuplicateAnalysis },
@@ -239,7 +245,7 @@ export const adminCategories: AdminCategory[] = [
       { id: 'landing-pages', name: 'Landing Pages', component: LandingPages },
       { id: 'forms', name: 'Forms', component: FormsBuilder },
       { id: 'templates', name: 'Templates', component: Templates },
-      { id: 'ab-testing', name: 'A/B Testing', component: ABTesting }
+      { id: 'campaigns', name: 'A/B Testing', component: CampaignManager }
     ]
   },
   {
@@ -316,7 +322,6 @@ export const adminCategories: AdminCategory[] = [
     tabs: [
       { id: 'general', name: 'General Settings', component: GeneralSettings },
       { id: 'api-config', name: 'API Configuration', component: APIConfiguration },
-      { id: 'solar-pricing', name: 'Solar Pricing', component: SolarPricing },
       { id: 'database', name: 'Database', component: DatabaseSettings },
       { id: 'backup', name: 'Backup', component: BackupSettings }
     ]

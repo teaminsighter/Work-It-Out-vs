@@ -14,6 +14,7 @@ import SelectForm from './SelectForm';
 import { usePathname } from 'next/navigation';
 import MultiSelectStep from './MultiSelectStep';
 import SliderStep from './SliderStep';
+import SMSVerificationStep from './SMSVerificationStep';
 
 const ALL_WIZARD_QUESTIONS = {...ALL_QUESTIONS, ...ALL_LOCATION_QUESTIONS};
 
@@ -31,6 +32,9 @@ export default function QuoteWizardLife() {
   const renderStep = () => {
     if (currentStepId === 'results') {
       return <ResultsPage />;
+    }
+    if (currentStepId === 'sms-verification') {
+      return <SMSVerificationStep question={currentQuestion} />;
     }
     if (currentQuestion) {
       if (currentQuestion.type === 'slider') {

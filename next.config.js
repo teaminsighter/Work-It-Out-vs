@@ -2,11 +2,13 @@
 const nextConfig = {
   /* config options here */
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false, // Enable type checking in production
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false, // Enable linting in production
   },
+  output: 'standalone', // For deployment optimization
+  
   async headers() {
     return [
       {
@@ -14,12 +16,27 @@ const nextConfig = {
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'https://work-it-out.ngrok-free.dev',
+            value: process.env.NODE_ENV === 'production' 
+              ? process.env.NEXTAUTH_URL || 'https://yourdomain.com'
+              : 'http://localhost:9002',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
           },
         ],
       },
     ]
   },
+  
   images: {
     remotePatterns: [
       {
@@ -33,9 +50,22 @@ const nextConfig = {
         hostname: 'firebasestorage.googleapis.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
+  
+  // Optimize for production
+  swcMinify: true,
+  compress: true,
+  
+  // Security headers
+  poweredByHeader: false,
 };
 
 module.exports = nextConfig;

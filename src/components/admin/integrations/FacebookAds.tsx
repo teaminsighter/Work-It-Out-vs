@@ -306,14 +306,19 @@ const FacebookAds = () => {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
               >
-                <div className={`w-12 h-12 bg-${metric.color}-500 rounded-lg flex items-center justify-center mb-4`}>
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${
+                  metric.color === 'blue' ? 'bg-blue-500' :
+                  metric.color === 'green' ? 'bg-green-500' :
+                  metric.color === 'purple' ? 'bg-purple-500' :
+                  metric.color === 'yellow' ? 'bg-yellow-500' : 'bg-gray-500'
+                }`}>
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                 </div>
-                <div className="text-2xl font-bold text-gray-900 mb-2">{metric.value}</div>
-                <div className="text-sm font-medium text-gray-700 mb-1">{metric.title}</div>
-                <div className="text-xs text-gray-500">{metric.change}</div>
+                <div className="text-2xl font-bold text-gray-900 mb-2">{metric.value || '...'}</div>
+                <div className="text-sm font-medium text-gray-700 mb-1">{metric.title || 'Loading...'}</div>
+                <div className="text-xs text-gray-500">{metric.change || 'No data'}</div>
               </motion.div>
             ))}
           </div>
@@ -697,6 +702,9 @@ eventRequest.execute();`}
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                alert("Create Custom Event\n\nThis would open a modal to:\n• Choose event type\n• Configure event parameters\n• Set up tracking rules\n• Enable server-side/browser-side tracking");
+              }}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               + Create Custom Event
@@ -767,6 +775,9 @@ eventRequest.execute();`}
                           <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
+                            onClick={() => {
+                              alert(`Testing event: ${event.name}\nType: ${event.event_type}\nServer-side: ${event.server_side ? 'Yes' : 'No'}\nBrowser-side: ${event.browser_side ? 'Yes' : 'No'}\nSending test event to Facebook Pixel...`);
+                            }}
                             className="p-1 text-blue-600 hover:text-blue-700"
                             title="Test Event"
                           >
@@ -778,6 +789,9 @@ eventRequest.execute();`}
                           <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
+                            onClick={() => {
+                              alert(`Event Details:\n\nName: ${event.name}\nID: ${event.id}\nType: ${event.event_type}\nServer-side tracking: ${event.server_side ? 'Enabled' : 'Disabled'}\nBrowser-side tracking: ${event.browser_side ? 'Enabled' : 'Disabled'}\nEvents (30 days): ${event.events_last_30_days}\nDeduplication rate: ${event.deduplication_rate}%`);
+                            }}
                             className="p-1 text-green-600 hover:text-green-700"
                             title="View Details"
                           >

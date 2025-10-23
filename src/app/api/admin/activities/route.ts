@@ -124,16 +124,11 @@ export async function GET(request: Request) {
         take: 5
       }),
       
-      // Activity by role
+      // Activity by role - simplified groupBy
       prisma.userActivity.groupBy({
-        by: ['user', 'action'],
+        by: ['userId', 'action'],
         where,
-        _count: { action: true },
-        include: {
-          user: {
-            select: { role: true }
-          }
-        }
+        _count: { action: true }
       }),
       
       // Unique active users

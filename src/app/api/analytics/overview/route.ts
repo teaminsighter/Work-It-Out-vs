@@ -116,9 +116,21 @@ export async function GET(request: Request) {
       }
     });
 
-    // Calculate revenue attribution (mock data based on leads)
-    const revenuePerLead = 150; // Average value per lead
-    const totalRevenue = totalLeads * revenuePerLead;
+    // Calculate revenue attribution from actual lead data
+    const leadSystemDetails = await prisma.systemDetails.findMany({
+      where: {
+        lead: {
+          createdAt: {
+            gte: startDate
+          }
+        }
+      },
+      select: {
+        estimatedCost: true
+      }
+    });
+    
+    const totalRevenue = leadSystemDetails.reduce((sum, detail) => sum + detail.estimatedCost, 0);
 
     // Get recent leads for activity feed
     const recentLeads = await prisma.lead.findMany({
@@ -173,7 +185,7 @@ export async function GET(request: Request) {
         leads: dayLeads,
         views: dayViews,
         conversions: Math.floor(dayLeads * (conversionRate / 100)), // Real conversion data based on actual rate
-        revenue: dayLeads * revenuePerLead
+        revenue: dayLeads > 0 ? Math.floor(dayLeads * (totalRevenue / totalLeads || 0)) : 0
       });
     }
 
@@ -200,7 +212,7 @@ export async function GET(request: Request) {
             name: source.source,
             leads: source._count,
             conversion: Number(sourceConversionRate.toFixed(1)),
-            revenue: `€${(source._count * revenuePerLead).toLocaleString()}`
+            revenue: `$${Math.floor(source._count * (totalRevenue / totalLeads || 0)).toLocaleString()}`
           };
         }),
         pageViews: Object.entries(pageViews).map(([page, views]) => {

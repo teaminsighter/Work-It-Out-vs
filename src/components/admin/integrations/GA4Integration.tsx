@@ -266,14 +266,19 @@ const GA4Integration = () => {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
               >
-                <div className={`w-12 h-12 bg-${metric.color}-500 rounded-lg flex items-center justify-center mb-4`}>
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${
+                  metric.color === 'orange' ? 'bg-orange-500' :
+                  metric.color === 'red' ? 'bg-red-500' :
+                  metric.color === 'green' ? 'bg-green-500' :
+                  metric.color === 'blue' ? 'bg-blue-500' : 'bg-gray-500'
+                }`}>
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                 </div>
-                <div className="text-2xl font-bold text-gray-900 mb-2">{metric.value}</div>
-                <div className="text-sm font-medium text-gray-700 mb-1">{metric.title}</div>
-                <div className="text-xs text-gray-500">{metric.change}</div>
+                <div className="text-2xl font-bold text-gray-900 mb-2">{metric.value || '...'}</div>
+                <div className="text-sm font-medium text-gray-700 mb-1">{metric.title || 'Loading...'}</div>
+                <div className="text-xs text-gray-500">{metric.change || 'No data'}</div>
               </motion.div>
             ))}
           </div>

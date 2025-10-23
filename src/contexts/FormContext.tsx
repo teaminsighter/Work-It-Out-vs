@@ -11,6 +11,7 @@ import { ALL_QUESTIONS as ALL_TRAUMA_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_ST
 import { ALL_QUESTIONS as ALL_MORTGAGE_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_MORTGAGE } from '@/lib/questions-mortgage';
 
 import { useToast } from "@/hooks/use-toast";
+import { campaignTracker } from '@/lib/campaign-tracker';
 
 interface FormContextType {
   formData: FormData;
@@ -38,15 +39,19 @@ const getQuestionSet = (pathname: string) => {
 }
 
 
-export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const FormProvider: React.FC<{ 
+  children: React.ReactNode;
+  overridePathname?: string;
+}> = ({ children, overridePathname }) => {
   const pathname = usePathname();
-  const { questions, totalSteps: initialTotalSteps } = getQuestionSet(pathname);
+  const effectivePathname = overridePathname || pathname;
+  const { questions, totalSteps: initialTotalSteps } = getQuestionSet(effectivePathname);
 
-  const isHealthPage = pathname === '/health';
-  const isLifePage = pathname === '/life';
-  const isIncomePage = pathname === '/income';
-  const isTraumaPage = pathname === '/trauma';
-  const isMortgagePage = pathname === '/mortgage';
+  const isHealthPage = effectivePathname === '/health';
+  const isLifePage = effectivePathname === '/life';
+  const isIncomePage = effectivePathname === '/income';
+  const isTraumaPage = effectivePathname === '/trauma';
+  const isMortgagePage = effectivePathname === '/mortgage';
   const isSpecialtyPage = isHealthPage || isLifePage || isIncomePage || isTraumaPage || isMortgagePage;
   
   const getInitialFormData = () => {
@@ -67,7 +72,10 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [stepHistory, setStepHistory] = useState<string[]>(getInitialStepHistory());
   const [totalSteps, setTotalSteps] = useState(initialTotalSteps);
   const [quoteWizardRef, setQuoteWizardRefState] = useState<React.RefObject<HTMLDivElement> | null>(null);
+  const [formStartedAt] = useState(new Date());
+  const [formStepsData, setFormStepsData] = useState<any[]>([]);
   const { toast } = useToast();
+  // Campaign tracking will be done through campaignTracker
 
   const currentStepId = useMemo(() => stepHistory[stepHistory.length - 1], [stepHistory]);
 
@@ -82,8 +90,112 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const submitFormData = async () => {
+    const formType = pathname.slice(1) || 'main'; // health, life, income, etc.
+    
+    try {
+      // Collect UTM parameters from URL or session storage
+      const utmParams = {
+        utmSource: new URLSearchParams(window.location.search).get('utm_source'),
+        utmMedium: new URLSearchParams(window.location.search).get('utm_medium'),
+        utmCampaign: new URLSearchParams(window.location.search).get('utm_campaign'),
+        utmContent: new URLSearchParams(window.location.search).get('utm_content'),
+        utmKeyword: new URLSearchParams(window.location.search).get('utm_keyword'),
+        gclid: new URLSearchParams(window.location.search).get('gclid'),
+        fbclid: new URLSearchParams(window.location.search).get('fbclid'),
+      };
+
+      // Get visitor tracking data
+      const visitorUserId = localStorage.getItem('visitorUserId') || `visitor_${Date.now()}`;
+      
+      // Calculate time to complete
+      const timeToComplete = Math.floor((Date.now() - formStartedAt.getTime()) / 1000);
+
+      const submissionData = {
+        firstName: formData.name?.split(' ')[0] || formData.firstName || 'Unknown',
+        lastName: formData.name?.split(' ').slice(1).join(' ') || formData.lastName || '',
+        email: formData.email || '',
+        phone: formData.phone || '',
+        contactPreference: formData.contactPreference || 'EMAIL',
+        formType,
+        formData: formData,
+        formSteps: formStepsData,
+        timeToComplete,
+        visitorUserId,
+        ipAddress: null, // Can be set by server
+        device: navigator.userAgent,
+        firstVisitUrl: document.referrer || window.location.href,
+        lastVisitUrl: window.location.href,
+        ...utmParams
+      };
+
+      console.log('Submitting form data:', submissionData);
+
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submissionData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log('Form submitted successfully:', result);
+        
+        // Track conversion for campaign analytics
+        campaignTracker.trackConversion({
+          metadata: {
+            formType,
+            email: formData.email,
+            phone: formData.phone,
+            timeToComplete,
+            totalSteps: stepHistory.length
+          }
+        });
+        
+        toast({
+          title: "Success!",
+          description: "Your information has been submitted successfully.",
+        });
+        return true;
+      } else {
+        console.error('Form submission failed:', result);
+        toast({
+          title: "Submission Failed",
+          description: result.error || "Failed to submit form data.",
+          variant: "destructive"
+        });
+        return false;
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast({
+        title: "Network Error",
+        description: "Please check your connection and try again.",
+        variant: "destructive"
+      });
+      return false;
+    }
+  };
+
   const handleAnswer = (questionId: string, value: any, nextStepId?: string) => {
     const newFormData = { ...formData };
+    
+    // Track this step data for detailed analytics
+    const currentQuestion = questions[currentStepId];
+    if (currentQuestion && questionId !== 'start') {
+      const stepData = {
+        stepId: questionId,
+        questionText: currentQuestion.question,
+        answerValue: typeof value === 'object' ? JSON.stringify(value) : value,
+        answerText: currentQuestion.options?.find(opt => opt.value === value)?.label || value,
+        timeOnStep: 30, // This could be tracked more precisely
+        attemptCount: 1
+      };
+      setFormStepsData(prev => [...prev, stepData]);
+    }
     
     if (typeof value === 'object' && value !== null) {
       Object.assign(newFormData, value);
@@ -92,9 +204,12 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     if (questionId === 'start' && value === 'go') {
-        // Just moving to the first question, no data to set yet
+        // Track form start for campaign analytics
+        campaignTracker.trackPageView();
     } else if (questionId === 'insurance-type') {
       newFormData['insuranceType'] = value;
+    } else if (questionId === 'security-systems') {
+      newFormData['coverageType'] = value;
     }
 
     setFormData(newFormData);
@@ -113,6 +228,13 @@ export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children
             nextStep = selectedOption.nextStepId;
         }
       }
+    }
+    
+    // Submit form data when moving to results page
+    if (nextStep === 'results') {
+      setTimeout(async () => {
+        await submitFormData();
+      }, 100); // Small delay to ensure state is updated
     }
     
     if (nextStep) {

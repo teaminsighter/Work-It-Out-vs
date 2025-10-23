@@ -35,6 +35,8 @@ const createSchema = (fields: string[] = []) => {
     if (fields.includes('age')) shape.age = z.string().refine(val => !isNaN(parseInt(val, 10)) && parseInt(val, 10) > 0, { message: 'Please enter a valid age.' });
     if (fields.includes('yourAge')) shape.yourAge = z.string().refine(val => !isNaN(parseInt(val, 10)) && parseInt(val, 10) > 0, { message: 'Please enter a valid age.' });
     if (fields.includes('partnerAge')) shape.partnerAge = z.string().refine(val => !isNaN(parseInt(val, 10)) && parseInt(val, 10) > 0, { message: 'Please enter a valid age.' });
+    if (fields.includes('oldestChildAge')) shape.oldestChildAge = z.string().refine(val => !isNaN(parseInt(val, 10)) && parseInt(val, 10) >= 0, { message: 'Please enter a valid age.' });
+    if (fields.includes('numberOfDependants')) shape.numberOfDependants = z.string().refine(val => !isNaN(parseInt(val, 10)) && parseInt(val, 10) >= 1 && parseInt(val, 10) <= 10, { message: 'Please enter a number between 1 and 10.' });
     if (fields.includes('yourSmokerStatus')) shape.yourSmokerStatus = z.enum(['yes', 'no']);
     if (fields.includes('partnerSmokerStatus')) shape.partnerSmokerStatus = z.enum(['yes', 'no']);
     return z.object(shape);
@@ -192,6 +194,36 @@ export default function ContactForm({ question }: ContactFormProps) {
                 )}
             />
           )}
+          {fields.includes('oldestChildAge') && (
+            <FormField
+                control={form.control}
+                name="oldestChildAge"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>What is the age of your oldest child?</FormLabel>
+                    <FormControl>
+                    <Input placeholder="e.g. 12" type="number" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+          )}
+          {fields.includes('numberOfDependants') && (
+            <FormField
+                control={form.control}
+                name="numberOfDependants"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Number of Dependants</FormLabel>
+                    <FormControl>
+                    <Input placeholder="e.g. 2" type="number" min="1" max="10" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+          )}
           {fields.includes('yourSmokerStatus') && (
             <FormField
               control={form.control}
@@ -258,7 +290,7 @@ export default function ContactForm({ question }: ContactFormProps) {
           )}
           
           <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-            Compare now
+            Next
           </Button>
         </form>
       </Form>

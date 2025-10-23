@@ -54,13 +54,13 @@ export async function GET(request: Request) {
       prisma.userActivity.count({
         where: {
           ...where,
-          status: 'success'
+          success: true
         }
       }),
       prisma.userActivity.count({
         where: {
           ...where,
-          status: 'failed'
+          success: false
         }
       }),
       prisma.userActivity.count({
