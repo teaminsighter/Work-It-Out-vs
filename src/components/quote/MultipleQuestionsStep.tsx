@@ -4,7 +4,7 @@ import type { Question } from '@/types';
 import { useForm } from '@/contexts/FormContext';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface MultipleQuestionsStepProps {
   question: Question;
@@ -17,15 +17,44 @@ export default function MultipleQuestionsStep({ question }: MultipleQuestionsSte
   // Initialize state for each sub-question
   const [answers, setAnswers] = useState<{[key: string]: string}>({});
   const [allAnswered, setAllAnswered] = useState(false);
+  const [isAutoAdvancing, setIsAutoAdvancing] = useState(false);
+  const autoAdvanceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Check if all questions are answered
   useEffect(() => {
     if (multipleQuestions) {
       const requiredAnswers = multipleQuestions.length;
       const providedAnswers = Object.keys(answers).filter(key => answers[key]).length;
-      setAllAnswered(requiredAnswers === providedAnswers);
+      const wasAllAnswered = allAnswered;
+      const nowAllAnswered = requiredAnswers === providedAnswers;
+      
+      setAllAnswered(nowAllAnswered);
+      
+      // Auto-advance when all questions are answered (and it's a new completion)
+      if (nowAllAnswered && !wasAllAnswered && id === 'smoking-family') {
+        setIsAutoAdvancing(true);
+        
+        // Clear any existing timeout
+        if (autoAdvanceTimeoutRef.current) {
+          clearTimeout(autoAdvanceTimeoutRef.current);
+        }
+        
+        // Auto-advance after 500ms delay
+        autoAdvanceTimeoutRef.current = setTimeout(() => {
+          handleAnswer(id, answers, nextStepId);
+        }, 500);
+      }
     }
-  }, [answers, multipleQuestions]);
+  }, [answers, multipleQuestions, allAnswered, id, nextStepId, handleAnswer]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (autoAdvanceTimeoutRef.current) {
+        clearTimeout(autoAdvanceTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleSubAnswer = (subQuestionId: string, value: string) => {
     setAnswers(prev => ({
@@ -89,24 +118,62 @@ export default function MultipleQuestionsStep({ question }: MultipleQuestionsSte
       </div>
 
       <div className="mt-8 w-full">
-        <Button
-          onClick={handleSubmit}
-          disabled={!allAnswered}
-          className={`
-            w-full py-3 px-6 text-lg font-semibold rounded-lg transition-all duration-200
-            ${allAnswered
-              ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg hover:shadow-xl'
-              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            }
-          `}
-        >
-          Continue
-        </Button>
-        
-        {!allAnswered && (
-          <p className="text-sm text-gray-500 mt-2">
-            Please answer all questions to continue
-          </p>
+        {/* Show auto-advance feedback for smoking step */}
+        {id === 'smoking-family' && allAnswered && isAutoAdvancing ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center py-4"
+          >
+            <div className="inline-flex items-center gap-2 text-purple-600 font-medium">
+              <motion.div
+                className="w-4 h-4 border-2 border-purple-600 border-t-transparent rounded-full"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              />
+              Advancing to next step...
+            </div>
+          </motion.div>
+        ) : id === 'smoking-family' && allAnswered ? (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-4"
+          >
+            <div className="text-green-600 font-medium">
+              ✓ All questions answered
+            </div>
+          </motion.div>
+        ) : id !== 'smoking-family' ? (
+          // Show regular Continue button for non-smoking steps
+          <>
+            <Button
+              onClick={handleSubmit}
+              disabled={!allAnswered}
+              className={`
+                w-full py-3 px-6 text-lg font-semibold rounded-lg transition-all duration-200
+                ${allAnswered
+                  ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg hover:shadow-xl'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }
+              `}
+            >
+              Continue
+            </Button>
+            
+            {!allAnswered && (
+              <p className="text-sm text-gray-500 mt-2">
+                Please answer all questions to continue
+              </p>
+            )}
+          </>
+        ) : (
+          // Show instruction for smoking step when not all answered
+          !allAnswered && (
+            <p className="text-sm text-gray-500 mt-2 text-center">
+              Please answer all questions to continue
+            </p>
+          )
         )}
       </div>
     </div>

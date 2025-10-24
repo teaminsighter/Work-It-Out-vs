@@ -4,11 +4,6 @@
 import React, { createContext, useContext, useState, useMemo, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import type { FormData, Question } from '@/types';
-import { ALL_QUESTIONS as ALL_MAIN_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_MAIN } from '@/lib/questions';
-import { ALL_QUESTIONS as ALL_LIFE_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_LIFE } from '@/lib/questions-life';
-import { ALL_QUESTIONS as ALL_HEALTH_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_HEALTH } from '@/lib/questions-health';
-import { ALL_QUESTIONS as ALL_TRAUMA_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_TRAUMA } from '@/lib/questions-trauma';
-import { ALL_QUESTIONS as ALL_MORTGAGE_QUESTIONS, TOTAL_STEPS_ESTIMATE as TOTAL_STEPS_MORTGAGE } from '@/lib/questions-mortgage';
 
 import { useToast } from "@/hooks/use-toast";
 import { campaignTracker } from '@/lib/campaign-tracker';
@@ -19,6 +14,8 @@ interface FormContextType {
   currentStepId: string;
   progress: number;
   totalSteps: number;
+  questions: any;
+  isQuestionsLoading: boolean;
   quoteWizardRef: React.RefObject<HTMLDivElement> | null;
   scrollToWizard: () => void;
   handleAnswer: (questionId: string, value: any, nextStepId?: string) => void;
@@ -29,14 +26,31 @@ interface FormContextType {
 
 const FormContext = createContext<FormContextType | undefined>(undefined);
 
-const getQuestionSet = (pathname: string) => {
-    if (pathname === '/life') return { questions: ALL_LIFE_QUESTIONS, totalSteps: TOTAL_STEPS_LIFE };
-    if (pathname === '/health') return { questions: ALL_HEALTH_QUESTIONS, totalSteps: TOTAL_STEPS_HEALTH };
-    if (pathname === '/income') return { questions: ALL_LIFE_QUESTIONS, totalSteps: TOTAL_STEPS_LIFE };
-    if (pathname === '/trauma') return { questions: ALL_TRAUMA_QUESTIONS, totalSteps: TOTAL_STEPS_TRAUMA };
-    if (pathname === '/mortgage') return { questions: ALL_MORTGAGE_QUESTIONS, totalSteps: TOTAL_STEPS_MORTGAGE };
-    return { questions: ALL_MAIN_QUESTIONS, totalSteps: TOTAL_STEPS_MAIN };
-}
+const getQuestionSet = async (pathname: string) => {
+  switch (pathname) {
+    case '/life':
+    case '/income': {
+      const { ALL_QUESTIONS, TOTAL_STEPS_ESTIMATE } = await import('@/lib/questions-life');
+      return { questions: ALL_QUESTIONS, totalSteps: TOTAL_STEPS_ESTIMATE };
+    }
+    case '/health': {
+      const { ALL_QUESTIONS, TOTAL_STEPS_ESTIMATE } = await import('@/lib/questions-health');
+      return { questions: ALL_QUESTIONS, totalSteps: TOTAL_STEPS_ESTIMATE };
+    }
+    case '/trauma': {
+      const { ALL_QUESTIONS, TOTAL_STEPS_ESTIMATE } = await import('@/lib/questions-trauma');
+      return { questions: ALL_QUESTIONS, totalSteps: TOTAL_STEPS_ESTIMATE };
+    }
+    case '/mortgage': {
+      const { ALL_QUESTIONS, TOTAL_STEPS_ESTIMATE } = await import('@/lib/questions-mortgage');
+      return { questions: ALL_QUESTIONS, totalSteps: TOTAL_STEPS_ESTIMATE };
+    }
+    default: {
+      const { ALL_QUESTIONS, TOTAL_STEPS_ESTIMATE } = await import('@/lib/questions');
+      return { questions: ALL_QUESTIONS, totalSteps: TOTAL_STEPS_ESTIMATE };
+    }
+  }
+};
 
 
 export const FormProvider: React.FC<{ 
@@ -45,7 +59,23 @@ export const FormProvider: React.FC<{
 }> = ({ children, overridePathname }) => {
   const pathname = usePathname();
   const effectivePathname = overridePathname || pathname;
-  const { questions, totalSteps: initialTotalSteps } = getQuestionSet(effectivePathname);
+  
+  const [questions, setQuestions] = useState<any>({});
+  const [isQuestionsLoading, setIsQuestionsLoading] = useState(true);
+  const [initialTotalSteps, setInitialTotalSteps] = useState(10);
+  
+  useEffect(() => {
+    const loadQuestions = async () => {
+      try {
+        const { questions: loadedQuestions, totalSteps } = await getQuestionSet(effectivePathname);
+        setQuestions(loadedQuestions);
+        setInitialTotalSteps(totalSteps);
+      } finally {
+        setIsQuestionsLoading(false);
+      }
+    };
+    loadQuestions();
+  }, [effectivePathname]);
 
   const isHealthPage = effectivePathname === '/health';
   const isLifePage = effectivePathname === '/life';
@@ -269,6 +299,8 @@ export const FormProvider: React.FC<{
     currentStepId,
     progress,
     totalSteps,
+    questions,
+    isQuestionsLoading,
     handleAnswer,
     goBack,
     quoteWizardRef,

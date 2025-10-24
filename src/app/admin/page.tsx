@@ -1,21 +1,30 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthContext';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 
 export default function AdminPage() {
-  const { isAuthenticated, isLoading, user } = useAuth();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (status === 'loading') return; // Still loading
+    
+    if (!session) {
       router.push('/admin/login');
+      return;
     }
-  }, [isAuthenticated, isLoading, router]);
+    
+    // Check if user has admin role
+    if (session.user?.role !== 'ADMIN' && session.user?.role !== 'SUPER_ADMIN') {
+      router.push('/admin/login');
+      return;
+    }
+  }, [session, status, router]);
 
-  if (isLoading) {
+  if (status === 'loading') {
     return (
       <div className="flex h-screen bg-gray-50 items-center justify-center">
         <div className="text-center">
@@ -26,25 +35,9 @@ export default function AdminPage() {
     );
   }
 
-  if (!isAuthenticated) {
-    return null;
+  if (!session) {
+    return null; // redirect is already happening
   }
 
-  // Map the AuthContext user ID to the database user ID
-  // The AuthContext uses simple IDs ('1', '2') but database uses cuid IDs
-  const getUserIdForDatabase = (authUserId: string | undefined) => {
-    if (!authUserId) return undefined;
-    
-    // Map auth context IDs to database IDs
-    const userIdMap: { [key: string]: string } = {
-      '1': 'cmg5u2rf000005szq9ww95cdh', // admin@localpower.com (super admin)
-      '2': 'cmg5u2rf100015szqwvmz2591'  // manager@localpower.com (admin)
-    };
-    
-    return userIdMap[authUserId];
-  };
-
-  const databaseUserId = getUserIdForDatabase(user?.id);
-
-  return <AdminDashboard userId={databaseUserId} />;
+  return <AdminDashboard userId={session.user?.id} />;
 }

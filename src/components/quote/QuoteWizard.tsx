@@ -2,39 +2,20 @@
 "use client";
 
 import { useForm } from '@/contexts/FormContext';
-import { ALL_QUESTIONS as ALL_MAIN_QUESTIONS } from '@/lib/questions';
-import { ALL_QUESTIONS as ALL_LIFE_QUESTIONS } from '@/lib/questions-life';
-import { ALL_QUESTIONS as ALL_HEALTH_QUESTIONS } from '@/lib/questions-health';
-import { ALL_QUESTIONS as ALL_TRAUMA_QUESTIONS } from '@/lib/questions-trauma';
-import { ALL_QUESTIONS as ALL_MORTGAGE_QUESTIONS } from '@/lib/questions-mortgage';
-import { ALL_LOCATION_QUESTIONS } from '@/lib/questions-location';
 import QuestionStep from './QuestionStep';
 import ResultsPage from './ResultsPage';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, RotateCcw, Sun } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronLeft, RotateCcw } from 'lucide-react';
 import ContactForm from './ContactForm';
 import SelectForm from './SelectForm';
-import { usePathname } from 'next/navigation';
 import MultiSelectStep from './MultiSelectStep';
 import SMSVerificationStep from './SMSVerificationStep';
 import SliderStep from './SliderStep';
 
-const getQuestionSet = (pathname: string) => {
-  if (pathname === '/life') return { ...ALL_LIFE_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
-  if (pathname === '/health') return { ...ALL_HEALTH_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
-  if (pathname === '/income') return { ...ALL_LIFE_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
-  if (pathname === '/trauma') return { ...ALL_TRAUMA_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
-  if (pathname === '/mortgage') return { ...ALL_MORTGAGE_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
-  return { ...ALL_MAIN_QUESTIONS, ...ALL_LOCATION_QUESTIONS };
-};
-
 export default function QuoteWizard() {
-  const { currentStepId, goBack, stepHistory } = useForm();
-  const pathname = usePathname();
+  const { currentStepId, goBack, stepHistory, questions, isQuestionsLoading } = useForm();
   
-  const ALL_WIZARD_QUESTIONS = getQuestionSet(pathname);
-  const currentQuestion = ALL_WIZARD_QUESTIONS[currentStepId];
+  const currentQuestion = questions[currentStepId];
   const isFirstStep = stepHistory.length <= 1;
 
   const renderStep = () => {
@@ -62,20 +43,33 @@ export default function QuoteWizard() {
     return <div>Question not found.</div>;
   };
 
+  if (isQuestionsLoading) {
+    return (
+      <div className="relative w-full max-w-xl mx-auto scale-75">
+        <div className="relative rounded-xl border bg-card/90 text-card-foreground p-4 shadow-2xl backdrop-blur-sm sm:p-6 mt-4">
+          <div className="animate-pulse space-y-4">
+            <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+            <div className="space-y-2">
+              <div className="h-4 bg-gray-200 rounded"></div>
+              <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+            </div>
+            <div className="h-10 bg-gray-200 rounded"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full max-w-xl mx-auto scale-75">
       <div className="relative rounded-xl border bg-card/90 text-card-foreground p-4 shadow-2xl backdrop-blur-sm sm:p-6 mt-4">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStepId}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3, type: "tween" }}
-          >
-            {renderStep()}
-          </motion.div>
-        </AnimatePresence>
+        <div 
+          key={currentStepId}
+          className="transition-opacity duration-150 ease-in-out"
+          style={{ opacity: 1 }}
+        >
+          {renderStep()}
+        </div>
 
         {!isFirstStep && currentStepId !== 'results' && (
           <Button

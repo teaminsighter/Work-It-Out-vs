@@ -5,26 +5,21 @@ import { setCampaignCookies } from './actions';
 import { FormProvider } from '@/contexts/FormContext';
 import dynamic from 'next/dynamic';
 
-// Dynamic imports with loading states
+// Dynamic imports with simple loading states
 const TraumaPage = dynamic(() => import('../trauma/page'), { 
-  ssr: false,
-  loading: () => <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div></div>
+  loading: () => <div className="animate-pulse h-20 bg-gray-200 rounded mx-auto mt-8 max-w-xl"></div>
 });
 const MortgagePage = dynamic(() => import('../mortgage/page'), { 
-  ssr: false,
-  loading: () => <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div></div>
+  loading: () => <div className="animate-pulse h-20 bg-gray-200 rounded mx-auto mt-8 max-w-xl"></div>
 });
 const HealthPage = dynamic(() => import('../health/page'), { 
-  ssr: false,
-  loading: () => <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div></div>
+  loading: () => <div className="animate-pulse h-20 bg-gray-200 rounded mx-auto mt-8 max-w-xl"></div>
 });
 const LifePage = dynamic(() => import('../life/page'), { 
-  ssr: false,
-  loading: () => <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div></div>
+  loading: () => <div className="animate-pulse h-20 bg-gray-200 rounded mx-auto mt-8 max-w-xl"></div>
 });
 const HomePage = dynamic(() => import('../page'), { 
-  ssr: false,
-  loading: () => <div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div></div>
+  loading: () => <div className="animate-pulse h-20 bg-gray-200 rounded mx-auto mt-8 max-w-xl"></div>
 });
 
 interface CampaignWrapperProps {

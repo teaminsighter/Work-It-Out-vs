@@ -10,9 +10,11 @@ datasource db {
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
+  name          String?   // Full name for NextAuth compatibility
   firstName     String    @map("first_name")
   lastName      String    @map("last_name")
   username      String?   @unique
+  password      String    // Password hash for authentication
   avatar        String?
   phoneNumber   String?   @map("phone_number")
   department    String?

@@ -15,13 +15,13 @@ interface SliderStepProps {
 
 export default function SliderStep({ question }: SliderStepProps) {
   const { handleAnswer, formData } = useForm();
-  const { id, Icon, question: questionText, description, nextStepId, min = 0, max = 100, step = 1, sliderField } = question;
+  const { id, Icon, question: questionText, description, nextStepId, min = 0, max = 100, step = 1, defaultValue, sliderField } = question;
   
   // Use sliderField properties if available, otherwise fall back to question properties
   const sliderMin = sliderField?.min ?? min;
   const sliderMax = sliderField?.max ?? max;
   const sliderStep = sliderField?.step ?? step;
-  const sliderDefault = sliderField?.defaultValue ?? sliderMin;
+  const sliderDefault = sliderField?.defaultValue ?? defaultValue ?? sliderMin;
   
   const initialValue = formData[sliderField?.id || id] || sliderDefault;
   const [value, setValue] = useState<number>(initialValue);

@@ -10,8 +10,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import VisitorTracking from '@/components/VisitorTracking';
 import { FormProvider } from '@/contexts/FormContext';
-import { AuthProvider } from '@/contexts/AuthContext';
+import { AuthProvider } from '@/contexts/AuthContextReal';
 import { ThemeProvider } from '@/components/theme-provider';
+import SessionProvider from '@/components/providers/SessionProvider';
 import React from 'react';
 import { usePathname } from 'next/navigation';
 
@@ -67,11 +68,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>
-            <FormProvider>
-              <ConditionalLayout>{children}</ConditionalLayout>
-            </FormProvider>
-          </AuthProvider>
+          <SessionProvider>
+            <AuthProvider>
+              <FormProvider>
+                <ConditionalLayout>{children}</ConditionalLayout>
+              </FormProvider>
+            </AuthProvider>
+          </SessionProvider>
         </ThemeProvider>
       </body>
     </html>

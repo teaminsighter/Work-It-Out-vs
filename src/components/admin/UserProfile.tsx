@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useAuth } from '@/contexts/AuthContext';
+import { useSession, signOut } from 'next-auth/react';
 import { User, Mail, Shield, Calendar, LogOut, Settings, Camera, Activity, Key, Download, FileText } from 'lucide-react';
 
 const UserProfile = () => {
-  const { user, logout, updateProfile } = useAuth();
+  const { data: session } = useSession();
+  const user = session?.user;
   const [isEditing, setIsEditing] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [userActivities, setUserActivities] = useState([]);
@@ -32,7 +33,7 @@ const UserProfile = () => {
   };
 
   const handleLogout = () => {
-    logout();
+    signOut({ callbackUrl: '/admin/login' });
   };
 
 

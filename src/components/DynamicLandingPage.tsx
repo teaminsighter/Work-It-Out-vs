@@ -21,11 +21,11 @@ const HowItWorks = dynamic(() => import('@/components/HowItWorks'));
 const Testimonials = dynamic(() => import('@/components/Testimonials'));
 const CTA = dynamic(() => import('@/components/CTA'));
 
-const QuoteWizard = dynamic(() => import('@/components/quote/QuoteWizard'), { ssr: false });
-const QuoteWizardHealthNew = dynamic(() => import('@/components/quote/QuoteWizardHealthNew'), { ssr: false });
-const QuoteWizardIncome = dynamic(() => import('@/components/quote/QuoteWizardIncome'), { ssr: false });
-const QuoteWizardLife = dynamic(() => import('@/components/quote/QuoteWizardLife'), { ssr: false });
-const QuoteWizardNew = dynamic(() => import('@/components/quote/QuoteWizardNew'), { ssr: false });
+const QuoteWizard = dynamic(() => import('@/components/quote/QuoteWizard'));
+const QuoteWizardHealthNew = dynamic(() => import('@/components/quote/QuoteWizardHealthNew'));
+const QuoteWizardIncome = dynamic(() => import('@/components/quote/QuoteWizardIncome'));
+const QuoteWizardLife = dynamic(() => import('@/components/quote/QuoteWizardLife'));
+const QuoteWizardNew = dynamic(() => import('@/components/quote/QuoteWizardNew'));
 
 
 import { Skeleton } from '@/components/ui/skeleton';

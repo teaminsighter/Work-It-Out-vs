@@ -563,10 +563,15 @@ export const ALL_QUESTIONS: Questions = {
   'number-of-dependants': {
     id: 'number-of-dependants',
     question: 'How many Dependants?',
-    description: 'Enter the number of children or dependants to include in your family coverage',
+    description: 'Select the number of children or dependants to include in your family coverage',
     Icon: Users,
-    fields: ['numberOfDependants'],
     nextStepId: 'medical-condition',
+    options: [
+      { value: '1', label: '1' },
+      { value: '2', label: '2' },
+      { value: '3', label: '3' },
+      { value: '4+', label: '4+' },
+    ],
   },
   'results': {
     id: 'results',

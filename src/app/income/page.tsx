@@ -30,15 +30,15 @@ const QuoteWizardLife = dynamic(() => import('@/components/quote/QuoteWizardLife
 const IncomePageHero = () => {
   const { quoteWizardRef } = useForm();
   return (
-    <section className="relative w-full pt-40 pb-16 md:pt-48 md:pb-24 lg:pt-56 lg:pb-32">
+    <section className="relative w-full pt-48 pb-24">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-scroll md:bg-fixed"
+        className="absolute inset-0 bg-cover bg-center bg-fixed"
         style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/quoteflow-insurance.firebasestorage.app/o/Lanind%20Page%201%2Ffamily.jpeg?alt=media&token=424b8995-e4f0-4cf9-b257-623ca0287635')" }}
         data-ai-hint="incomey family"
       ></div>
       <div className="absolute inset-0 bg-primary/70"></div>
       <div className="container mx-auto px-4 relative z-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div className="grid grid-cols-2 gap-8 items-center">
           <div className="text-white">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold !leading-tight mb-4 text-shadow-lg">
               Compare Income Insurance Quotes

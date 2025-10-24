@@ -31,7 +31,7 @@ export default function QuestionStep({ question }: QuestionStepProps) {
     handleAnswer(id, value, nextStepId);
   };
 
-  const isGalleryView = id === 'insurance-type' || id === 'previous-claims' || id === 'coverage-level' || id === 'gender';
+  const isGalleryView = id === 'insurance-type' || id === 'previous-claims' || id === 'coverage-level';
   const isWelcomeSpecialty = id === 'welcome-specialty';
   const isInsuranceType = id === 'insurance-type';
   const isCoverageSelection = id === 'security-systems';

@@ -117,6 +117,7 @@ export const ALL_QUESTIONS: Questions = {
     min: 100000,
     max: 1000000,
     step: 50000,
+    defaultValue: 500000,
   },
   'who-to-cover': {
     id: 'who-to-cover',
